@@ -1,5 +1,6 @@
 package brickGame;
 
+import brickGame.Saving.LoadSave;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -23,7 +24,7 @@ import java.util.Random;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 
-    private int level = 0;
+    public int level = 0;
 
     private double xBreak = 0.0f;
     private double centerBreakX;
@@ -53,8 +54,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private double v = 1.000;
 
-    private int  heart    = 3;
-    private int  score    = 0;
+    public int  heart    = 3;
+    public int  score    = 0;
     private long time     = 0;
     private long hitTime  = 0;
     private long goldTime = 0;
@@ -110,7 +111,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initBreak();
             initBoard();
 
-            load = new Button("Load Game");
+            load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
             load.setTranslateX(220);
             load.setTranslateY(300);
@@ -225,11 +226,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 move(LEFT);
                 break;
             case RIGHT:
-
                 move(RIGHT);
                 break;
             case DOWN:
-                //setPhysicsToBall();
+               // setPhysicsToBall();
                 break;
             case S:
                 saveGame();
@@ -239,6 +239,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     float oldXBreak;
 
+
+    // Paddle code
     private void move(final int direction) {
         new Thread(new Runnable() {
             @Override
@@ -282,6 +284,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball.setFill(new ImagePattern(new Image("ball.png")));
     }
 
+
+    //Paddle initialisation
     private void initBreak() {
         rect = new Rectangle();
         rect.setWidth(breakWidth);
@@ -297,7 +301,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private boolean goDownBall                  = true;
     private boolean goRightBall                 = true;
-    private boolean colideToBreak               = false;
+    private boolean colideToBreak               = false; // Boolean, true when ball collides with Paddle
     private boolean colideToBreakAndMoveToRight = true;
     private boolean colideToRightWall           = false;
     private boolean colideToLeftWall            = false;
@@ -324,8 +328,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void setPhysicsToBall() {
-        //v = ((time - hitTime) / 1000.000) + 1.000;
+//        v = ((time - hitTime) / 1000.000) + 1.000;
 
+        v = 0;
         if (goDownBall) {
             yBall += vY;
         } else {
@@ -345,6 +350,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             return;
         }
         if (yBall >= sceneHeigt) {
+
             goDownBall = false;
             if (!isGoldStauts) {
                 //TODO gameover
@@ -714,6 +720,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     @Override
     public void onPhysicsUpdate() {
+
         checkDestroyedCount();
         setPhysicsToBall();
 

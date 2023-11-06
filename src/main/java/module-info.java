@@ -4,4 +4,6 @@ module brickGame {
 
     opens brickGame to javafx.fxml;
     exports brickGame;
+    exports brickGame.Saving;
+    opens brickGame.Saving to javafx.fxml;
 }
