@@ -34,7 +34,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private int breakHeight    = 30;
     private int halfBreakWidth = breakWidth / 2;
 
-    private int sceneWidth = 500;
+    public int sceneWidth = 500;
     private int sceneHeigt = 700;
 
     private static int LEFT  = 1;
@@ -219,6 +219,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         launch(args);
     }
 
+
+    //Keyboard for paddle
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
