@@ -17,6 +17,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import brickGame.BreakPaddle;
+
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,9 +29,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     public int level = 0;
 
-    private double xBreak = 0.0f;
+//    private double xBreak = 0.0f;
     private double centerBreakX;
-    private double yBreak = 640.0f;
+   // private double yBreak = 640.0f;
 
     private int breakWidth     = 130;
     private int breakHeight    = 30;
@@ -47,7 +50,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isGoldStauts      = false;
     private boolean isExistHeartBlock = false;
 
-    private Rectangle rect;
+  //  private Rectangle rect;
     private int       ballRadius = 10;
 
     private int destroyedBlockCount = 0;
@@ -92,9 +95,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button load    = null;
     Button newGame = null;
 
+    private BreakPaddle breakPaddle;
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+
 
 
         if (loadFromSave == false) {
@@ -108,8 +115,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
 
             initBall();
-            initBreak();
+            //initBreak();
             initBoard();
+            breakPaddle = new BreakPaddle();
+            breakPaddle.initBreak();
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -118,19 +127,22 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             newGame.setTranslateX(220);
             newGame.setTranslateY(340);
 
+
         }
 
 
         root = new Pane();
+        root.setPrefSize(sceneWidth, sceneHeigt);
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+
         } else {
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel);
         }
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
@@ -225,10 +237,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
-                move(LEFT);
+                breakPaddle.moveLeft();
                 break;
             case RIGHT:
-                move(RIGHT);
+                breakPaddle.moveRight();
                 break;
             case DOWN:
                // setPhysicsToBall();
@@ -242,41 +254,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     float oldXBreak;
 
 
-    // Paddle code
-    private void move(final int direction) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
-                        return;
-                    }
-                    if (xBreak == 0 && direction == LEFT) {
-                        return;
-                    }
-                    if (direction == RIGHT) {
-                        xBreak++;
-                    } else {
-                        xBreak--;
-                    }
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
-
-
-    }
-
-
     private void initBall() {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
@@ -284,20 +261,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball = new Circle();
         ball.setRadius(ballRadius);
         ball.setFill(new ImagePattern(new Image("ball.png")));
-    }
-
-
-    //Paddle initialisation
-    private void initBreak() {
-        rect = new Rectangle();
-        rect.setWidth(breakWidth);
-        rect.setHeight(breakHeight);
-        rect.setX(xBreak);
-        rect.setY(yBreak);
-
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-
-        rect.setFill(pattern);
     }
 
 
@@ -330,9 +293,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private void setPhysicsToBall() {
-//        v = ((time - hitTime) / 1000.000) + 1.000;
+     v = ((time - hitTime) / 1000.000) + 1.000;
 
-        v = 0;
+       // v = 0;
         if (goDownBall) {
             yBall += vY;
         } else {
@@ -368,9 +331,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //return;
         }
 
-        if (yBall >= yBreak - ballRadius) {
+        if (yBall >= breakPaddle.yBreak - ballRadius) {
             //System.out.println("Colide1");
-            if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
+            if (xBall >= breakPaddle.xBreak && xBall <= breakPaddle.xBreak + breakWidth) {
                 hitTime = time;
                 resetColideFlags();
                 colideToBreak = true;
@@ -380,13 +343,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
-                    vX = Math.abs(relation);
+                    vX = 0.5 * Math.abs(relation);
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    vX = (Math.abs(relation) * 1.5) + (level / 3.500);
-                    //System.out.println("vX " + vX);
+                    vX = 0.7 * ((Math.abs(relation) * 1.5) + (level / 3.500));
+                    System.out.println("vX " + vX);
                 } else {
-                    vX = (Math.abs(relation) * 2) + (level / 3.500);
-                    //System.out.println("vX " + vX);
+                    vX = 0.6 * ((Math.abs(relation) * 2) + (level / 3.500));
+                    System.out.println("vX " + vX);
                 }
 
                 if (xBall - centerBreakX > 0) {
@@ -477,8 +440,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     outputStream.writeDouble(xBall);
                     outputStream.writeDouble(yBall);
-                    outputStream.writeDouble(xBreak);
-                    outputStream.writeDouble(yBreak);
+                    outputStream.writeDouble(breakPaddle.xBreak);
+                    outputStream.writeDouble(breakPaddle.yBreak);
                     outputStream.writeDouble(centerBreakX);
                     outputStream.writeLong(time);
                     outputStream.writeLong(goldTime);
@@ -552,8 +515,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         destroyedBlockCount = loadSave.destroyedBlockCount;
         xBall = loadSave.xBall;
         yBall = loadSave.yBall;
-        xBreak = loadSave.xBreak;
-        yBreak = loadSave.yBreak;
+        breakPaddle.xBreak = loadSave.xBreak;
+        breakPaddle.yBreak = loadSave.yBreak;
         centerBreakX = loadSave.centerBreakX;
         time = loadSave.time;
         goldTime = loadSave.goldTime;
@@ -646,8 +609,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 scoreLabel.setText("Score: " + score);
                 heartLabel.setText("Heart : " + heart);
 
-                rect.setX(xBreak);
-                rect.setY(yBreak);
+                breakPaddle.rect.setX(breakPaddle.xBreak);
+                breakPaddle.rect.setY(breakPaddle.yBreak);
                 ball.setCenterX(xBall);
                 ball.setCenterY(yBall);
 
@@ -737,7 +700,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (choco.y > sceneHeigt || choco.taken) {
                 continue;
             }
-            if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= xBreak && choco.x <= xBreak + breakWidth) {
+            if (choco.y >= breakPaddle.yBreak && choco.y <= breakPaddle.yBreak + breakHeight && choco.x >= breakPaddle.xBreak && choco.x <= breakPaddle.xBreak + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
                 choco.choco.setVisible(false);
@@ -750,7 +713,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
 
     }
-
 
     @Override
     public void onTime(long time) {

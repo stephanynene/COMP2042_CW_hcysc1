@@ -5,9 +5,9 @@ import javafx.scene.shape.Rectangle;
 
 public class BreakPaddle {
 
-    private double xBreak = 0.0f;
+    public double xBreak = 0.0f;
     private double centerBreakX;
-    private double yBreak = 640.0f;
+    public double yBreak = 640.0f;
     private int breakWidth = 130;
     private int breakHeight = 30;
     private int halfBreakWidth = breakWidth / 2;
@@ -17,16 +17,13 @@ public class BreakPaddle {
     private static int LEFT  = 1;
     private static int RIGHT = 2;
 
-    private Rectangle rect;
+    public Rectangle rect;
 
 
-    public BreakPaddle() {
-        // Initialize the paddle
-        initBreak();
-    }
+
 
     //Paddle initialisation
-    private void initBreak() {
+    public void initBreak() {
         rect = new Rectangle();
         rect.setWidth(breakWidth);
         rect.setHeight(breakHeight);
@@ -34,45 +31,46 @@ public class BreakPaddle {
         rect.setY(yBreak);
 
         ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-
         rect.setFill(pattern);
     }
 
     // Paddle code
-    private void move(final int direction) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
-                        return;
-                    }
-                    if (xBreak == 0 && direction == LEFT) {
-                        return;
-                    }
-                    if (direction == RIGHT) {
-                        xBreak++;
-                    } else {
-                        xBreak--;
-                    }
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
-    }
+//    public void move(final int direction) {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                int sleepTime = 4;
+//                for (int i = 0; i < 30; i++) {
+//                    if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
+//                        return;
+//                    }
+//                    if (xBreak == 0 && direction == LEFT) {
+//                        return;
+//                    }
+//                    if (direction == RIGHT) {
+//                        xBreak++;
+//                    } else {
+//                        xBreak--;
+//                    }
+//                    centerBreakX = xBreak + halfBreakWidth;
+//                    try {
+//                        Thread.sleep(sleepTime);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (i >= 20) {
+//                        sleepTime = i;
+//                    }
+//                }
+//            }
+//        }).start();
+//    }
 
-    // Split into two methods
-    private void moveRight() {
+//    Split into two methods
+    public void moveRight() {
+        //System.out.println("Move right");
         new Thread(new Runnable() {
+
             @Override
             public void run() {
                 int sleepTime = 4;
@@ -95,7 +93,10 @@ public class BreakPaddle {
         }).start();
     }
 
-    private void moveLeft() {
+
+
+     public void moveLeft() {
+      //   System.out.println("Move left");
         new Thread(new Runnable() {
             @Override
             public void run() {
