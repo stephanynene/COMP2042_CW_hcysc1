@@ -2,13 +2,12 @@ package brickGame.gameObjects;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
+
 
 
 import java.util.Random;
 
-public class Ball {
+public class Ball extends Circle {
 
     public Circle getBall() {
         return ball;
@@ -60,9 +59,9 @@ public class Ball {
         this.fill = imagePattern;
     }
 
-    public ImagePattern getFill() {
-        return fill;
-    }
+  //  public ImagePattern getFill() {
+  //      return fill;
+   // }
 
 
 }
