@@ -14,7 +14,6 @@ public class Ball {
 
     public int sceneWidth = 500;
     private int sceneHeigt = 700;
-
     private void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
