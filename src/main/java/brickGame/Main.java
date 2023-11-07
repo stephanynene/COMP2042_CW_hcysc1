@@ -333,7 +333,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (yBall >= breakPaddle.yBreak - ballRadius) {
             //System.out.println("Colide1");
-            if (xBall >= breakPaddle.xBreak && xBall <= breakPaddle.xBreak + breakWidth) {
+            if (xBall >= breakPaddle.getxBreak() && xBall <= breakPaddle.getxBreak() + breakWidth) {
                 hitTime = time;
                 resetColideFlags();
                 colideToBreak = true;
@@ -440,7 +440,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     outputStream.writeDouble(xBall);
                     outputStream.writeDouble(yBall);
-                    outputStream.writeDouble(breakPaddle.xBreak);
+                    outputStream.writeDouble(breakPaddle.getxBreak());
                     outputStream.writeDouble(breakPaddle.yBreak);
                     outputStream.writeDouble(centerBreakX);
                     outputStream.writeLong(time);
@@ -515,7 +515,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         destroyedBlockCount = loadSave.destroyedBlockCount;
         xBall = loadSave.xBall;
         yBall = loadSave.yBall;
-        breakPaddle.xBreak = loadSave.xBreak;
+        breakPaddle.setxBreak(loadSave.xBreak);
         breakPaddle.yBreak = loadSave.yBreak;
         centerBreakX = loadSave.centerBreakX;
         time = loadSave.time;
@@ -609,7 +609,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 scoreLabel.setText("Score: " + score);
                 heartLabel.setText("Heart : " + heart);
 
-                breakPaddle.rect.setX(breakPaddle.xBreak);
+                breakPaddle.rect.setX(breakPaddle.getxBreak());
                 breakPaddle.rect.setY(breakPaddle.yBreak);
                 ball.setCenterX(xBall);
                 ball.setCenterY(yBall);
@@ -700,7 +700,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (choco.y > sceneHeigt || choco.taken) {
                 continue;
             }
-            if (choco.y >= breakPaddle.yBreak && choco.y <= breakPaddle.yBreak + breakHeight && choco.x >= breakPaddle.xBreak && choco.x <= breakPaddle.xBreak + breakWidth) {
+            if (choco.y >= breakPaddle.yBreak && choco.y <= breakPaddle.yBreak + breakHeight && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
                 choco.choco.setVisible(false);

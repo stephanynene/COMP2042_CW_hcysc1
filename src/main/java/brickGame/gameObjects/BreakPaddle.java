@@ -5,14 +5,23 @@ import javafx.scene.shape.Rectangle;
 
 public class BreakPaddle {
 
-    public double xBreak = 0.0f;
+
+
+
+    private double xBreak = 0.0f;
+    public void setxBreak(double xBreak) {
+        this.xBreak = xBreak;
+    }
+    public double getxBreak() {
+        return xBreak;
+    }
     private double centerBreakX;
     public double yBreak = 640.0f;
     private int breakWidth = 130;
     private int breakHeight = 30;
     private int halfBreakWidth = breakWidth / 2;
 
-    public int sceneWidth = 500;
+    private int sceneWidth = 500;
     private int sceneHeigt = 700;
     private static int LEFT  = 1;
     private static int RIGHT = 2;
