@@ -1,6 +1,9 @@
 package brickGame;
 
 import brickGame.Saving.LoadSave;
+import brickGame.gameObjects.Block;
+import brickGame.gameObjects.Bonus;
+import brickGame.gameObjects.BreakPaddle;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,10 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
-import brickGame.BreakPaddle;
 
 
 import java.io.*;
@@ -51,7 +51,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isExistHeartBlock = false;
 
   //  private Rectangle rect;
-    private int       ballRadius = 10;
+    private int ballRadius = 10;
 
     private int destroyedBlockCount = 0;
 
@@ -84,10 +84,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             Color.TOMATO,
             Color.TAN,
     };
-    public  Pane             root;
-    private Label            scoreLabel;
-    private Label            heartLabel;
-    private Label            levelLabel;
+    public  Pane root;
+    private Label scoreLabel;
+    private Label heartLabel;
+    private Label levelLabel;
 
     private boolean loadFromSave = false;
 
@@ -114,7 +114,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 return;
             }
 
-            initBall();
+            initBall(level);
             //initBreak();
             initBoard();
             breakPaddle = new BreakPaddle();
@@ -254,7 +254,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     float oldXBreak;
 
 
-    private void initBall() {
+    private void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
         yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
