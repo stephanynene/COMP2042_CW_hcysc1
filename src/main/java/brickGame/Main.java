@@ -331,7 +331,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //return;
         }
 
-        if (yBall >= breakPaddle.yBreak - ballRadius) {
+        if (yBall >= breakPaddle.getyBreak() - ballRadius) {
             //System.out.println("Colide1");
             if (xBall >= breakPaddle.getxBreak() && xBall <= breakPaddle.getxBreak() + breakWidth) {
                 hitTime = time;
@@ -441,7 +441,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeDouble(xBall);
                     outputStream.writeDouble(yBall);
                     outputStream.writeDouble(breakPaddle.getxBreak());
-                    outputStream.writeDouble(breakPaddle.yBreak);
+                    outputStream.writeDouble(breakPaddle.getyBreak());
                     outputStream.writeDouble(centerBreakX);
                     outputStream.writeLong(time);
                     outputStream.writeLong(goldTime);
@@ -516,7 +516,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         xBall = loadSave.xBall;
         yBall = loadSave.yBall;
         breakPaddle.setxBreak(loadSave.xBreak);
-        breakPaddle.yBreak = loadSave.yBreak;
+        breakPaddle.setyBreak(loadSave.yBreak);
         centerBreakX = loadSave.centerBreakX;
         time = loadSave.time;
         goldTime = loadSave.goldTime;
@@ -610,7 +610,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 heartLabel.setText("Heart : " + heart);
 
                 breakPaddle.rect.setX(breakPaddle.getxBreak());
-                breakPaddle.rect.setY(breakPaddle.yBreak);
+                breakPaddle.rect.setY(breakPaddle.getyBreak());
                 ball.setCenterX(xBall);
                 ball.setCenterY(yBall);
 
@@ -700,7 +700,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (choco.y > sceneHeigt || choco.taken) {
                 continue;
             }
-            if (choco.y >= breakPaddle.yBreak && choco.y <= breakPaddle.yBreak + breakHeight && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + breakWidth) {
+            if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + breakHeight && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
                 choco.choco.setVisible(false);
