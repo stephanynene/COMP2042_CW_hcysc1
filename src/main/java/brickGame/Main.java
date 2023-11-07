@@ -1,6 +1,7 @@
 package brickGame;
 
 import brickGame.Saving.LoadSave;
+import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
 import brickGame.gameObjects.Bonus;
 import brickGame.gameObjects.BreakPaddle;
@@ -42,10 +43,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private static int LEFT  = 1;
     private static int RIGHT = 2;
-
-    private Circle ball;
-    private double xBall;
-    private double yBall;
+//
+//    private Circle ball;
+//    private double xBall;
+//    private double yBall;
 
     private boolean isGoldStauts      = false;
     private boolean isExistHeartBlock = false;
@@ -96,6 +97,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     Button newGame = null;
 
     private BreakPaddle breakPaddle;
+    private Ball ball;
 
 
     @Override
@@ -114,7 +116,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 return;
             }
 
-            initBall(level);
+            //initBall(level);
+            ball = new Ball();
+            ball.initBall(level);
             //initBreak();
             initBoard();
             breakPaddle = new BreakPaddle();
@@ -139,10 +143,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ball.getBall(), scoreLabel, heartLabel, levelLabel, newGame);
 
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ball.getBall(), scoreLabel, heartLabel, levelLabel);
         }
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
@@ -254,14 +258,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     float oldXBreak;
 
 
-    private void initBall(int level) {
-        Random random = new Random();
-        xBall = random.nextInt(sceneWidth) + 1;
-        yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
-        ball = new Circle();
-        ball.setRadius(ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
-    }
+//    private void initBall(int level) {
+//        Random random = new Random();
+//        xBall = random.nextInt(sceneWidth) + 1;
+//        yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
+//        ball = new Circle();
+//        ball.setRadius(ballRadius);
+//        ball.setFill(new ImagePattern(new Image("ball.png")));
+//    }
 
 
     private boolean goDownBall                  = true;
@@ -297,24 +301,32 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
        // v = 0;
         if (goDownBall) {
-            yBall += vY;
+            double currentY = ball.getyBall(); // Get the current yBall value
+            currentY += vY; // Update the yBall value
+            ball.setyBall(currentY);
         } else {
-            yBall -= vY;
+            double currentY = ball.getyBall();
+            currentY -= vY;
+            ball.setyBall(currentY);
         }
 
         if (goRightBall) {
-            xBall += vX;
+            double currentX = ball.getxBall();
+            currentX += vX;
+            ball.setxBall(currentX);
         } else {
-            xBall -= vX;
+            double currentX = ball.getxBall();
+            currentX -= vX;
+            ball.setxBall(currentX);
         }
 
-        if (yBall <= 0) {
+        if (ball.getyBall() <= 0) {
             //vX = 1.000;
             resetColideFlags();
             goDownBall = true;
             return;
         }
-        if (yBall >= sceneHeigt) {
+        if (ball.getyBall() >= sceneHeigt) {
 
             goDownBall = false;
             if (!isGoldStauts) {
@@ -331,15 +343,15 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //return;
         }
 
-        if (yBall >= breakPaddle.getyBreak() - ballRadius) {
+        if (ball.getyBall() >= breakPaddle.getyBreak() - ballRadius) {
             //System.out.println("Colide1");
-            if (xBall >= breakPaddle.getxBreak() && xBall <= breakPaddle.getxBreak() + breakWidth) {
+            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + breakWidth) {
                 hitTime = time;
                 resetColideFlags();
                 colideToBreak = true;
                 goDownBall = false;
 
-                double relation = (xBall - centerBreakX) / (breakWidth / 2);
+                double relation = (ball.getxBall() - centerBreakX) / (breakWidth / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -352,7 +364,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     System.out.println("vX " + vX);
                 }
 
-                if (xBall - centerBreakX > 0) {
+                if (ball.getxBall() - centerBreakX > 0) {
                     colideToBreakAndMoveToRight = true;
                 } else {
                     colideToBreakAndMoveToRight = false;
@@ -361,13 +373,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
 
-        if (xBall >= sceneWidth) {
+        if (ball.getxBall() >= sceneWidth) {
             resetColideFlags();
             //vX = 1.000;
             colideToRightWall = true;
         }
 
-        if (xBall <= 0) {
+        if (ball.getxBall() <= 0) {
             resetColideFlags();
             //vX = 1.000;
             colideToLeftWall = true;
@@ -438,8 +450,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     outputStream.writeInt(destroyedBlockCount);
 
 
-                    outputStream.writeDouble(xBall);
-                    outputStream.writeDouble(yBall);
+                    outputStream.writeDouble(ball.getxBall());
+                    outputStream.writeDouble(ball.getyBall());
                     outputStream.writeDouble(breakPaddle.getxBreak());
                     outputStream.writeDouble(breakPaddle.getyBreak());
                     outputStream.writeDouble(centerBreakX);
@@ -513,8 +525,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         score = loadSave.score;
         heart = loadSave.heart;
         destroyedBlockCount = loadSave.destroyedBlockCount;
-        xBall = loadSave.xBall;
-        yBall = loadSave.yBall;
+        ball.setxBall(loadSave.xBall);
+        ball.setyBall(loadSave.yBall);
         breakPaddle.setxBreak(loadSave.xBreak);
         breakPaddle.setyBreak(loadSave.yBreak);
         centerBreakX = loadSave.centerBreakX;
@@ -611,8 +623,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                 breakPaddle.rect.setX(breakPaddle.getxBreak());
                 breakPaddle.rect.setY(breakPaddle.getyBreak());
-                ball.setCenterX(xBall);
-                ball.setCenterY(yBall);
+                ball.setCenterX(ball.getxBall());
+                ball.setCenterY(ball.getyBall());
 
                 for (Bonus choco : chocos) {
                     choco.choco.setY(choco.y);
@@ -621,9 +633,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         });
 
 
-        if (yBall >= Block.getPaddingTop() && yBall <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
+        if (ball.getyBall() >= Block.getPaddingTop() && ball.getyBall() <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
             for (final Block block : blocks) {
-                int hitCode = block.checkHitToBlock(xBall, yBall);
+                int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
                 if (hitCode != Block.NO_HIT) {
                     score += 1;
 
@@ -649,7 +661,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     if (block.type == Block.BLOCK_STAR) {
                         goldTime = time;
-                        ball.setFill(new ImagePattern(new Image("goldball.png")));
+                        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
+                        ball.setFill(imagePattern);
                         System.out.println("gold ball");
                         root.getStyleClass().add("goldRoot");
                         isGoldStauts = true;
