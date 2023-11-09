@@ -52,7 +52,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private boolean isExistHeartBlock = false;
 
   //  private Rectangle rect;
-    private int ballRadius = 10;
+    //private int ballRadius = 10;
 
     private int destroyedBlockCount = 0;
 
@@ -124,6 +124,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
+
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
             load.setTranslateX(220);
@@ -142,11 +143,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
+
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ball.getBall(), scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
 
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ball.getBall(), scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel);
         }
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
@@ -343,7 +345,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //return;
         }
 
-        if (ball.getyBall() >= breakPaddle.getyBreak() - ballRadius) {
+        if (ball.getyBall() >= breakPaddle.getyBreak() - ball.getBallRadius()) {
             //System.out.println("Colide1");
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + breakWidth) {
                 hitTime = time;

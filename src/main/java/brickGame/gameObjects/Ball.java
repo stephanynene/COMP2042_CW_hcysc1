@@ -9,16 +9,16 @@ import java.util.Random;
 
 public class Ball extends Circle {
 
-    public Circle getBall() {
-        return ball;
-    }
+ //   private Circle ball;
+    public int sceneWidth = 500;
+    private int sceneHeigt = 700;
+//    public Circle getBall() {
+//        return ball;
+//    }
 
-    public void setBall(Circle ball) {
-        this.ball = ball;
-    }
-
-    private Circle ball;
-
+//    public void setBall(Circle ball) {
+//        this.ball = ball;
+//    }
 
 
     private double xBall;
@@ -39,18 +39,26 @@ public class Ball extends Circle {
     }
 
 
+    public int getBallRadius() {
+        return ballRadius;
+    }
+
+    public void setBallRadius(int ballRadius) {
+        this.ballRadius = ballRadius;
+    }
+
     private int ballRadius = 10;
 
-    public int sceneWidth = 500;
-    private int sceneHeigt = 700;
+
 
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(sceneWidth) + 1;
         yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
-        ball = new Circle();
-        ball.setRadius(ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
+        this.setRadius(ballRadius);
+        this.setFill(new ImagePattern(new Image("/ball.png")));
+        this.setCenterX(xBall);
+        this.setCenterY(yBall);
     }
 
     private ImagePattern fill;
