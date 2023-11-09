@@ -8,18 +8,9 @@ import javafx.scene.shape.Circle;
 import java.util.Random;
 
 public class Ball extends Circle {
-
- //   private Circle ball;
+ private ImagePattern fill;
     public int sceneWidth = 500;
     private int sceneHeigt = 700;
-//    public Circle getBall() {
-//        return ball;
-//    }
-
-//    public void setBall(Circle ball) {
-//        this.ball = ball;
-//    }
-
 
     private double xBall;
     public void setxBall(double xBall) {
@@ -29,7 +20,6 @@ public class Ball extends Circle {
         return xBall;
     }
 
-
     private double yBall;
     public void setyBall(double yBall) {
         this.yBall = yBall;
@@ -38,18 +28,13 @@ public class Ball extends Circle {
         return yBall;
     }
 
-
     public int getBallRadius() {
         return ballRadius;
     }
-
     public void setBallRadius(int ballRadius) {
         this.ballRadius = ballRadius;
     }
-
     private int ballRadius = 10;
-
-
 
     public void initBall(int level) {
         Random random = new Random();
@@ -60,16 +45,5 @@ public class Ball extends Circle {
         this.setCenterX(xBall);
         this.setCenterY(yBall);
     }
-
-    private ImagePattern fill;
-
-    public void setFill(ImagePattern imagePattern) {
-        this.fill = imagePattern;
-    }
-
-  //  public ImagePattern getFill() {
-  //      return fill;
-   // }
-
 
 }
