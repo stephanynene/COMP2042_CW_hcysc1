@@ -17,7 +17,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 
@@ -29,30 +28,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
     public int level = 0;
-
-//    private double xBreak = 0.0f;
     private double centerBreakX;
-   // private double yBreak = 640.0f;
-
     private int breakWidth     = 130;
     private int breakHeight    = 30;
     private int halfBreakWidth = breakWidth / 2;
 
     public int sceneWidth = 500;
-    private int sceneHeigt = 700;
+    private int sceneHeight = 700;
 
     private static int LEFT  = 1;
     private static int RIGHT = 2;
-//
-//    private Circle ball;
-//    private double xBall;
-//    private double yBall;
-
     private boolean isGoldStauts      = false;
     private boolean isExistHeartBlock = false;
-
-  //  private Rectangle rect;
-    //private int ballRadius = 10;
 
     private int destroyedBlockCount = 0;
 
@@ -99,12 +86,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private BreakPaddle breakPaddle;
     private Ball ball;
 
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-
-
 
         if (loadFromSave == false) {
             level++;
@@ -116,14 +100,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 return;
             }
 
-            //initBall(level);
             ball = new Ball();
             ball.initBall(level);
-            //initBreak();
             initBoard();
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
-
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -131,13 +112,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             load.setTranslateY(300);
             newGame.setTranslateX(220);
             newGame.setTranslateY(340);
-
-
         }
 
-
         root = new Pane();
-        root.setPrefSize(sceneWidth, sceneHeigt);
+        root.setPrefSize(sceneWidth, sceneHeight);
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
@@ -153,7 +131,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
-        Scene scene = new Scene(root, sceneWidth, sceneHeigt);
+        Scene scene = new Scene(root, sceneWidth, sceneHeight);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this);
 
@@ -200,8 +178,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             engine.start();
             loadFromSave = false;
         }
-
-
     }
 
     private void initBoard() {
@@ -232,11 +208,9 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
     public static void main(String[] args) {
         launch(args);
     }
-
 
     //Keyboard for paddle
     @Override
@@ -256,19 +230,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
         }
     }
-
     float oldXBreak;
-
-
-//    private void initBall(int level) {
-//        Random random = new Random();
-//        xBall = random.nextInt(sceneWidth) + 1;
-//        yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
-//        ball = new Circle();
-//        ball.setRadius(ballRadius);
-//        ball.setFill(new ImagePattern(new Image("ball.png")));
-//    }
-
 
     private boolean goDownBall                  = true;
     private boolean goRightBall                 = true;
@@ -328,13 +290,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             goDownBall = true;
             return;
         }
-        if (ball.getyBall() >= sceneHeigt) {
+        if (ball.getyBall() >= sceneHeight) {
 
             goDownBall = false;
             if (!isGoldStauts) {
                 //TODO gameover
                 heart--;
-                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, this);
+                new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
 
                 if (heart == 0) {
                     new Score().showGameOver(this);
@@ -422,10 +384,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (colideToBottomBlock) {
             goDownBall = true;
         }
-
-
     }
-
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
@@ -502,14 +461,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
             }
         }).start();
-
     }
 
     private void loadGame() {
 
         LoadSave loadSave = new LoadSave();
         loadSave.read();
-
 
         isExistHeartBlock = loadSave.isExistHeartBlock;
         isGoldStauts = loadSave.isGoldStauts;
@@ -544,14 +501,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
         }
 
-
         try {
             loadFromSave = true;
             start(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -568,7 +523,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
                     isGoldStauts = false;
                     isExistHeartBlock = false;
-
 
                     hitTime = 0;
                     time = 0;
@@ -612,7 +566,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onUpdate() {
@@ -692,7 +645,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
     }
 
-
     @Override
     public void onInit() {
 
@@ -712,7 +664,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         for (Bonus choco : chocos) {
-            if (choco.y > sceneHeigt || choco.taken) {
+            if (choco.y > sceneHeight || choco.taken) {
                 continue;
             }
             if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + breakHeight && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + breakWidth) {
@@ -726,7 +678,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
-
     }
 
     @Override
