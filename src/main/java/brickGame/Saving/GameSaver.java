@@ -8,8 +8,14 @@ import brickGame.gameObjects.Block;
 import java.io.*;
 import java.util.ArrayList;
 
+
+
+
 public class GameSaver {
-    private void saveGame() {
+
+    public static String savePath    = "D:/save/save.mdds";
+    public static String savePathDir = "D:/save/";
+    private void saveGame(Main gameInstance) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -76,5 +82,16 @@ public class GameSaver {
             }
         }).start();
     }
+
+    // Method for saving/writing  all game states
+
+    public void writeGameState(){
+
+    }
+
+
+
+
+
 
 }

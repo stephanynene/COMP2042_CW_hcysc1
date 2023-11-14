@@ -45,6 +45,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private double v = 1.000;
 
+    public int getHeart() {
+        return heart;
+    }
+
+    public void setHeart(int heart) {
+        this.heart = heart;
+    }
+
     public int  heart    = 3;
     public int  score    = 0;
     private long time     = 0;
