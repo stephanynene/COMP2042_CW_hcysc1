@@ -27,7 +27,7 @@ import java.util.Random;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 
-    public int level = 0;
+
     private double centerBreakX;
     private int breakWidth     = 130;
     private int breakHeight    = 30;
@@ -39,7 +39,24 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private static int LEFT  = 1;
     private static int RIGHT = 2;
     private boolean isGoldStauts      = false;
+
+    public boolean isExistHeartBlock() {
+        return isExistHeartBlock;
+    }
+
+    public void setExistHeartBlock(boolean existHeartBlock) {
+        isExistHeartBlock = existHeartBlock;
+    }
+
     private boolean isExistHeartBlock = false;
+
+    public int getDestroyedBlockCount() {
+        return destroyedBlockCount;
+    }
+
+    public void setDestroyedBlockCount(int destroyedBlockCount) {
+        this.destroyedBlockCount = destroyedBlockCount;
+    }
 
     private int destroyedBlockCount = 0;
 
@@ -52,11 +69,55 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void setHeart(int heart) {
         this.heart = heart;
     }
+    private int  heart    = 3;
+    public int getLevel() {
+        return level;
+    }
 
-    public int  heart    = 3;
-    public int  score    = 0;
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int level = 0;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    private int  score    = 0;
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     private long time     = 0;
+
+    public long getHitTime() {
+        return hitTime;
+    }
+
+    public void setHitTime(long hitTime) {
+        this.hitTime = hitTime;
+    }
+
     private long hitTime  = 0;
+
+    public long getGoldTime() {
+        return goldTime;
+    }
+
+    public void setGoldTime(long goldTime) {
+        this.goldTime = goldTime;
+    }
+
     private long goldTime = 0;
 
     private GameEngine engine;
