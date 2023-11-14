@@ -31,7 +31,7 @@ public class BreakPaddle {
     private int halfBreakWidth = breakWidth / 2;
 
     private int sceneWidth = 500;
-    private int sceneHeigt = 700;
+    private int sceneHeight = 700;
     private static int LEFT  = 1;
     private static int RIGHT = 2;
 
@@ -52,37 +52,6 @@ public class BreakPaddle {
         rect.setFill(pattern);
     }
 
-    // Paddle code
-//    public void move(final int direction) {
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int sleepTime = 4;
-//                for (int i = 0; i < 30; i++) {
-//                    if (xBreak == (sceneWidth - breakWidth) && direction == RIGHT) {
-//                        return;
-//                    }
-//                    if (xBreak == 0 && direction == LEFT) {
-//                        return;
-//                    }
-//                    if (direction == RIGHT) {
-//                        xBreak++;
-//                    } else {
-//                        xBreak--;
-//                    }
-//                    centerBreakX = xBreak + halfBreakWidth;
-//                    try {
-//                        Thread.sleep(sleepTime);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    if (i >= 20) {
-//                        sleepTime = i;
-//                    }
-//                }
-//            }
-//        }).start();
-//    }
 
 //    Split into two methods
     public void moveRight() {

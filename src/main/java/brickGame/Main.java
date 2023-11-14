@@ -247,7 +247,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private double vY = 1.000;
 
 
-    private void resetColideFlags() {
+    private void resetCollideFlags() {
 
         colideToBreak = false;
         colideToBreakAndMoveToRight = false;
@@ -286,7 +286,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (ball.getyBall() <= 0) {
             //vX = 1.000;
-            resetColideFlags();
+            resetCollideFlags();
             goDownBall = true;
             return;
         }
@@ -311,7 +311,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             //System.out.println("Colide1");
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + breakWidth) {
                 hitTime = time;
-                resetColideFlags();
+                resetCollideFlags();
                 colideToBreak = true;
                 goDownBall = false;
 
@@ -338,13 +338,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         if (ball.getxBall() >= sceneWidth) {
-            resetColideFlags();
+            resetCollideFlags();
             //vX = 1.000;
             colideToRightWall = true;
         }
 
         if (ball.getxBall() <= 0) {
-            resetColideFlags();
+            resetCollideFlags();
             //vX = 1.000;
             colideToLeftWall = true;
         }
@@ -518,7 +518,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     vX = 1.000;
 
                     engine.stop();
-                    resetColideFlags();
+                    resetCollideFlags();
                     goDownBall = true;
 
                     isGoldStauts = false;
@@ -549,7 +549,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             score = 0;
             vX = 1.000;
             destroyedBlockCount = 0;
-            resetColideFlags();
+            resetCollideFlags();
             goDownBall = true;
 
             isGoldStauts = false;
@@ -600,7 +600,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     block.isDestroyed = true;
                     destroyedBlockCount++;
                     //System.out.println("size is " + blocks.size());
-                    resetColideFlags();
+                    resetCollideFlags();
 
                     if (block.type == Block.BLOCK_CHOCO) {
                         final Bonus choco = new Bonus(block.row, block.column);
