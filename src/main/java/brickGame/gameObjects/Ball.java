@@ -8,7 +8,7 @@ import javafx.scene.shape.Circle;
 import java.util.Random;
 
 public class Ball extends Circle {
- private ImagePattern fill;
+ //private ImagePattern fill;
     public int sceneWidth = 500;
     private int sceneHeight = 700;
 

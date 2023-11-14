@@ -676,7 +676,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
-
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
     }
 
