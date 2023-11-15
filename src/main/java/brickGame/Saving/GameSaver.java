@@ -57,7 +57,7 @@ public class GameSaver {
                     outputStream.writeBoolean(gameInstance.isColideToTopBlock());
 
                     ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (Block block : blocks) {
+                    for (Block block : gameInstance.getBlocks()) {
                         if (block.isDestroyed) {
                             continue;
                         }

@@ -140,6 +140,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public static String savePath    = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
 
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
+
+    public void setBlocks(ArrayList<Block> blocks) {
+        this.blocks = blocks;
+    }
+
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
     private Color[]          colors = new Color[]{
