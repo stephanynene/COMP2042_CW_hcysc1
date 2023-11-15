@@ -27,6 +27,13 @@ import java.util.Random;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 
+    public double getCenterBreakX() {
+        return centerBreakX;
+    }
+
+    public void setCenterBreakX(double centerBreakX) {
+        this.centerBreakX = centerBreakX;
+    }
 
     private double centerBreakX;
     private int breakWidth     = 130;
