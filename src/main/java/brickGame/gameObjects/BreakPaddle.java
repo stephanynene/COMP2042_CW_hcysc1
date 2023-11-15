@@ -8,15 +8,16 @@ public class BreakPaddle {
 
 
 
-    private double xBreak = 0.0f;
+
     public void setxBreak(double xBreak) {
         this.xBreak = xBreak;
     }
     public double getxBreak() {
         return xBreak;
     }
+    private double xBreak = 0.0f;
     private double centerBreakX;
-    private double yBreak = 640.0f;
+
     public double getyBreak() {
         return yBreak;
     }
@@ -24,8 +25,7 @@ public class BreakPaddle {
     public void setyBreak(double yBreak) {
         this.yBreak = yBreak;
     }
-
-
+    private double yBreak = 640.0f;
     private int breakWidth = 130;
     private int breakHeight = 30;
     private int halfBreakWidth = breakWidth / 2;

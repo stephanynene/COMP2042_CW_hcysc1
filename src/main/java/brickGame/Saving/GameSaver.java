@@ -25,10 +25,10 @@ public class GameSaver {
                 try {
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
 
-                    outputStream.writeInt(level);
-                    outputStream.writeInt(score);
-                    outputStream.writeInt(heart);
-                    outputStream.writeInt(destroyedBlockCount);
+                    outputStream.writeInt(gameInstance.level);
+                    outputStream.writeInt(gameInstance.getScore());
+                    outputStream.writeInt(gameInstance.getHeart());
+                    outputStream.writeInt(gameInstance.getDestroyedBlockCount());
 
 
                     outputStream.writeDouble(ball.getxBall());
@@ -41,9 +41,9 @@ public class GameSaver {
                     outputStream.writeDouble(vX);
 
 
-                    outputStream.writeBoolean(isExistHeartBlock);
-                    outputStream.writeBoolean(isGoldStauts);
-                    outputStream.writeBoolean(goDownBall);
+                    outputStream.writeBoolean(gameInstance.isExistHeartBlock());
+                    outputStream.writeBoolean(gameInstance.isGoldStauts());
+                    outputStream.writeBoolean(gameInstance.goDownBall);
                     outputStream.writeBoolean(goRightBall);
                     outputStream.writeBoolean(colideToBreak);
                     outputStream.writeBoolean(colideToBreakAndMoveToRight);
