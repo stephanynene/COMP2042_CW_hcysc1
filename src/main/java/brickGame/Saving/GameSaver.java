@@ -66,7 +66,7 @@ public class GameSaver {
 
                     outputStream.writeObject(blockSerializables);
 
-                    new Score().showMessage("Game Saved", Main.this);
+                    new Score().showMessage("Game Saved", gameInstance);
 
 
                 } catch (FileNotFoundException e) {
