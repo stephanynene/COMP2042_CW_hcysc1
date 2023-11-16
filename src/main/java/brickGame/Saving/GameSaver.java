@@ -17,7 +17,7 @@ public class GameSaver {
 
     public static String savePath    = "D:/save/save.mdds";
     public static String savePathDir = "D:/save/";
-    private void saveGame(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
+    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -27,7 +27,7 @@ public class GameSaver {
                 try {
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
 
-                    outputStream.writeInt(gameInstance.level);
+                    outputStream.writeInt(gameInstance.getLevel());
                     outputStream.writeInt(gameInstance.getScore());
                     outputStream.writeInt(gameInstance.getHeart());
                     outputStream.writeInt(gameInstance.getDestroyedBlockCount());
