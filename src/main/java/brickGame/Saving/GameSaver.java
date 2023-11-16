@@ -1,6 +1,7 @@
 package brickGame.Saving;
 
 import brickGame.BlockSerializable;
+import brickGame.GameConstants;
 import brickGame.Main;
 import brickGame.Score;
 import brickGame.gameObjects.Ball;
@@ -9,21 +10,21 @@ import brickGame.gameObjects.BreakPaddle;
 
 import java.io.*;
 import java.util.ArrayList;
+import brickGame.GameConstants;
 
 
 
 
 public class GameSaver {
 
-    public static final String SAVE_PATH = "C:/save/save.mdds";
-    public static final String SAVE_PATH_DIR = "C:/save/";
+
     public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new File(SAVE_PATH_DIR).mkdirs();
-                File file = new File(SAVE_PATH);
+                new File(GameConstants.SAVE_PATH_DIR.getStringValue()).mkdirs();
+                File file = new File(GameConstants.SAVE_PATH.getStringValue());
 
                 try {
                     if (file.getParentFile().mkdirs() || file.createNewFile()) {

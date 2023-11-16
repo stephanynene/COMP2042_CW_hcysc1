@@ -1,6 +1,7 @@
 package brickGame.Saving;
 
 import brickGame.BlockSerializable;
+import brickGame.GameConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,7 +41,7 @@ public class LoadSave {
 
 
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(GameSaver.SAVE_PATH)));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(GameConstants.SAVE_PATH.getStringValue())));
 
 
             level = inputStream.readInt();
