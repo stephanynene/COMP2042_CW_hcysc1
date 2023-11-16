@@ -36,15 +36,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private double centerBreakX;
-    private int breakWidth     = 130;
-    private int breakHeight    = 30;
-
-
-    public int sceneWidth = 500;
-    private int sceneHeight = 700;
-
-    private static int LEFT  = 1;
-    private static int RIGHT = 2;
 
     public boolean isGoldStauts() {
         return isGoldStauts;
@@ -269,21 +260,21 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
-    private Color[] colors = new Color[]{
-            Color.MAGENTA,
-            Color.RED,
-            Color.GOLD,
-            Color.CORAL,
-            Color.AQUA,
-            Color.VIOLET,
-            Color.GREENYELLOW,
-            Color.ORANGE,
-            Color.PINK,
-            Color.SLATEGREY,
-            Color.YELLOW,
-            Color.TOMATO,
-            Color.TAN,
-    };
+//    private Color[] colors = new Color[]{
+//            Color.MAGENTA,
+//            Color.RED,
+//            Color.GOLD,
+//            Color.CORAL,
+//            Color.AQUA,
+//            Color.VIOLET,
+//            Color.GREENYELLOW,
+//            Color.ORANGE,
+//            Color.PINK,
+//            Color.SLATEGREY,
+//            Color.YELLOW,
+//            Color.TOMATO,
+//            Color.TAN,
+//    };
     public  Pane root;
     private Label scoreLabel;
     private Label heartLabel;
@@ -327,12 +318,12 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         root = new Pane();
-        root.setPrefSize(sceneWidth, sceneHeight);
+        root.setPrefSize(GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
-        heartLabel.setTranslateX(sceneWidth - 70);
+        heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
@@ -343,7 +334,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
-        Scene scene = new Scene(root, sceneWidth, sceneHeight);
+        Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this);
 
@@ -414,7 +405,11 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 } else {
                     type = Block.BLOCK_NORMAL;
                 }
-                blocks.add(new Block(j, i, colors[r % (colors.length)], type));
+
+                Color[] colors = (Color[]) ((Object[]) GameConstants.COLORS.getValue());
+                blocks.add(new Block(j, i, colors[r % colors.length], type));
+
+
                 //System.out.println("colors " + r % (colors.length));
             }
         }
@@ -489,13 +484,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             goDownBall = true;
             return;
         }
-        if (ball.getyBall() >= sceneHeight) {
+        if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
 
             goDownBall = false;
             if (!isGoldStauts) {
                 //TODO gameover
                 heart--;
-                new Score().show(sceneWidth / 2, sceneHeight / 2, -1, this);
+                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, this);
 
                 if (heart == 0) {
                     new Score().showGameOver(this);
@@ -508,13 +503,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         if (ball.getyBall() >= breakPaddle.getyBreak() - ball.getBallRadius()) {
             //System.out.println("Colide1");
-            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + breakWidth) {
+            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
                 hitTime = time;
                 resetCollideFlags();
                 colideToBreak = true;
                 goDownBall = false;
 
-                double relation = (ball.getxBall() - centerBreakX) / (breakWidth / 2);
+                double relation = (ball.getxBall() - centerBreakX) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -536,7 +531,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             }
         }
 
-        if (ball.getxBall() >= sceneWidth) {
+        if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
             resetCollideFlags();
             //vX = 1.000;
             colideToRightWall = true;
@@ -630,6 +625,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
         for (BlockSerializable ser : loadSave.blocks) {
             int r = new Random().nextInt(200);
+            Color[] colors = GameConstants.COLORS.getValue();
             blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
         }
 
@@ -796,10 +792,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
 
         for (Bonus choco : chocos) {
-            if (choco.y > sceneHeight || choco.taken) {
+            if (choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken) {
                 continue;
             }
-            if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + breakHeight && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + breakWidth) {
+            if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + GameConstants.BREAK_WIDTH.getIntValue()  && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue()) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
                 choco.choco.setVisible(false);
