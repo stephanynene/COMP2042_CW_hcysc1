@@ -15,14 +15,25 @@ import java.util.ArrayList;
 
 public class GameSaver {
 
-    public static String savePath    = "D:/save/save.mdds";
-    public static String savePathDir = "D:/save/";
+    public static String savePath    = "C:/save/save.mdds";
+    public static String savePathDir = "C:/save/";
     public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 new File(savePathDir).mkdirs();
-               File file = new File(savePath);
+                File file = new File(savePath);
+
+                try {
+                    if (file.getParentFile().mkdirs() || file.createNewFile()) {
+                        System.out.println("File created successfully");
+                    } else {
+                        System.out.println("File exists");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 ObjectOutputStream outputStream = null;
                 try {
                     outputStream = new ObjectOutputStream(new FileOutputStream(file));
@@ -67,7 +78,7 @@ public class GameSaver {
                     outputStream.writeObject(blockSerializables);
 
                     new Score().showMessage("Game Saved", gameInstance);
-
+                    System.out.println("Game Saved");
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
