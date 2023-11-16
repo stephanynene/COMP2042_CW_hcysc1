@@ -14,15 +14,14 @@ import java.util.ArrayList;
 
 
 public class GameSaver {
-
-    public static String savePath    = "C:/save/save.mdds";
-    public static String savePathDir = "C:/save/";
+    public static final String SAVE_PATH = "C:/save/save.mdds";
+    public static final String SAVE_PATH_DIR = "C:/save/";
     public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                new File(savePathDir).mkdirs();
-                File file = new File(savePath);
+                new File(SAVE_PATH_DIR).mkdirs();
+                File file = new File(SAVE_PATH);
 
                 try {
                     if (file.getParentFile().mkdirs() || file.createNewFile()) {

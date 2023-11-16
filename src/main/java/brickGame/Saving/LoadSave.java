@@ -41,7 +41,7 @@ public class LoadSave {
 
 
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(Main.savePath)));
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(new File(GameSaver.SAVE_PATH)));
 
 
             level = inputStream.readInt();

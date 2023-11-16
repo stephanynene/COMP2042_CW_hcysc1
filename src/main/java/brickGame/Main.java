@@ -138,8 +138,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private long goldTime = 0;
 
     private GameEngine engine;
-    public static String savePath    = "D:/save/save.mdds";
-    public static String savePathDir = "D:/save/";
+
 
     public ArrayList<Block> getBlocks() {
         return blocks;
