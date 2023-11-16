@@ -1,12 +1,10 @@
 package brickGame.gameObjects;
+import brickGame.GameConstants;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class BreakPaddle {
-
-
-
 
 
     public void setxBreak(double xBreak) {
@@ -26,25 +24,17 @@ public class BreakPaddle {
         this.yBreak = yBreak;
     }
     private double yBreak = 640.0f;
-    private int breakWidth = 130;
-    private int breakHeight = 30;
-    private int halfBreakWidth = breakWidth / 2;
-
-    private int sceneWidth = 500;
-    private int sceneHeight = 700;
-    private static int LEFT  = 1;
-    private static int RIGHT = 2;
+    private int halfBreakWidth = GameConstants.BREAK_WIDTH.getIntValue() / 2;
 
     public Rectangle rect;
-
 
 
 
     //Paddle initialisation
     public void initBreak() {
         rect = new Rectangle();
-        rect.setWidth(breakWidth);
-        rect.setHeight(breakHeight);
+        rect.setWidth(GameConstants.BREAK_WIDTH.getIntValue());
+        rect.setHeight(GameConstants.BREAK_HEIGHT.getIntValue());
         rect.setX(xBreak);
         rect.setY(yBreak);
 
@@ -62,7 +52,7 @@ public class BreakPaddle {
             public void run() {
                 int sleepTime = 4;
                 for (int i = 0; i < 30; i++) {
-                    if (xBreak == (sceneWidth - breakWidth)) {
+                    if (xBreak == (GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue())) {
                         return;
                     }
                     xBreak++;

@@ -8,6 +8,7 @@ public enum GameConstants {
     SAVE_PATH_DIR("C:/save/"),
     BREAK_WIDTH(130),
     BREAK_HEIGHT(30),
+
     LEFT(1),
     RIGHT(2),
     SCENE_WIDTH(500),
