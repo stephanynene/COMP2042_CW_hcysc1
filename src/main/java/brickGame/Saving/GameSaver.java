@@ -14,9 +14,11 @@ import java.util.ArrayList;
 
 
 public class GameSaver {
+
     public static final String SAVE_PATH = "C:/save/save.mdds";
     public static final String SAVE_PATH_DIR = "C:/save/";
     public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {

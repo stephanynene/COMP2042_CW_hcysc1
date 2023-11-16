@@ -21,7 +21,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,7 +38,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private double centerBreakX;
     private int breakWidth     = 130;
     private int breakHeight    = 30;
-    private int halfBreakWidth = breakWidth / 2;
+
 
     public int sceneWidth = 500;
     private int sceneHeight = 700;
@@ -55,7 +54,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         isGoldStauts = goldStauts;
     }
 
-    private boolean isGoldStauts      = false;
+    private boolean isGoldStauts  = false;
 
     public boolean isExistHeartBlock() {
         return isExistHeartBlock;
@@ -115,7 +114,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         this.time = time;
     }
 
-    private long time     = 0;
+    private long time = 0;
 
     public long getHitTime() {
         return hitTime;
@@ -136,8 +135,128 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private long goldTime = 0;
+    float oldXBreak;
 
-    private GameEngine engine;
+    public boolean isGoDownBall() {
+        return goDownBall;
+    }
+
+    public void setGoDownBall(boolean goDownBall) {
+        this.goDownBall = goDownBall;
+    }
+
+    private boolean goDownBall  = true;
+
+    public boolean isGoRightBall() {
+        return goRightBall;
+    }
+
+    public void setGoRightBall(boolean goRightBall) {
+        this.goRightBall = goRightBall;
+    }
+
+    private boolean goRightBall  = true;
+
+    public boolean isColideToBreak() {
+        return colideToBreak;
+    }
+
+    public void setColideToBreak(boolean colideToBreak) {
+        this.colideToBreak = colideToBreak;
+    }
+
+    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
+
+    public boolean isColideToBreakAndMoveToRight() {
+        return colideToBreakAndMoveToRight;
+    }
+
+    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
+        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
+    }
+
+    private boolean colideToBreakAndMoveToRight = true;
+
+    public boolean isColideToRightWall() {
+        return colideToRightWall;
+    }
+
+    public void setColideToRightWall(boolean colideToRightWall) {
+        this.colideToRightWall = colideToRightWall;
+    }
+
+    private boolean colideToRightWall = false;
+
+    public boolean isColideToLeftWall() {
+        return colideToLeftWall;
+    }
+
+    public void setColideToLeftWall(boolean colideToLeftWall) {
+        this.colideToLeftWall = colideToLeftWall;
+    }
+
+    private boolean colideToLeftWall = false;
+
+    public boolean isColideToRightBlock() {
+        return colideToRightBlock;
+    }
+
+    public void setColideToRightBlock(boolean colideToRightBlock) {
+        this.colideToRightBlock = colideToRightBlock;
+    }
+
+    private boolean colideToRightBlock          = false;
+
+    public boolean isColideToBottomBlock() {
+        return colideToBottomBlock;
+    }
+
+    public void setColideToBottomBlock(boolean colideToBottomBlock) {
+        this.colideToBottomBlock = colideToBottomBlock;
+    }
+
+    private boolean colideToBottomBlock         = false;
+
+    public boolean isColideToLeftBlock() {
+        return colideToLeftBlock;
+    }
+
+    public void setColideToLeftBlock(boolean colideToLeftBlock) {
+        this.colideToLeftBlock = colideToLeftBlock;
+    }
+
+    private boolean colideToLeftBlock           = false;
+
+    public boolean isColideToTopBlock() {
+        return colideToTopBlock;
+    }
+
+    public void setColideToTopBlock(boolean colideToTopBlock) {
+        this.colideToTopBlock = colideToTopBlock;
+    }
+
+    private boolean colideToTopBlock = false;
+
+    public double getvX() {
+        return vX;
+    }
+
+    public void setvX(double vX) {
+        this.vX = vX;
+    }
+
+    private double vX = 1.000;
+
+    public double getvY() {
+        return vY;
+    }
+
+    public void setvY(double vY) {
+        this.vY = vY;
+    }
+
+    private double vY = 1.000;
+
 
 
     public ArrayList<Block> getBlocks() {
@@ -150,7 +269,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
-    private Color[]          colors = new Color[]{
+    private Color[] colors = new Color[]{
             Color.MAGENTA,
             Color.RED,
             Color.GOLD,
@@ -178,7 +297,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private BreakPaddle breakPaddle;
     private Ball ball;
-
+    private GameEngine engine;
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -324,127 +443,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
         }
     }
-    float oldXBreak;
 
-    public boolean isGoDownBall() {
-        return goDownBall;
-    }
-
-    public void setGoDownBall(boolean goDownBall) {
-        this.goDownBall = goDownBall;
-    }
-
-    private boolean goDownBall                  = true;
-
-    public boolean isGoRightBall() {
-        return goRightBall;
-    }
-
-    public void setGoRightBall(boolean goRightBall) {
-        this.goRightBall = goRightBall;
-    }
-
-    private boolean goRightBall                 = true;
-
-    public boolean isColideToBreak() {
-        return colideToBreak;
-    }
-
-    public void setColideToBreak(boolean colideToBreak) {
-        this.colideToBreak = colideToBreak;
-    }
-
-    private boolean colideToBreak               = false; // Boolean, true when ball collides with Paddle
-
-    public boolean isColideToBreakAndMoveToRight() {
-        return colideToBreakAndMoveToRight;
-    }
-
-    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
-        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
-    }
-
-    private boolean colideToBreakAndMoveToRight = true;
-
-    public boolean isColideToRightWall() {
-        return colideToRightWall;
-    }
-
-    public void setColideToRightWall(boolean colideToRightWall) {
-        this.colideToRightWall = colideToRightWall;
-    }
-
-    private boolean colideToRightWall           = false;
-
-    public boolean isColideToLeftWall() {
-        return colideToLeftWall;
-    }
-
-    public void setColideToLeftWall(boolean colideToLeftWall) {
-        this.colideToLeftWall = colideToLeftWall;
-    }
-
-    private boolean colideToLeftWall            = false;
-
-    public boolean isColideToRightBlock() {
-        return colideToRightBlock;
-    }
-
-    public void setColideToRightBlock(boolean colideToRightBlock) {
-        this.colideToRightBlock = colideToRightBlock;
-    }
-
-    private boolean colideToRightBlock          = false;
-
-    public boolean isColideToBottomBlock() {
-        return colideToBottomBlock;
-    }
-
-    public void setColideToBottomBlock(boolean colideToBottomBlock) {
-        this.colideToBottomBlock = colideToBottomBlock;
-    }
-
-    private boolean colideToBottomBlock         = false;
-
-    public boolean isColideToLeftBlock() {
-        return colideToLeftBlock;
-    }
-
-    public void setColideToLeftBlock(boolean colideToLeftBlock) {
-        this.colideToLeftBlock = colideToLeftBlock;
-    }
-
-    private boolean colideToLeftBlock           = false;
-
-    public boolean isColideToTopBlock() {
-        return colideToTopBlock;
-    }
-
-    public void setColideToTopBlock(boolean colideToTopBlock) {
-        this.colideToTopBlock = colideToTopBlock;
-    }
-
-    private boolean colideToTopBlock            = false;
-
-    public double getvX() {
-        return vX;
-    }
-
-    public void setvX(double vX) {
-        this.vX = vX;
-    }
-
-    private double vX = 1.000;
-
-    public double getvY() {
-        return vY;
-    }
-
-    public void setvY(double vY) {
-        this.vY = vY;
-    }
-
-    private double vY = 1.000;
 
 
     private void resetCollideFlags() {
