@@ -377,18 +377,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 }
                 int type;
                 if (r % 10 == 1) {
-                    type = Block.BLOCK_CHOCO;
+                    type = GameConstants.BLOCK_CHOCO.getIntValue();
                 } else if (r % 10 == 2) {
                     if (!isExistHeartBlock) {
-                        type = Block.BLOCK_HEART;
+                        type = GameConstants.BLOCK_HEART.getIntValue();
                         isExistHeartBlock = true;
                     } else {
-                        type = Block.BLOCK_NORMAL;
+                        type = GameConstants.BLOCK_NORMAL.getIntValue();
                     }
                 } else if (r % 10 == 3) {
-                    type = Block.BLOCK_STAR;
+                    type = GameConstants.BLOCK_STAR.getIntValue();
                 } else {
-                    type = Block.BLOCK_NORMAL;
+                    type = GameConstants.BLOCK_NORMAL.getIntValue();
                 }
 
                 Color[] colors = (Color[]) ((Object[]) GameConstants.COLORS.getValue());
@@ -715,7 +715,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     //System.out.println("size is " + blocks.size());
                     resetCollideFlags();
 
-                    if (block.type == Block.BLOCK_CHOCO) {
+                    if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
                         final Bonus choco = new Bonus(block.row, block.column);
                         choco.timeCreated = time;
                         Platform.runLater(new Runnable() {
@@ -727,7 +727,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         chocos.add(choco);
                     }
 
-                    if (block.type == Block.BLOCK_STAR) {
+                    if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
                         goldTime = time;
                         ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
                         ball.setFill(imagePattern);
@@ -736,7 +736,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         isGoldStauts = true;
                     }
 
-                    if (block.type == Block.BLOCK_HEART) {
+                    if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
                         heart++;
                     }
 

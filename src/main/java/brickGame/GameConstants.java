@@ -13,10 +13,11 @@ public enum GameConstants {
     RIGHT(2),
     SCENE_WIDTH(500),
     SCENE_HEIGHT(700),
-    BLOCK_CHOCO(1),
-    BLOCK_HEART(2),
-    BLOCK_STAR(3),
-    BLOCK_NORMAL(4),
+    BLOCK_NORMAL(99),
+    BLOCK_CHOCO(100),
+    BLOCK_HEART(101),
+    BLOCK_STAR(102),
+
 
     COLORS(new Color[]{
         Color.MAGENTA, Color.RED, Color.GOLD, Color.CORAL,
