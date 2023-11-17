@@ -18,6 +18,11 @@ public enum GameConstants {
     BLOCK_HEART(101),
     BLOCK_STAR(102),
 
+    NO_HIT(-1),
+    HIT_RIGHT(0),
+    HIT_BOTTOM(1),
+    HIT_LEFT(2),
+    HIT_TOP(3),
 
     COLORS(new Color[]{
         Color.MAGENTA, Color.RED, Color.GOLD, Color.CORAL,

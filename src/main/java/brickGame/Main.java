@@ -704,7 +704,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         if (ball.getyBall() >= Block.getPaddingTop() && ball.getyBall() <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
-                if (hitCode != Block.NO_HIT) {
+                if (hitCode != GameConstants.NO_HIT.getIntValue()) {
                     score += 1;
 
                     new Score().show(block.x, block.y, 1, this);
@@ -740,13 +740,13 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                         heart++;
                     }
 
-                    if (hitCode == Block.HIT_RIGHT) {
+                    if (hitCode == GameConstants.HIT_RIGHT.getIntValue()) {
                         colideToRightBlock = true;
-                    } else if (hitCode == Block.HIT_BOTTOM) {
+                    } else if (hitCode == GameConstants.HIT_BOTTOM.getIntValue()) {
                         colideToBottomBlock = true;
-                    } else if (hitCode == Block.HIT_LEFT) {
+                    } else if (hitCode == GameConstants.HIT_LEFT.getIntValue()) {
                         colideToLeftBlock = true;
-                    } else if (hitCode == Block.HIT_TOP) {
+                    } else if (hitCode == GameConstants.HIT_TOP.getIntValue()) {
                         colideToTopBlock = true;
                     }
 

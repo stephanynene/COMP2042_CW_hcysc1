@@ -31,13 +31,6 @@ public class Block implements Serializable {
     public Rectangle rect;
 
 
-    public static int NO_HIT = -1;
-    public static int HIT_RIGHT = 0;
-    public static int HIT_BOTTOM = 1;
-    public static int HIT_LEFT = 2;
-    public static int HIT_TOP = 3;
-
-
     public Block(int row, int column, Color color, int type) {
         this.row = row;
         this.column = column;
@@ -79,26 +72,26 @@ public class Block implements Serializable {
     public int checkHitToBlock(double xBall, double yBall) {
 
         if (isDestroyed) {
-            return NO_HIT;
+            return GameConstants.NO_HIT.getIntValue();
         }
 
         if (xBall >= x && xBall <= x + width && yBall == y + height) {
-            return HIT_BOTTOM;
+            return GameConstants.HIT_BOTTOM.getIntValue();
         }
 
         if (xBall >= x && xBall <= x + width && yBall == y) {
-            return HIT_TOP;
+            return GameConstants.HIT_TOP.getIntValue();
         }
 
         if (yBall >= y && yBall <= y + height && xBall == x + width) {
-            return HIT_RIGHT;
+            return GameConstants.HIT_RIGHT.getIntValue();
         }
 
         if (yBall >= y && yBall <= y + height && xBall == x) {
-            return HIT_LEFT;
+            return GameConstants.HIT_LEFT.getIntValue();
         }
 
-        return NO_HIT;
+        return GameConstants.NO_HIT.getIntValue();
     }
 
     public static int getPaddingTop() {
