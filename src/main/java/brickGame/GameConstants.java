@@ -9,6 +9,8 @@ public enum GameConstants {
     BREAK_WIDTH(130),
     BREAK_HEIGHT(30),
 
+    BALL_RADIUS(10),
+
     LEFT(1),
     RIGHT(2),
 

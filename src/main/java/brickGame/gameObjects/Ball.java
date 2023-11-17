@@ -26,19 +26,11 @@ public class Ball extends Circle {
         return yBall;
     }
 
-    public int getBallRadius() {
-        return ballRadius;
-    }
-    public void setBallRadius(int ballRadius) {
-        this.ballRadius = ballRadius;
-    }
-    private int ballRadius = 10;
-
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;
         yBall = random.nextInt(GameConstants.SCENE_HEIGHT.getIntValue() - 200) + ((level + 1) * Block.getHeight()) + 15;
-        this.setRadius(ballRadius);
+        this.setRadius(GameConstants.BALL_RADIUS.getIntValue());
         this.setFill(new ImagePattern(new Image("/ball.png")));
         this.setCenterX(xBall);
         this.setCenterY(yBall);
