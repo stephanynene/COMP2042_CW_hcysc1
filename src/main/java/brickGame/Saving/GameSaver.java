@@ -50,7 +50,7 @@ public class GameSaver {
                     outputStream.writeDouble(ball.getyBall());
                     outputStream.writeDouble(breakPaddle.getxBreak());
                     outputStream.writeDouble(breakPaddle.getyBreak());
-                    outputStream.writeDouble(gameInstance.getCenterBreakX());
+                    outputStream.writeDouble(breakPaddle.getCenterBreakX());
                     outputStream.writeLong(gameInstance.getTime());
                     outputStream.writeLong(gameInstance.getGoldTime());
                     outputStream.writeDouble(gameInstance.getvX());

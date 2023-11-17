@@ -14,6 +14,15 @@ public class BreakPaddle {
         return xBreak;
     }
     private double xBreak = 0.0f;
+
+    public double getCenterBreakX() {
+        return centerBreakX;
+    }
+
+    public void setCenterBreakX(double centerBreakX) {
+        this.centerBreakX = centerBreakX;
+    }
+
     private double centerBreakX;
 
     public double getyBreak() {

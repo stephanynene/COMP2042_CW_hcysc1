@@ -26,17 +26,6 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-
-    public double getCenterBreakX() {
-        return centerBreakX;
-    }
-
-    public void setCenterBreakX(double centerBreakX) {
-        this.centerBreakX = centerBreakX;
-    }
-
-    private double centerBreakX;
-
     public boolean isGoldStauts() {
         return isGoldStauts;
     }
@@ -494,7 +483,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 colideToBreak = true;
                 goDownBall = false;
 
-                double relation = (ball.getxBall() - centerBreakX) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
+                double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
@@ -507,7 +496,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     System.out.println("vX " + vX);
                 }
 
-                if (ball.getxBall() - centerBreakX > 0) {
+                if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
                     colideToBreakAndMoveToRight = true;
                 } else {
                     colideToBreakAndMoveToRight = false;
@@ -600,7 +589,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         ball.setyBall(loadSave.yBall);
         breakPaddle.setxBreak(loadSave.xBreak);
         breakPaddle.setyBreak(loadSave.yBreak);
-        centerBreakX = loadSave.centerBreakX;
+        breakPaddle.setCenterBreakX(loadSave.centerBreakX);
         time = loadSave.time;
         goldTime = loadSave.goldTime;
         vX = loadSave.vX;
