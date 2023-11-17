@@ -6,15 +6,20 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import brickGame.GameConstants;
 
 import java.io.Serializable;
+
+import static brickGame.GameConstants.BLOCK_HEIGHT;
+import static brickGame.GameConstants.BLOCK_WIDTH;
+import static brickGame.GameConstants.PADDING_H;
+
 
 public class Block implements Serializable {
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
 
     public int row;
     public int column;
-
 
     public boolean isDestroyed = false;
 
@@ -24,10 +29,7 @@ public class Block implements Serializable {
     public int x;
     public int y;
 
-    private int width = 100;
-    private int height = 30;
-    private int paddingTop = height * 2;
-    private int paddingH = 50;
+    private static int paddingTop = BLOCK_HEIGHT.getIntValue() * 2;
     public Rectangle rect;
 
 
@@ -41,12 +43,12 @@ public class Block implements Serializable {
     }
 
     private void draw() {
-        x = (column * width) + paddingH;
-        y = (row * height) + paddingTop;
+        x = (column * BLOCK_WIDTH.getIntValue()) + PADDING_H.getIntValue();
+        y = (row * BLOCK_HEIGHT.getIntValue()) + paddingTop;
 
         rect = new Rectangle();
-        rect.setWidth(width);
-        rect.setHeight(height);
+        rect.setWidth(BLOCK_WIDTH.getIntValue());
+        rect.setHeight(BLOCK_HEIGHT.getIntValue());
         rect.setX(x);
         rect.setY(y);
 
@@ -75,19 +77,19 @@ public class Block implements Serializable {
             return GameConstants.NO_HIT.getIntValue();
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y + height) {
+        if (xBall >= x && xBall <= x + GameConstants.BLOCK_WIDTH.getIntValue() && yBall == y + BLOCK_HEIGHT.getIntValue()) {
             return GameConstants.HIT_BOTTOM.getIntValue();
         }
 
-        if (xBall >= x && xBall <= x + width && yBall == y) {
+        if (xBall >= x && xBall <= x + GameConstants.BLOCK_WIDTH.getIntValue() && yBall == y) {
             return GameConstants.HIT_TOP.getIntValue();
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x + width) {
+        if (yBall >= y && yBall <= y + BLOCK_HEIGHT.getIntValue() && xBall == x + GameConstants.BLOCK_WIDTH.getIntValue()) {
             return GameConstants.HIT_RIGHT.getIntValue();
         }
 
-        if (yBall >= y && yBall <= y + height && xBall == x) {
+        if (yBall >= y && yBall <= y + BLOCK_HEIGHT.getIntValue() && xBall == x) {
             return GameConstants.HIT_LEFT.getIntValue();
         }
 
@@ -95,19 +97,19 @@ public class Block implements Serializable {
     }
 
     public static int getPaddingTop() {
-        return block.paddingTop;
+        return paddingTop;
     }
 
     public static int getPaddingH() {
-        return block.paddingH;
+        return PADDING_H.getIntValue();
     }
 
     public static int getHeight() {
-        return block.height;
+        return BLOCK_HEIGHT.getIntValue();
     }
 
     public static int getWidth() {
-        return block.width;
+        return GameConstants.BLOCK_WIDTH.getIntValue();
     }
 
 }

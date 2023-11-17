@@ -11,6 +11,7 @@ public enum GameConstants {
 
     LEFT(1),
     RIGHT(2),
+
     SCENE_WIDTH(500),
     SCENE_HEIGHT(700),
     BLOCK_NORMAL(99),
@@ -24,6 +25,9 @@ public enum GameConstants {
     HIT_LEFT(2),
     HIT_TOP(3),
 
+    BLOCK_WIDTH(100),
+    BLOCK_HEIGHT(30),
+    PADDING_H(50),
     COLORS(new Color[]{
         Color.MAGENTA, Color.RED, Color.GOLD, Color.CORAL,
                 Color.AQUA, Color.VIOLET, Color.GREENYELLOW, Color.ORANGE,
