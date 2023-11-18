@@ -3,16 +3,13 @@ package brickGame.Saving;
 import brickGame.BlockSerializable;
 import brickGame.GameConstants;
 import brickGame.Main;
-import brickGame.Score;
+import brickGame.Scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
 import brickGame.gameObjects.BreakPaddle;
 
 import java.io.*;
 import java.util.ArrayList;
-import brickGame.GameConstants;
-
-
 
 
 public class GameSaver {

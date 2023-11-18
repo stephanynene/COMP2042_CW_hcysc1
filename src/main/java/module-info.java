@@ -8,4 +8,6 @@ module brickGame {
     opens brickGame.Saving to javafx.fxml;
     exports brickGame.gameObjects;
     opens brickGame.gameObjects to javafx.fxml;
+    exports brickGame.Scoring;
+    opens brickGame.Scoring to javafx.fxml;
 }

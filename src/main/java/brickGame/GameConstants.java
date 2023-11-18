@@ -6,6 +6,9 @@ public enum GameConstants {
 
     SAVE_PATH("C:/save/save.mdds"),
     SAVE_PATH_DIR("C:/save/"),
+    GAME_OVER_MESSAGE("Game Over!"),
+    WIN_MESSAGE("You Win!"),
+    RESTART_MESSAGE("Restart"),
     BREAK_WIDTH(130),
     BREAK_HEIGHT(30),
 
@@ -37,7 +40,6 @@ public enum GameConstants {
     });
 
     private final Object value;
-
 
     GameConstants(Object value) {
         this.value = value;

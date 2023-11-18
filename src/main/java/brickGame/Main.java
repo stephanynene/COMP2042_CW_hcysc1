@@ -2,6 +2,7 @@ package brickGame;
 
 import brickGame.Saving.GameSaver;
 import brickGame.Saving.LoadSave;
+import brickGame.Scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
 import brickGame.gameObjects.Bonus;
