@@ -17,11 +17,6 @@ public class Score {
         } else {
             sign = "";
         }
-//        final Label label = new Label(sign + score);
-//        label.setTranslateX(x);
-//        label.setTranslateY(y);
-
-//        String signScore = sign + score;
         Label label = ScoreLabel.createLabel(sign + score, x,y, main);
         Platform.runLater(new Runnable() {
             @Override
@@ -48,9 +43,6 @@ public class Score {
     }
 
     public void showMessage(String message, final Main main) {
-//        final Label label = new Label(message);
-//        label.setTranslateX(220);
-//        label.setTranslateY(340);
 Label label = ScoreLabel.createLabel(message, 220, 340, main);
 
         Platform.runLater(new Runnable() {
@@ -81,17 +73,9 @@ Label label = ScoreLabel.createLabel(message, 220, 340, main);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-//                Label label = new Label(GameConstants.GAME_OVER_MESSAGE.getStringValue());
-//                label.setTranslateX(200);
-//                label.setTranslateY(250);
-//
                 Label label = ScoreLabel.createLabel(GameConstants.GAME_OVER_MESSAGE.getStringValue(),200,250, main);
                 label.setScaleX(2);
                 label.setScaleY(2);
-
-//                Button restart = new Button("Restart");
-//                restart.setTranslateX(220);
-//                restart.setTranslateY(300);
 
                 Button restart = ScoreLabel.createRestartButton(GameConstants.GAME_OVER_MESSAGE.getStringValue(), 220,300,main);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
@@ -111,9 +95,6 @@ Label label = ScoreLabel.createLabel(message, 220, 340, main);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-//                Label label = new Label(GameConstants.WIN_MESSAGE.getStringValue());
-//                label.setTranslateX(200);
-//                label.setTranslateY(250);
 
                 Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200,250,main);
                 label.setScaleX(2);
