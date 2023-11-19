@@ -57,6 +57,14 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private int destroyedBlockCount = 0;
 
+    public double getV() {
+        return v;
+    }
+
+    public void setV(double v) {
+        this.v = v;
+    }
+
     private double v = 1.000;
 
     public int getHeart() {
@@ -416,7 +424,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
 
-    private void resetCollideFlags() {
+    public void resetCollideFlags() {
 
         colideToBreak = false;
         colideToBreakAndMoveToRight = false;
