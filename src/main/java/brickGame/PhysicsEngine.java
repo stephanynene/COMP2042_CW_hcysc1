@@ -16,71 +16,17 @@ public class PhysicsEngine {
         this.ball = ball;
         this.breakPaddle = breakPaddle;
     }
-    private void setPhysicsToBall() {
-
+    public void setPhysicsToBall() {
         calculateVelocity();
         ballPositioning();
         boundaryCollisons();
-
-        // Check if the ball collides with the BreakPaddle
-        if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
-            //System.out.println("Colide1");
-            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
-                game.setHitTime(game.getTime());
-                game.resetCollideFlags();
-                game.setColideToBreak(true);
-                game.setGoDownBall(false);
-
-                // Calculate relation and update velocity based on collision
-                double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
-
-                if (Math.abs(relation) <= 0.3) {
-                    //vX = 0;
-                    int v1 = (int) (0.5 * Math.abs(relation));
-                    game.setvX(v1);
-                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    int v1 = (int) (0.7 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
-                    game.setvX(v1);
-                    System.out.println("vX " + game.getvX());
-                } else {
-                    int v1 = (int) (0.6 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
-                    game.setvX(v1);
-                    System.out.println("vX " + game.getvX());
-                }
-
-                // Determine the direction of the collision
-                if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
-                    game.setColideToBreakAndMoveToRight(true);
-                } else {
-                    game.setColideToBreakAndMoveToRight(false);
-                }
-                //System.out.println("Colide2");
-            }
-        }
-
-
-        // Handle various collision scenarios
-        if (game.isColideToBreak()) {
-            if (game.isColideToBreakAndMoveToRight()) {
-                game.setGoRightBall(true);
-            } else {
-                game.setGoRightBall(false);
-            }
-        }
-
-        //Wall Collide
-
-        if (game.isColideToRightWall()) {
-            game.setGoRightBall(false);
-        }
-
-        if (game.isColideToLeftWall()) {
-            game.setGoRightBall(true);
-        }
-
-        //Block Collide
-
-        if (game.isColideToRightWall()) {
+        handleBreakCollision();
+        breakCollisonDirection();
+        wallCollisons();
+        ballCollision();
+    }
+    private void ballCollision(){
+        if (game.isColideToRightBlock()) {
             game.setGoRightBall(true);
         }
 
@@ -97,13 +43,25 @@ public class PhysicsEngine {
         }
     }
 
+    private void wallCollisons(){
+
+        if (game.isColideToRightWall()) {
+            game.setGoRightBall(false);
+        }
+
+        if (game.isColideToLeftWall()) {
+            game.setGoRightBall(true);
+        }
+
+    }
+
     // Calculate velocity based on time and hit time
-    public void calculateVelocity(){
+    private void calculateVelocity(){
         game.setV(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
     }
 
     //Handle boundary collisions
-    public void boundaryCollisons(){
+    private void boundaryCollisons(){
 
         // Check if  ball hits the top boundary
         if (ball.getyBall() <= 0) {
@@ -146,7 +104,9 @@ public class PhysicsEngine {
         }
     }
 
-    public void ballPositioning(){
+
+    //Update ball positioning
+    private void ballPositioning(){
         if (game.isGoDownBall()) {
             double currentY = ball.getyBall(); // Get the current yBall value
             currentY += game.getvY(); // Update the yBall value
@@ -167,4 +127,56 @@ public class PhysicsEngine {
             ball.setxBall(currentX);
         }
     }
+
+
+    //Handle collisions to break paddle
+    private void breakCollisonDirection(){
+        if (game.isColideToBreak()) {
+            if (game.isColideToBreakAndMoveToRight()) {
+                game.setGoRightBall(true);
+            } else {
+                game.setGoRightBall(false);
+            }
+        }
+    }
+
+    private void handleBreakCollision(){
+        // Check if the ball collides with the BreakPaddle
+        if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
+            //System.out.println("Colide1");
+            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
+                game.setHitTime(game.getTime());
+                game.resetCollideFlags();
+                game.setColideToBreak(true);
+                game.setGoDownBall(false);
+
+                // Calculate relation and update velocity based on collision
+                double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
+
+                if (Math.abs(relation) <= 0.3) {
+                    //vX = 0;
+                    int v1 = (int) (0.5 * Math.abs(relation));
+                    game.setvX(v1);
+                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
+                    int v1 = (int) (0.7 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
+                    game.setvX(v1);
+                    System.out.println("vX " + game.getvX());
+                } else {
+                    int v1 = (int) (0.6 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
+                    game.setvX(v1);
+                    System.out.println("vX " + game.getvX());
+                }
+
+                // Determine the direction of the collision
+                if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
+                    game.setColideToBreakAndMoveToRight(true);
+                } else {
+                    game.setColideToBreakAndMoveToRight(false);
+                }
+                //System.out.println("Colide2");
+            }
+        }
+    }
+
+
 }
