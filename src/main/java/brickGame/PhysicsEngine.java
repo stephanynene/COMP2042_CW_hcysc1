@@ -58,7 +58,7 @@ public class PhysicsEngine {
 
     // Calculate velocity based on time and hit time
     private void calculateVelocity(){
-        game.setV(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
+        game.setVelocity(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
     }
 
     //Handle boundary collisions
@@ -110,21 +110,21 @@ public class PhysicsEngine {
     private void ballPositioning(){
         if (game.isGoDownBall()) {
             double currentY = ball.getyBall(); // Get the current yBall value
-            currentY += game.getvY(); // Update the yBall value
+            currentY += game.getVelocityY(); // Update the yBall value
             ball.setyBall(currentY);
         } else {
             double currentY = ball.getyBall();
-            currentY -= game.getvY();
+            currentY -= game.getVelocityY();
             ball.setyBall(currentY);
         }
 
         if (game.isGoRightBall()) {
             double currentX = ball.getxBall();
-            currentX += game.getvX();
+            currentX += game.getVelocityX();
             ball.setxBall(currentX);
         } else {
             double currentX = ball.getxBall();
-            currentX -= game.getvX();
+            currentX -= game.getVelocityX();
             ball.setxBall(currentX);
         }
     }
@@ -157,15 +157,15 @@ public class PhysicsEngine {
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
                     int v1 = (int) (0.5 * Math.abs(relation));
-                    game.setvX(v1);
+                    game.setVelocityX(v1);
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
                     int v1 = (int) (0.7 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
-                    game.setvX(v1);
-                    System.out.println("vX " + game.getvX());
+                    game.setVelocityX(v1);
+                    System.out.println("vX " + game.getVelocityX());
                 } else {
                     int v1 = (int) (0.6 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
-                    game.setvX(v1);
-                    System.out.println("vX " + game.getvX());
+                    game.setVelocityX(v1);
+                    System.out.println("vX " + game.getVelocityX());
                 }
 
                 // Determine the direction of the collision

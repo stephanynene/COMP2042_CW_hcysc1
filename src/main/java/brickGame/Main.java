@@ -27,8 +27,6 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
-
-
     public boolean isGoldStauts() {
         return isGoldStauts;
     }
@@ -59,15 +57,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private int destroyedBlockCount = 0;
 
-    public double getV() {
-        return v;
-    }
 
-    public void setV(double v) {
-        this.v = v;
-    }
-
-    private double v = 1.000;
 
     public int getHeart() {
         return heart;
@@ -227,26 +217,34 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     }
 
     private boolean colideToTopBlock = false;
-
-    public double getvX() {
-        return vX;
+    public double getVelocity() {
+        return velocity;
     }
 
-    public void setvX(double vX) {
-        this.vX = vX;
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
     }
 
-    private double vX = 1.000;
-
-    public double getvY() {
-        return vY;
+    private double velocity = 1.000;
+    public double getVelocityX() {
+        return velocityX;
     }
 
-    public void setvY(double vY) {
-        this.vY = vY;
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
     }
 
-    private double vY = 1.000;
+    private double velocityX = 1.000;
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    private double velocityY = 1.000;
 
 
 
@@ -449,8 +447,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             nextLevel();
         }
     }
-
-
     private void loadGame() {
 
         LoadSave loadSave = new LoadSave();
@@ -479,7 +475,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         breakPaddle.setCenterBreakX(loadSave.centerBreakX);
         time = loadSave.time;
         goldTime = loadSave.goldTime;
-        vX = loadSave.vX;
+        velocityX = loadSave.vX;
 
         blocks.clear();
         chocos.clear();
@@ -504,7 +500,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             @Override
             public void run() {
                 try {
-                    vX = 1.000;
+                    velocityX = 1.000;
 
                     engine.stop();
                     resetCollideFlags();
@@ -536,7 +532,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             level = 0;
             heart = 3;
             score = 0;
-            vX = 1.000;
+            velocityX = 1.000;
             destroyedBlockCount = 0;
             resetCollideFlags();
             goDownBall = true;
