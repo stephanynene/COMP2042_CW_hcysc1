@@ -20,7 +20,7 @@ public class ScoreLabel {
         Button restart = new Button(text);
         restart.setTranslateX(x);
         restart.setTranslateY(y);
-        restart.setOnAction(event -> main.restartGame());
+//        restart.setOnAction(event -> main.restartGame());
         return restart;
     }
 }
