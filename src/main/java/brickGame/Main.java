@@ -27,6 +27,8 @@ import java.util.Random;
 
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
+
+
     public boolean isGoldStauts() {
         return isGoldStauts;
     }
@@ -272,6 +274,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private BreakPaddle breakPaddle;
     private Ball ball;
     private GameEngine engine;
+    private PhysicsEngine physicsEngine;
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -291,6 +294,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             initBoard();
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
+            physicsEngine = new PhysicsEngine(this, ball, breakPaddle);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -437,131 +441,131 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         colideToTopBlock = false;
     }
 
-    private void setPhysicsToBall() {
-     v = ((time - hitTime) / 1000.000) + 1.000;
-
-       // v = 0;
-        if (goDownBall) {
-            double currentY = ball.getyBall(); // Get the current yBall value
-            currentY += vY; // Update the yBall value
-            ball.setyBall(currentY);
-        } else {
-            double currentY = ball.getyBall();
-            currentY -= vY;
-            ball.setyBall(currentY);
-        }
-
-        if (goRightBall) {
-            double currentX = ball.getxBall();
-            currentX += vX;
-            ball.setxBall(currentX);
-        } else {
-            double currentX = ball.getxBall();
-            currentX -= vX;
-            ball.setxBall(currentX);
-        }
-
-        if (ball.getyBall() <= 0) {
-            //vX = 1.000;
-            resetCollideFlags();
-            goDownBall = true;
-            return;
-        }
-        if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
-
-            goDownBall = false;
-            if (!isGoldStauts) {
-                //TODO gameover
-                heart--;
-                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, this);
-
-                if (heart == 0) {
-                    new Score().showGameOver(this);
-                    engine.stop();
-                }
-
-            }
-            //return;
-        }
-
-        if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
-            //System.out.println("Colide1");
-            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
-                hitTime = time;
-                resetCollideFlags();
-                colideToBreak = true;
-                goDownBall = false;
-
-                double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
-
-                if (Math.abs(relation) <= 0.3) {
-                    //vX = 0;
-                    vX = 0.5 * Math.abs(relation);
-                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    vX = 0.7 * ((Math.abs(relation) * 1.5) + (level / 3.500));
-                    System.out.println("vX " + vX);
-                } else {
-                    vX = 0.6 * ((Math.abs(relation) * 2) + (level / 3.500));
-                    System.out.println("vX " + vX);
-                }
-
-                if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
-                    colideToBreakAndMoveToRight = true;
-                } else {
-                    colideToBreakAndMoveToRight = false;
-                }
-                //System.out.println("Colide2");
-            }
-        }
-
-        if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
-            resetCollideFlags();
-            //vX = 1.000;
-            colideToRightWall = true;
-        }
-
-        if (ball.getxBall() <= 0) {
-            resetCollideFlags();
-            //vX = 1.000;
-            colideToLeftWall = true;
-        }
-
-        if (colideToBreak) {
-            if (colideToBreakAndMoveToRight) {
-                goRightBall = true;
-            } else {
-                goRightBall = false;
-            }
-        }
-
-        //Wall Colide
-
-        if (colideToRightWall) {
-            goRightBall = false;
-        }
-
-        if (colideToLeftWall) {
-            goRightBall = true;
-        }
-
-        //Block Colide
-
-        if (colideToRightBlock) {
-            goRightBall = true;
-        }
-
-        if (colideToLeftBlock) {
-            goRightBall = true;
-        }
-
-        if (colideToTopBlock) {
-            goDownBall = false;
-        }
-
-        if (colideToBottomBlock) {
-            goDownBall = true;
-        }
-    }
+//    private void setPhysicsToBall() {
+//     v = ((time - hitTime) / 1000.000) + 1.000;
+//
+//       // v = 0;
+//        if (goDownBall) {
+//            double currentY = ball.getyBall(); // Get the current yBall value
+//            currentY += vY; // Update the yBall value
+//            ball.setyBall(currentY);
+//        } else {
+//            double currentY = ball.getyBall();
+//            currentY -= vY;
+//            ball.setyBall(currentY);
+//        }
+//
+//        if (goRightBall) {
+//            double currentX = ball.getxBall();
+//            currentX += vX;
+//            ball.setxBall(currentX);
+//        } else {
+//            double currentX = ball.getxBall();
+//            currentX -= vX;
+//            ball.setxBall(currentX);
+//        }
+//
+//        if (ball.getyBall() <= 0) {
+//            //vX = 1.000;
+//            resetCollideFlags();
+//            goDownBall = true;
+//            return;
+//        }
+//        if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
+//
+//            goDownBall = false;
+//            if (!isGoldStauts) {
+//                //TODO gameover
+//                heart--;
+//                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, this);
+//
+//                if (heart == 0) {
+//                    new Score().showGameOver(this);
+//                    engine.stop();
+//                }
+//
+//            }
+//            //return;
+//        }
+//
+//        if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
+//            //System.out.println("Colide1");
+//            if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
+//                hitTime = time;
+//                resetCollideFlags();
+//                colideToBreak = true;
+//                goDownBall = false;
+//
+//                double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
+//
+//                if (Math.abs(relation) <= 0.3) {
+//                    //vX = 0;
+//                    vX = 0.5 * Math.abs(relation);
+//                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
+//                    vX = 0.7 * ((Math.abs(relation) * 1.5) + (level / 3.500));
+//                    System.out.println("vX " + vX);
+//                } else {
+//                    vX = 0.6 * ((Math.abs(relation) * 2) + (level / 3.500));
+//                    System.out.println("vX " + vX);
+//                }
+//
+//                if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
+//                    colideToBreakAndMoveToRight = true;
+//                } else {
+//                    colideToBreakAndMoveToRight = false;
+//                }
+//                //System.out.println("Colide2");
+//            }
+//        }
+//
+//        if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
+//            resetCollideFlags();
+//            //vX = 1.000;
+//            colideToRightWall = true;
+//        }
+//
+//        if (ball.getxBall() <= 0) {
+//            resetCollideFlags();
+//            //vX = 1.000;
+//            colideToLeftWall = true;
+//        }
+//
+//        if (colideToBreak) {
+//            if (colideToBreakAndMoveToRight) {
+//                goRightBall = true;
+//            } else {
+//                goRightBall = false;
+//            }
+//        }
+//
+//        //Wall Colide
+//
+//        if (colideToRightWall) {
+//            goRightBall = false;
+//        }
+//
+//        if (colideToLeftWall) {
+//            goRightBall = true;
+//        }
+//
+//        //Block Colide
+//
+//        if (colideToRightBlock) {
+//            goRightBall = true;
+//        }
+//
+//        if (colideToLeftBlock) {
+//            goRightBall = true;
+//        }
+//
+//        if (colideToTopBlock) {
+//            goDownBall = false;
+//        }
+//
+//        if (colideToBottomBlock) {
+//            goDownBall = true;
+//        }
+//    }
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
@@ -765,7 +769,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public void onPhysicsUpdate() {
 
         checkDestroyedCount();
-        setPhysicsToBall();
+        physicsEngine.setPhysicsToBall();
 
 
         if (time - goldTime > 5000) {

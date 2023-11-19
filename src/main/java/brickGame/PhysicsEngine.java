@@ -15,6 +15,7 @@ public class PhysicsEngine {
         this.game = game;
         this.ball = ball;
         this.breakPaddle = breakPaddle;
+        this.gameEngine = gameEngine;
     }
     public void setPhysicsToBall() {
         calculateVelocity();
