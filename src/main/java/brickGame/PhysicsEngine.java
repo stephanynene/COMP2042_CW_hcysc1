@@ -18,58 +18,10 @@ public class PhysicsEngine {
     }
     private void setPhysicsToBall() {
 
-        // Calculate velocity based on time and hit time
-        game.setV(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
+        calculateVelocity();
+        ballPositioning();
+        boundaryCollisons();
 
-        // v = 0;
-        // Update ball position based on velocity and direction
-        if (game.isGoDownBall()) {
-            double currentY = ball.getyBall(); // Get the current yBall value
-            currentY += game.getvY(); // Update the yBall value
-            ball.setyBall(currentY);
-        } else {
-            double currentY = ball.getyBall();
-            currentY -= game.getvY();
-            ball.setyBall(currentY);
-        }
-
-        if (game.isGoRightBall()) {
-            double currentX = ball.getxBall();
-            currentX += game.getvX();
-            ball.setxBall(currentX);
-        } else {
-            double currentX = ball.getxBall();
-            currentX -= game.getvX();
-            ball.setxBall(currentX);
-        }
-
-        // Handle collisions and boundary conditions
-
-        // Check if  ball hits the top boundary
-        if (ball.getyBall() <= 0) {
-            //vX = 1.000;
-            game.resetCollideFlags();
-            game.setGoDownBall(true);
-            return;
-
-        }
-        // Check if the ball goes beyond the bottom boundary
-        if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
-
-            game.setGoDownBall(false);
-            if (!game.isGoldStauts()) {
-                //TODO gameover
-                game.setHeart(game.getHeart() - 1);
-                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
-
-                if (game.getHeart() == 0) {
-                    new Score().showGameOver(game);
-                    gameEngine.stop();
-                }
-
-            }
-            //return;
-        }
         // Check if the ball collides with the BreakPaddle
         if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
             //System.out.println("Colide1");
@@ -106,19 +58,6 @@ public class PhysicsEngine {
             }
         }
 
-        // Check if the ball hits the right boundary
-        if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
-            game.resetCollideFlags();
-            //vX = 1.000;
-            game.setColideToRightWall(true);
-        }
-
-        // Check if the ball hits the left boundary
-        if (ball.getxBall() <= 0) {
-            game.resetCollideFlags();
-            //vX = 1.000;
-            game.setColideToLeftWall(true);
-        }
 
         // Handle various collision scenarios
         if (game.isColideToBreak()) {
@@ -160,6 +99,72 @@ public class PhysicsEngine {
 
     // Calculate velocity based on time and hit time
     public void calculateVelocity(){
+        game.setV(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
+    }
 
+    //Handle boundary collisions
+    public void boundaryCollisons(){
+
+        // Check if  ball hits the top boundary
+        if (ball.getyBall() <= 0) {
+            //vX = 1.000;
+            game.resetCollideFlags();
+            game.setGoDownBall(true);
+            return;
+
+        }
+        // Check if the ball goes beyond the bottom boundary
+        if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
+
+            game.setGoDownBall(false);
+            if (!game.isGoldStauts()) {
+                //TODO gameover
+                game.setHeart(game.getHeart() - 1);
+                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
+
+                if (game.getHeart() == 0) {
+                    new Score().showGameOver(game);
+                    gameEngine.stop();
+                }
+
+            }
+            //return;
+        }
+
+        // Check if the ball hits the right boundary
+        if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
+            game.resetCollideFlags();
+            //vX = 1.000;
+            game.setColideToRightWall(true);
+        }
+
+        // Check if the ball hits the left boundary
+        if (ball.getxBall() <= 0) {
+            game.resetCollideFlags();
+            //vX = 1.000;
+            game.setColideToLeftWall(true);
+        }
+    }
+
+    public void ballPositioning(){
+        if (game.isGoDownBall()) {
+            double currentY = ball.getyBall(); // Get the current yBall value
+            currentY += game.getvY(); // Update the yBall value
+            ball.setyBall(currentY);
+        } else {
+            double currentY = ball.getyBall();
+            currentY -= game.getvY();
+            ball.setyBall(currentY);
+        }
+
+        if (game.isGoRightBall()) {
+            double currentX = ball.getxBall();
+            currentX += game.getvX();
+            ball.setxBall(currentX);
+        } else {
+            double currentX = ball.getxBall();
+            currentX -= game.getvX();
+            ball.setxBall(currentX);
+        }
     }
 }
