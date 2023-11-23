@@ -373,26 +373,6 @@ public class Main extends Application implements GameEngine.OnAction {
     public static void main(String[] args) {
         launch(args);
     }
-//
-//    //Keyboard for paddle
-//    @Override
-//    public void handle(KeyEvent event) {
-//        switch (event.getCode()) {
-//            case LEFT:
-//                breakPaddle.moveLeft();
-//                break;
-//            case RIGHT:
-//                breakPaddle.moveRight();
-//                break;
-//            case DOWN:
-//               // setPhysicsToBall();
-//                break;
-//            case S:
-//                GameSaver gameSaver = new GameSaver();
-//                gameSaver.saveGameState(this, breakPaddle, ball);
-//                break;
-//        }
-//    }
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
