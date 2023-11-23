@@ -67,7 +67,7 @@ public class PhysicsEngine {
         // Check if  ball hits the top boundary
         if (ball.getyBall() <= 0) {
             //vX = 1.000;
-            game.resetCollideFlags();
+            resetCollideFlags();
             game.setGoDownBall(true);
             return;
 
@@ -92,14 +92,14 @@ public class PhysicsEngine {
 
         // Check if the ball hits the right boundary
         if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
-            game.resetCollideFlags();
+            resetCollideFlags();
             //vX = 1.000;
             game.setColideToRightWall(true);
         }
 
         // Check if the ball hits the left boundary
         if (ball.getxBall() <= 0) {
-            game.resetCollideFlags();
+            resetCollideFlags();
             //vX = 1.000;
             game.setColideToLeftWall(true);
         }
@@ -147,7 +147,7 @@ public class PhysicsEngine {
             //System.out.println("Colide1");
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
                 game.setHitTime(game.getTime());
-                game.resetCollideFlags();
+                resetCollideFlags();
                 game.setColideToBreak(true);
                 game.setGoDownBall(false);
 
@@ -179,5 +179,17 @@ public class PhysicsEngine {
         }
     }
 
+    public void resetCollideFlags() {
+
+        game.setColideToBreak(false);
+        game.setColideToBreakAndMoveToRight(false);
+        game.setColideToRightWall(false);
+        game.setColideToLeftWall(false);
+
+        game.setColideToRightBlock(false);
+        game.setColideToBottomBlock(false);
+        game.setColideToLeftBlock(false);
+        game.setColideToTopBlock(false);
+    }
 
 }

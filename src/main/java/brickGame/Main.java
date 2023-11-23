@@ -394,18 +394,18 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
 
 
-    public void resetCollideFlags() {
-
-        colideToBreak = false;
-        colideToBreakAndMoveToRight = false;
-        colideToRightWall = false;
-        colideToLeftWall = false;
-
-        colideToRightBlock = false;
-        colideToBottomBlock = false;
-        colideToLeftBlock = false;
-        colideToTopBlock = false;
-    }
+//    public void resetCollideFlags() {
+//
+//        colideToBreak = false;
+//        colideToBreakAndMoveToRight = false;
+//        colideToRightWall = false;
+//        colideToLeftWall = false;
+//
+//        colideToRightBlock = false;
+//        colideToBottomBlock = false;
+//        colideToLeftBlock = false;
+//        colideToTopBlock = false;
+//    }
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
@@ -471,7 +471,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     velocityX = 1.000;
 
                     engine.stop();
-                    resetCollideFlags();
+                    physicsEngine.resetCollideFlags();
                     goDownBall = true;
 
                     isGoldStauts = false;
@@ -502,7 +502,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             score = 0;
             velocityX = 1.000;
             destroyedBlockCount = 0;
-            resetCollideFlags();
+            physicsEngine.resetCollideFlags();
             goDownBall = true;
 
             isGoldStauts = false;
@@ -553,7 +553,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     block.isDestroyed = true;
                     destroyedBlockCount++;
                     //System.out.println("size is " + blocks.size());
-                    resetCollideFlags();
+                    physicsEngine.resetCollideFlags();
 
                     if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
                         final Bonus choco = new Bonus(block.row, block.column);
