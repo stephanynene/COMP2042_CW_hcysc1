@@ -77,7 +77,7 @@ Label label = ScoreLabel.createLabel(message, 220, 340, main);
                 label.setScaleX(2);
                 label.setScaleY(2);
 
-                Button restart = ScoreLabel.createRestartButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220,300,main);
+                Button restart = ScoreLabel.createButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220,300,main);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {

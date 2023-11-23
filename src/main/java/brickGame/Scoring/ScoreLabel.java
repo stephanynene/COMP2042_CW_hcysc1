@@ -16,7 +16,7 @@ public class ScoreLabel {
     }
 
 // Method used in creating button in Score class
-    public static Button createRestartButton(String text, double x, double y, Main main) {
+    public static Button createButton(String text, double x, double y, Main main) {
         Button restart = new Button(text);
         restart.setTranslateX(x);
         restart.setTranslateY(y);

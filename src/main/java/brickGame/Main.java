@@ -3,10 +3,7 @@ package brickGame;
 import brickGame.Saving.GameSaver;
 import brickGame.Saving.LoadSave;
 import brickGame.Scoring.Score;
-import brickGame.gameObjects.Ball;
-import brickGame.gameObjects.Block;
-import brickGame.gameObjects.Bonus;
-import brickGame.gameObjects.BreakPaddle;
+import brickGame.gameObjects.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -273,6 +270,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Ball ball;
     private GameEngine engine;
     private PhysicsEngine physicsEngine;
+
+    private Board board;
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -289,7 +288,8 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
             ball = new Ball();
             ball.initBall(level);
-            initBoard();
+            board = new Board(this);
+            board.initBoard();
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
             physicsEngine = new PhysicsEngine(this, ball, breakPaddle);
@@ -365,38 +365,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             engine.setFps(120);
             engine.start();
             loadFromSave = false;
-        }
-    }
-
-    private void initBoard() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < level + 1; j++) {
-                int r = new Random().nextInt(500);
-                if (r % 5 == 0) {
-                    continue;
-                }
-                int type;
-                if (r % 10 == 1) {
-                    type = GameConstants.BLOCK_CHOCO.getIntValue();
-                } else if (r % 10 == 2) {
-                    if (!isExistHeartBlock) {
-                        type = GameConstants.BLOCK_HEART.getIntValue();
-                        isExistHeartBlock = true;
-                    } else {
-                        type = GameConstants.BLOCK_NORMAL.getIntValue();
-                    }
-                } else if (r % 10 == 3) {
-                    type = GameConstants.BLOCK_STAR.getIntValue();
-                } else {
-                    type = GameConstants.BLOCK_NORMAL.getIntValue();
-                }
-
-                Color[] colors = (Color[]) ((Object[]) GameConstants.COLORS.getValue());
-                blocks.add(new Block(j, i, colors[r % colors.length], type));
-
-
-                //System.out.println("colors " + r % (colors.length));
-            }
         }
     }
 

@@ -156,14 +156,14 @@ public class PhysicsEngine {
 
                 if (Math.abs(relation) <= 0.3) {
                     //vX = 0;
-                    int v1 = (int) (0.5 * Math.abs(relation));
+                    int v1 = (int) (1 * Math.abs(relation));
                     game.setVelocityX(v1);
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    int v1 = (int) (0.7 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
+                    int v1 = (int) (1.5 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
                     game.setVelocityX(v1);
                     System.out.println("vX " + game.getVelocityX());
                 } else {
-                    int v1 = (int) (0.6 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
+                    int v1 = (int) (1.2 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
                     game.setVelocityX(v1);
                     System.out.println("vX " + game.getVelocityX());
                 }
