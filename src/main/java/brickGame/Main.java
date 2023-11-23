@@ -268,7 +268,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 
     private BreakPaddle breakPaddle;
     private Ball ball;
-    private GameEngine engine;
+    private GameEngine gameEngine;
     private PhysicsEngine physicsEngine;
 
     private Board board;
@@ -292,7 +292,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             board.initBoard();
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
-            physicsEngine = new PhysicsEngine(this, ball, breakPaddle, engine);
+            physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -331,10 +331,10 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-                engine = new GameEngine();
-                engine.setOnAction(this);
-                engine.setFps(120);
-                engine.start();
+                gameEngine = new GameEngine();
+                gameEngine.setOnAction(this);
+                gameEngine.setFps(120);
+                gameEngine.start();
             }
 
             load.setOnAction(new EventHandler<ActionEvent>() {
@@ -350,20 +350,20 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    engine = new GameEngine();
-                    engine.setOnAction(Main.this);
-                    engine.setFps(120);
-                    engine.start();
+                    gameEngine = new GameEngine();
+                    gameEngine.setOnAction(Main.this);
+                    gameEngine.setFps(120);
+                    gameEngine.start();
 
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
             });
         } else {
-            engine = new GameEngine();
-            engine.setOnAction(this);
-            engine.setFps(120);
-            engine.start();
+            gameEngine = new GameEngine();
+            gameEngine.setOnAction(this);
+            gameEngine.setFps(120);
+            gameEngine.start();
             loadFromSave = false;
         }
     }
@@ -391,21 +391,6 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 break;
         }
     }
-
-
-
-//    public void resetCollideFlags() {
-//
-//        colideToBreak = false;
-//        colideToBreakAndMoveToRight = false;
-//        colideToRightWall = false;
-//        colideToLeftWall = false;
-//
-//        colideToRightBlock = false;
-//        colideToBottomBlock = false;
-//        colideToLeftBlock = false;
-//        colideToTopBlock = false;
-//    }
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
@@ -470,7 +455,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                 try {
                     velocityX = 1.000;
 
-                    engine.stop();
+                    gameEngine.stop();
                     physicsEngine.resetCollideFlags();
                     goDownBall = true;
 
@@ -481,7 +466,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
                     time = 0;
                     goldTime = 0;
 
-                    engine.stop();
+                    gameEngine.stop();
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
