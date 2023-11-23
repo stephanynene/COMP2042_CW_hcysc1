@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
+public class Main extends Application implements GameEngine.OnAction {
 
     public boolean isGoldStauts() {
         return isGoldStauts;
@@ -270,6 +270,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     private Ball ball;
     private GameEngine gameEngine;
     private PhysicsEngine physicsEngine;
+    private InputHandler inputHandler;
 
     private Board board;
     @Override
@@ -293,6 +294,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
             physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
+            inputHandler = new InputHandler(breakPaddle, ball, this);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -321,7 +323,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
-        scene.setOnKeyPressed(this);
+        scene.setOnKeyPressed(inputHandler);
 
         primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
@@ -371,26 +373,26 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
     public static void main(String[] args) {
         launch(args);
     }
-
-    //Keyboard for paddle
-    @Override
-    public void handle(KeyEvent event) {
-        switch (event.getCode()) {
-            case LEFT:
-                breakPaddle.moveLeft();
-                break;
-            case RIGHT:
-                breakPaddle.moveRight();
-                break;
-            case DOWN:
-               // setPhysicsToBall();
-                break;
-            case S:
-                GameSaver gameSaver = new GameSaver();
-                gameSaver.saveGameState(this, breakPaddle, ball);
-                break;
-        }
-    }
+//
+//    //Keyboard for paddle
+//    @Override
+//    public void handle(KeyEvent event) {
+//        switch (event.getCode()) {
+//            case LEFT:
+//                breakPaddle.moveLeft();
+//                break;
+//            case RIGHT:
+//                breakPaddle.moveRight();
+//                break;
+//            case DOWN:
+//               // setPhysicsToBall();
+//                break;
+//            case S:
+//                GameSaver gameSaver = new GameSaver();
+//                gameSaver.saveGameState(this, breakPaddle, ball);
+//                break;
+//        }
+//    }
 
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
