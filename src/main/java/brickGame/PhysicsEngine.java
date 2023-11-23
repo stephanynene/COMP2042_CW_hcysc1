@@ -11,7 +11,7 @@ public class PhysicsEngine {
     private BreakPaddle breakPaddle;
     private GameEngine gameEngine;
 
-    public PhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle) {
+    public PhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, GameEngine gameEngine) {
         this.game = game;
         this.ball = ball;
         this.breakPaddle = breakPaddle;

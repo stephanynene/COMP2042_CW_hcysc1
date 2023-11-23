@@ -292,7 +292,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
             board.initBoard();
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
-            physicsEngine = new PhysicsEngine(this, ball, breakPaddle);
+            physicsEngine = new PhysicsEngine(this, ball, breakPaddle, engine);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");

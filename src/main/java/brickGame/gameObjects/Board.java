@@ -44,7 +44,7 @@ public class Board {
 //                mainInstance.blocks.add(new Block(j, i, colors[r % colors.length], type));
 
 
-                //System.out.println("colors " + r % (colors.length));
+                System.out.println("colors " + r % (colors.length));
             }
         }
     }
