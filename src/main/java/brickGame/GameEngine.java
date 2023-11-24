@@ -9,8 +9,19 @@ public class GameEngine {
     private Thread physicsThread;
     public boolean isStopped = true;
 
-    public void setOnAction(OnAction onAction) {
+    private PhysicsUpdater physicsUpdater;
+
+//    public void setOnAction(OnAction onAction) {
+//        this.onAction = onAction;
+//    }
+//
+//    public void setPhysicsUpdater(PhysicsUpdater physicsUpdater) {
+//        this.physicsUpdater = physicsUpdater;
+//    }
+
+    public void setOnActionAndPhysicsUpdater(OnAction onAction, PhysicsUpdater physicsUpdater) {
         this.onAction = onAction;
+        this.physicsUpdater = physicsUpdater;
     }
 
     /**
@@ -47,7 +58,7 @@ public class GameEngine {
             public void run() {
                 while (!physicsThread.isInterrupted()) {
                     try {
-                        onAction.onPhysicsUpdate();
+                        physicsUpdater.onPhysicsUpdate();
                         Thread.sleep(fps);
                     } catch (InterruptedException e) {
                         e.printStackTrace();

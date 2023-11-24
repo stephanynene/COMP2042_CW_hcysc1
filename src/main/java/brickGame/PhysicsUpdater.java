@@ -8,26 +8,44 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
-public class PhysicsUpdater {
+import java.util.ArrayList;
+
+public class PhysicsUpdater implements GameEngine.OnAction {
     private Main game;
     private Ball ball;
     private Pane root;
     private Bonus bonus;
     private BreakPaddle breakPaddle;
     private PhysicsEngine physicsEngine;
-    public PhysicsUpdater(Main game, Ball ball, Pane root, Bonus bonus, BreakPaddle breakPaddle, PhysicsEngine physicsEngine ) {
+    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, PhysicsEngine physicsEngine ) {
         this.game = game;
         this.ball = ball;
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.physicsEngine = physicsEngine;
     }
+
+    @Override
+    public void onUpdate() {
+
+    }
+
+    @Override
+    public void onInit() {
+
+    }
+
     public void onPhysicsUpdate() {
         game.checkDestroyedCount();
         physicsEngine.setPhysicsToBall();
         updateGoldStatus();
         updateChocos();
-        // additional logic...
+
+    }
+
+    @Override
+    public void onTime(long time) {
+
     }
 
     private void updateChocos() {
@@ -66,6 +84,9 @@ public class PhysicsUpdater {
     }
 
     private void resetGoldStatus() {
+        if (this.root != null) {
+            this.root.getStyleClass().remove("goldRoot");
+        }
         ball.setFill(new ImagePattern(new Image("ball.png")));
         root.getStyleClass().remove("goldRoot");
         game.setGoldStauts(false);
