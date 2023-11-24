@@ -349,10 +349,7 @@ public class Main extends Application implements GameEngine.OnAction {
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-                gameEngine = new GameEngine();
-                gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater);
-                gameEngine.setFps(120);
-                gameEngine.start();
+                initGameEngine();
             }
 
             load.setOnAction(new EventHandler<ActionEvent>() {
@@ -368,26 +365,27 @@ public class Main extends Application implements GameEngine.OnAction {
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    gameEngine = new GameEngine();
-                    gameEngine.setOnActionAndPhysicsUpdater(Main.this, physicsUpdater  );
-                    gameEngine.setFps(120);
-                    gameEngine.start();
+                    initGameEngine();
 
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
             });
         } else {
-            gameEngine = new GameEngine();
-            gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater);
-            gameEngine.setFps(120);
-            gameEngine.start();
+            initGameEngine();
             loadFromSave = false;
         }
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void initGameEngine(){
+        gameEngine = new GameEngine();
+        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater);
+        gameEngine.setFps(120);
+        gameEngine.start();
     }
 
     public void checkDestroyedCount() {
