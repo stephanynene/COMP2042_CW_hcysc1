@@ -309,9 +309,6 @@ public class Main extends Application implements GameEngine.OnAction {
             physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
             inputHandler = new InputHandler(breakPaddle, ball, this);
 
-//            physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
-
-
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
             load.setTranslateX(220);
@@ -352,7 +349,6 @@ public class Main extends Application implements GameEngine.OnAction {
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-//                physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
                 gameEngine = new GameEngine();
                 gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater);
                 gameEngine.setFps(120);
@@ -589,41 +585,10 @@ public class Main extends Application implements GameEngine.OnAction {
     public void onInit() {
 
     }
-
     @Override
     public void onPhysicsUpdate() {
 
     }
-
-//    @Override
-//    public void onPhysicsUpdate() {
-//
-//        checkDestroyedCount();
-//        physicsEngine.setPhysicsToBall();
-//
-//
-//        if (time - goldTime > 5000) {
-//            ball.setFill(new ImagePattern(new Image("ball.png")));
-//            root.getStyleClass().remove("goldRoot");
-//            isGoldStauts = false;
-//        }
-//
-//        for (Bonus choco : chocos) {
-//            if (choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken) {
-//                continue;
-//            }
-//            if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + GameConstants.BREAK_WIDTH.getIntValue()  && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue()) {
-//                System.out.println("You Got it and +3 score for you");
-//                choco.taken = true;
-//                choco.choco.setVisible(false);
-//                score += 3;
-//                new Score().show(choco.x, choco.y, 3, this);
-//            }
-//            choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
-//        }
-//        //System.out.println("time is:" + time + " goldTime is " + goldTime);
-//    }
-
     @Override
     public void onTime(long time) {
         this.time = time;
