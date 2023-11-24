@@ -254,6 +254,15 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
+
+    public ArrayList<Bonus> getChocos() {
+        return chocos;
+    }
+
+    public void setChocos(ArrayList<Bonus> chocos) {
+        this.chocos = chocos;
+    }
+
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
     public  Pane root;
     private Label scoreLabel;
@@ -374,7 +383,7 @@ public class Main extends Application implements GameEngine.OnAction {
         launch(args);
     }
 
-    private void checkDestroyedCount() {
+    public void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
             //System.out.println("You Win");
