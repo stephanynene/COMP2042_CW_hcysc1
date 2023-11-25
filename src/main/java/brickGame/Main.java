@@ -583,6 +583,14 @@ public class Main extends Application implements GameEngine.OnAction {
         }
     }
 
+    //Updating score and heart labels - for use in UpdateElements class
+    public void updateScoreLabel(int newScore) {
+        scoreLabel.setText("Score: " + newScore);
+    }
+    public void updateHeartLabel(int newHeart) {
+        heartLabel.setText("Heart: " + newHeart);
+    }
+
     @Override
     public void onInit() {
 
