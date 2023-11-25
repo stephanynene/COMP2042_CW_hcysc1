@@ -29,89 +29,95 @@ public class UpdateElements implements GameEngine.OnAction {
         this.root = root;
     }
 
-//    public void UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root){
-//        this.game = game;
-//        this.breakPaddle = breakPaddle;
-//        this.ball = ball;
-//        this.physicsEngine = physicsEngine;
-//        this.root = root;
-//    }
     public void onUpdate() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                game.updateScoreLabel(game.getScore());
-                game.updateHeartLabel(game.getHeart());
-
-                breakPaddle.rect.setX(breakPaddle.getxBreak());
-                breakPaddle.rect.setY(breakPaddle.getyBreak());
-                ball.setCenterX(ball.getxBall());
-                ball.setCenterY(ball.getyBall());
-
-                for (Bonus choco : game.getChocos()) {
-                    choco.choco.setY(choco.y);
-                }
-            }
-        });
+        Platform.runLater(this::updateUI);
+        if (isBallWithinBounds()) {
+            handleBlockCollisions();
+        }
+    }
 
 
-        if (ball.getyBall() >= Block.getPaddingTop() && ball.getyBall() <= (Block.getHeight() * (game.getLevel() + 1)) + Block.getPaddingTop()) {
-            for (final Block block : game.getBlocks()) {
-                int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
-                if (hitCode != GameConstants.NO_HIT.getIntValue()) {
-                    game.setScore(game.getScore() + 1);
+    private void updateUI() {
+        game.updateScoreLabel(game.getScore());
+        game.updateHeartLabel(game.getHeart());
 
-                    new Score().show(block.x, block.y, 1, game);
+        // Update positions of UI elements
+        breakPaddle.rect.setX(breakPaddle.getxBreak());
+        breakPaddle.rect.setY(breakPaddle.getyBreak());
+        ball.setCenterX(ball.getxBall());
+        ball.setCenterY(ball.getyBall());
 
-                    block.rect.setVisible(false);
-                    block.isDestroyed = true;
-                    game.setDestroyedBlockCount(game.getDestroyedBlockCount()+1);
-                    //System.out.println("size is " + blocks.size());
-                    physicsEngine.resetCollideFlags();
+        // Update positions of bonus item
+        updateChocos();
+    }
 
-                    if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
-                        final Bonus choco = new Bonus(block.row, block.column);
-                        choco.timeCreated = game.getTime();
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                root.getChildren().add(choco.choco);
-                            }
-                        });
-                        game.getChocos().add(choco);
-                    }
+    // Check if ball is within vertical game bounds
+    private boolean isBallWithinBounds() {
+        double paddingTop = Block.getPaddingTop();
+        double ballY = ball.getyBall();
+        double blockHeight = Block.getHeight();
+        int level = game.getLevel();
 
-                    if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
-                        game.setGoldTime(game.getTime());
-                        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-                        ball.setFill(imagePattern);
-                        System.out.println("gold ball");
-                        root.getStyleClass().add("goldRoot");
-                        game.setGoldStauts(true);
-                    }
+        return ballY >= paddingTop && ballY <= (blockHeight * (level + 1)) + paddingTop;
+    }
 
-                    if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
-                        game.setHeart(game.getHeart() + 1);
-                    }
-
-                    if (hitCode == GameConstants.HIT_RIGHT.getIntValue()) {
-                        game.setColideToRightBlock(true);
-                    } else if (hitCode == GameConstants.HIT_BOTTOM.getIntValue()) {
-                        game.setColideToBottomBlock(true);
-                    } else if (hitCode == GameConstants.HIT_LEFT.getIntValue()) {
-                        game.setColideToLeftBlock(true);
-                    } else if (hitCode == GameConstants.HIT_TOP.getIntValue()) {
-                        game.setColideToTopBlock(true);
-                    }
-
-                }
-
-                //TODO hit to break and some work here....
-                //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
+    private void handleBlockCollisions() {
+        for (Block block : game.getBlocks()) {
+            int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
+            if (hitCode != GameConstants.NO_HIT.getIntValue()) {
+                // Increase the score and handle the specific block hit
+                game.setScore(game.getScore() + 1);
+                handleBlockHit(block, hitCode);
             }
         }
     }
+
+
+    private void handleBlockHit(Block block, int hitCode) {
+        // Show score, hide block, and update game state
+        new Score().show(block.x, block.y, 1, game);
+        block.rect.setVisible(false);
+        block.isDestroyed = true;
+        game.setDestroyedBlockCount(game.getDestroyedBlockCount() + 1);
+        physicsEngine.resetCollideFlags();
+
+        // Handle different block types
+        if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
+            handleChocoBlockHit(block);
+        } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
+            handleStarBlockHit();
+        } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
+            game.setHeart(game.getHeart() + 1);
+        }
+    }
+
+    // Handle hit to choco block
+    private void handleChocoBlockHit(Block block) {
+        final Bonus choco = new Bonus(block.row, block.column);
+        choco.timeCreated = game.getTime();
+        // Add the choco to the UI and the game state
+        Platform.runLater(() -> root.getChildren().add(choco.choco));
+        game.getChocos().add(choco);
+    }
+
+    // Handle hit to star block
+    private void handleStarBlockHit() {
+        // Set  gold ball status and update UI
+        game.setGoldTime(game.getTime());
+        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
+        ball.setFill(imagePattern);
+        System.out.println("gold ball");
+        root.getStyleClass().add("goldRoot");
+        game.setGoldStauts(true);
+    }
+
+    // Update position of chocos
+    private void updateChocos() {
+        for (Bonus choco : game.getChocos()) {
+            choco.choco.setY(choco.y);
+        }
+    }
+
 
     @Override
     public void onInit() {
