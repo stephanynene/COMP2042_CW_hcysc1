@@ -1,6 +1,7 @@
-package brickGame;
+package brickGame.input;
 
-import brickGame.Saving.GameSaver;
+import brickGame.Main;
+import brickGame.saving.GameSaver;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.BreakPaddle;
 import javafx.event.EventHandler;

@@ -1,4 +1,4 @@
-package brickGame;
+package brickGame.constants;
 
 import java.io.Serializable;
 

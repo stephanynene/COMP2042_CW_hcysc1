@@ -1,4 +1,4 @@
-package brickGame;
+package brickGame.gameEngine;
 
 
 public class GameEngine {

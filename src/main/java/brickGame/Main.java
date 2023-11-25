@@ -1,8 +1,13 @@
 package brickGame;
 
-import brickGame.Saving.GameSaver;
-import brickGame.Saving.LoadSave;
-import brickGame.Scoring.Score;
+import brickGame.constants.BlockSerializable;
+import brickGame.constants.GameConstants;
+import brickGame.gameEngine.GameEngine;
+import brickGame.gameEngine.PhysicsEngine;
+import brickGame.gameEngine.PhysicsUpdater;
+import brickGame.input.InputHandler;
+import brickGame.saving.LoadSave;
+import brickGame.scoring.Score;
 import brickGame.gameObjects.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
