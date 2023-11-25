@@ -1,7 +1,7 @@
-package brickGame.Saving;
+package brickGame.saving;
 
-import brickGame.BlockSerializable;
-import brickGame.GameConstants;
+import brickGame.constants.BlockSerializable;
+import brickGame.constants.GameConstants;
 
 import java.io.File;
 import java.io.FileInputStream;

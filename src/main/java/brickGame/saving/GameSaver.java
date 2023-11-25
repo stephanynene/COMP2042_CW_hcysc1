@@ -1,9 +1,9 @@
-package brickGame.Saving;
+package brickGame.saving;
 
-import brickGame.BlockSerializable;
-import brickGame.GameConstants;
+import brickGame.constants.BlockSerializable;
+import brickGame.constants.GameConstants;
 import brickGame.Main;
-import brickGame.Scoring.Score;
+import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
 import brickGame.gameObjects.BreakPaddle;

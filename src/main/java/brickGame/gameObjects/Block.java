@@ -1,7 +1,7 @@
 package brickGame.gameObjects;
 
 
-import brickGame.GameConstants;
+import brickGame.constants.GameConstants;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -9,9 +9,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
-import static brickGame.GameConstants.BLOCK_HEIGHT;
-import static brickGame.GameConstants.BLOCK_WIDTH;
-import static brickGame.GameConstants.PADDING_H;
+import static brickGame.constants.GameConstants.BLOCK_HEIGHT;
+import static brickGame.constants.GameConstants.BLOCK_WIDTH;
+import static brickGame.constants.GameConstants.PADDING_H;
 
 
 public class Block implements Serializable {

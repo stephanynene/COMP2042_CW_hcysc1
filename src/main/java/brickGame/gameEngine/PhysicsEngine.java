@@ -1,6 +1,8 @@
-package brickGame;
+package brickGame.gameEngine;
 
-import brickGame.Scoring.Score;
+import brickGame.constants.GameConstants;
+import brickGame.Main;
+import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.BreakPaddle;
 
