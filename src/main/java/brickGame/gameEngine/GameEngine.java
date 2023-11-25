@@ -1,6 +1,8 @@
 package brickGame.gameEngine;
 
 
+import brickGame.UpdateElements;
+
 public class GameEngine {
 
     private OnAction onAction;
@@ -10,6 +12,7 @@ public class GameEngine {
     public boolean isStopped = true;
 
     private PhysicsUpdater physicsUpdater;
+    private UpdateElements updateElements;
 
 //    public void setOnAction(OnAction onAction) {
 //        this.onAction = onAction;
@@ -19,9 +22,10 @@ public class GameEngine {
 //        this.physicsUpdater = physicsUpdater;
 //    }
 
-    public void setOnActionAndPhysicsUpdater(OnAction onAction, PhysicsUpdater physicsUpdater) {
+    public void setOnActionAndPhysicsUpdater(OnAction onAction, PhysicsUpdater physicsUpdater, UpdateElements updateElements) {
         this.onAction = onAction;
         this.physicsUpdater = physicsUpdater;
+        this.updateElements = updateElements;
     }
 
     /**
@@ -37,7 +41,7 @@ public class GameEngine {
             public void run() {
                 while (!updateThread.isInterrupted()) {
                     try {
-                        onAction.onUpdate();
+                        updateElements.onUpdate();
                         Thread.sleep(fps);
                     } catch (InterruptedException e) {
                         e.printStackTrace();

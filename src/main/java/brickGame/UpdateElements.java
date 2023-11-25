@@ -1,6 +1,7 @@
 package brickGame;
 
 import brickGame.constants.GameConstants;
+import brickGame.gameEngine.GameEngine;
 import brickGame.gameEngine.PhysicsEngine;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
@@ -9,20 +10,32 @@ import brickGame.gameObjects.BreakPaddle;
 import brickGame.scoring.Score;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
-public class UpdateElements {
+public class UpdateElements implements GameEngine.OnAction {
 
     private Main game;
     private BreakPaddle breakPaddle;
     private Ball ball;
     private PhysicsEngine physicsEngine;
-    public void UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine){
+    private Pane root;
+
+    public UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
         this.physicsEngine = physicsEngine;
+        this.root = root;
     }
+
+//    public void UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root){
+//        this.game = game;
+//        this.breakPaddle = breakPaddle;
+//        this.ball = ball;
+//        this.physicsEngine = physicsEngine;
+//        this.root = root;
+//    }
     public void onUpdate() {
         Platform.runLater(new Runnable() {
             @Override
@@ -66,7 +79,7 @@ public class UpdateElements {
                                 root.getChildren().add(choco.choco);
                             }
                         });
-                        chocos.add(choco);
+                        game.getChocos().add(choco);
                     }
 
                     if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
@@ -98,5 +111,20 @@ public class UpdateElements {
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
             }
         }
+    }
+
+    @Override
+    public void onInit() {
+
+    }
+
+    @Override
+    public void onPhysicsUpdate() {
+
+    }
+
+    @Override
+    public void onTime(long time) {
+
     }
 }

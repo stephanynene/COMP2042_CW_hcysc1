@@ -268,6 +268,10 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
+
+    public void addToChocos( Bonus bonus) {
+        chocos.add(bonus);
+    }
     public  Pane root;
     private Label scoreLabel;
     private Label heartLabel;
@@ -283,6 +287,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private Ball ball;
     private GameEngine gameEngine;
     private PhysicsUpdater physicsUpdater;
+    private UpdateElements updateElements;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
 
@@ -330,6 +335,7 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
+        updateElements = new UpdateElements(this, breakPaddle, ball, physicsEngine, root);
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
@@ -387,7 +393,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private void initGameEngine(){
         gameEngine = new GameEngine();
-        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater);
+        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, updateElements);
         gameEngine.setFps(120);
         gameEngine.start();
     }
@@ -505,90 +511,17 @@ public class Main extends Application implements GameEngine.OnAction {
         }
     }
 
-    @Override
-    public void onUpdate() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                scoreLabel.setText("Score: " + score);
-                heartLabel.setText("Heart : " + heart);
-
-                breakPaddle.rect.setX(breakPaddle.getxBreak());
-                breakPaddle.rect.setY(breakPaddle.getyBreak());
-                ball.setCenterX(ball.getxBall());
-                ball.setCenterY(ball.getyBall());
-
-                for (Bonus choco : chocos) {
-                    choco.choco.setY(choco.y);
-                }
-            }
-        });
-
-
-        if (ball.getyBall() >= Block.getPaddingTop() && ball.getyBall() <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
-            for (final Block block : blocks) {
-                int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
-                if (hitCode != GameConstants.NO_HIT.getIntValue()) {
-                    score += 1;
-
-                    new Score().show(block.x, block.y, 1, this);
-
-                    block.rect.setVisible(false);
-                    block.isDestroyed = true;
-                    destroyedBlockCount++;
-                    //System.out.println("size is " + blocks.size());
-                    physicsEngine.resetCollideFlags();
-
-                    if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
-                        final Bonus choco = new Bonus(block.row, block.column);
-                        choco.timeCreated = time;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                root.getChildren().add(choco.choco);
-                            }
-                        });
-                        chocos.add(choco);
-                    }
-
-                    if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
-                        goldTime = time;
-                        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-                        ball.setFill(imagePattern);
-                        System.out.println("gold ball");
-                        root.getStyleClass().add("goldRoot");
-                        isGoldStauts = true;
-                    }
-
-                    if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
-                        heart++;
-                    }
-
-                    if (hitCode == GameConstants.HIT_RIGHT.getIntValue()) {
-                        colideToRightBlock = true;
-                    } else if (hitCode == GameConstants.HIT_BOTTOM.getIntValue()) {
-                        colideToBottomBlock = true;
-                    } else if (hitCode == GameConstants.HIT_LEFT.getIntValue()) {
-                        colideToLeftBlock = true;
-                    } else if (hitCode == GameConstants.HIT_TOP.getIntValue()) {
-                        colideToTopBlock = true;
-                    }
-
-                }
-
-                //TODO hit to break and some work here....
-                //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
-            }
-        }
-    }
-
     //Updating score and heart labels - for use in UpdateElements class
     public void updateScoreLabel(int newScore) {
         scoreLabel.setText("Score: " + newScore);
     }
     public void updateHeartLabel(int newHeart) {
         heartLabel.setText("Heart: " + newHeart);
+    }
+
+    @Override
+    public void onUpdate() {
+
     }
 
     @Override
