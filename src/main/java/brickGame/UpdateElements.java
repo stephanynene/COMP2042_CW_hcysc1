@@ -67,13 +67,13 @@ public class UpdateElements implements GameEngine.OnAction {
             if (hitCode != GameConstants.NO_HIT.getIntValue()) {
                 // Increase the score and handle the specific block hit
                 game.setScore(game.getScore() + 1);
-                handleBlockHit(block, hitCode);
+                handleBlockHit(block);
             }
         }
     }
 
 
-    private void handleBlockHit(Block block, int hitCode) {
+    private void handleBlockHit(Block block) {
         // Show score, hide block, and update game state
         new Score().show(block.x, block.y, 1, game);
         block.rect.setVisible(false);
