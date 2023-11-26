@@ -95,9 +95,10 @@ public class UpdateElements implements GameEngine.OnAction {
     private void handleChocoBlockHit(Block block) {
         final Bonus choco = new Bonus(block.row, block.column);
         choco.timeCreated = game.getTime();
-        // Add the choco to the UI and the game state
+        // Add choco to UI
         Platform.runLater(() -> root.getChildren().add(choco.choco));
-        game.getChocos().add(choco);
+        // Update game state on JavaFX thread
+        Platform.runLater(() -> game.getChocos().add(choco));
     }
 
     // Handle hit to star block

@@ -56,8 +56,10 @@ public class PhysicsUpdater implements GameEngine.OnAction {
             if (shouldSkipChocoUpdate(choco)) {
                 continue;
             }
-            handleChocoCollision(choco);
-            updateChocoPosition(choco);
+            Platform.runLater(() -> {
+                handleChocoCollision(choco);
+                updateChocoPosition(choco);
+            });
         }
     }
 

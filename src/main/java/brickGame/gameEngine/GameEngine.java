@@ -61,7 +61,7 @@ public class GameEngine {
                 updateElements.onUpdate();
                 Thread.sleep(fps);
             } catch (InterruptedException e) {
-                // Handle interruption, clean up, and exit the thread
+
                 Thread.currentThread().interrupt();
                 return;
             }
@@ -98,7 +98,6 @@ public class GameEngine {
                     physicsUpdater.onPhysicsUpdate();
                     Thread.sleep(fps);
                 } catch (InterruptedException e) {
-                    // Handle interruption, clean up, and exit the thread
                     Thread.currentThread().interrupt();
                     return;
                 }
@@ -128,7 +127,7 @@ public class GameEngine {
     public void stop() {
         if (!stopRequested) {
             stopRequested = true;
-            // Optionally, you can interrupt the threads here if needed.
+
         }
     }
 
