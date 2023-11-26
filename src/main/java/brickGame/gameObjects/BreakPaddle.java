@@ -1,7 +1,5 @@
 package brickGame.gameObjects;
 import brickGame.constants.GameConstants;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class BreakPaddle {
