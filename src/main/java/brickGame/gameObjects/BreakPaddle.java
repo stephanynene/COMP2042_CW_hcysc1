@@ -1,12 +1,10 @@
 package brickGame.gameObjects;
 import brickGame.constants.GameConstants;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class BreakPaddle {
 
-
+    private BreakPaddleView breakPaddleView;
     public void setxBreak(double xBreak) {
         this.xBreak = xBreak;
     }
@@ -37,22 +35,19 @@ public class BreakPaddle {
 
     public Rectangle rect;
 
+    public BreakPaddleView getBreakPaddleView() {
 
-
-    //Paddle initialisation
-    public void initBreak() {
-        rect = new Rectangle();
-        rect.setWidth(GameConstants.BREAK_WIDTH.getIntValue());
-        rect.setHeight(GameConstants.BREAK_HEIGHT.getIntValue());
-        rect.setX(xBreak);
-        rect.setY(yBreak);
-
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-        rect.setFill(pattern);
+        return breakPaddleView;
     }
 
 
-//    Split into two methods
+    public void initBreak() {
+    rect = new Rectangle();
+    breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
+    }
+
+
+    //    Split into two methods
     public void moveRight() {
         //System.out.println("Move right");
         new Thread(new Runnable() {
