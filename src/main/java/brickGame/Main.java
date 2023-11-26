@@ -343,13 +343,6 @@ public class Main extends Application implements GameEngine.OnAction {
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
         updateElements = new UpdateElements(this, breakPaddle, ball, physicsEngine, root);
 
-        System.out.println("breakPaddle.rect: " + breakPaddle.rect);
-//        System.out.println("ballView: " + ballView);
-//        System.out.println("scoreLabel: " + scoreLabel);
-//        System.out.println("heartLabel: " + heartLabel);
-//        System.out.println("levelLabel: " + levelLabel);
-//        System.out.println("newGame: " + newGame);
-
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
