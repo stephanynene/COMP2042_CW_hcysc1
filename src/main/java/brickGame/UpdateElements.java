@@ -13,6 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UpdateElements implements GameEngine.OnAction {
 
     private Main game;
@@ -114,7 +117,10 @@ public class UpdateElements implements GameEngine.OnAction {
 
     // Update position of chocos
     private void updateChocos() {
-        for (Bonus choco : game.getChocos()) {
+        // Create a copy of the list to avoid ConcurrentModificationException
+        List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
+
+        for (Bonus choco : chocosCopy) {
             choco.choco.setY(choco.y);
         }
     }
