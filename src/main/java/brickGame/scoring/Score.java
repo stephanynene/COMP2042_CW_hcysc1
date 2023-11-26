@@ -1,6 +1,6 @@
-package brickGame.Scoring;
+package brickGame.scoring;
 
-import brickGame.GameConstants;
+import brickGame.constants.GameConstants;
 import brickGame.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

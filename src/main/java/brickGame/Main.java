@@ -1,8 +1,13 @@
 package brickGame;
 
-import brickGame.Saving.GameSaver;
-import brickGame.Saving.LoadSave;
-import brickGame.Scoring.Score;
+import brickGame.constants.BlockSerializable;
+import brickGame.constants.GameConstants;
+import brickGame.gameEngine.GameEngine;
+import brickGame.gameEngine.PhysicsEngine;
+import brickGame.gameEngine.PhysicsUpdater;
+import brickGame.input.InputHandler;
+import brickGame.saving.LoadSave;
+import brickGame.scoring.Score;
 import brickGame.gameObjects.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,12 +17,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
-
+import brickGame.gameObjects.Bonus;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -255,7 +259,22 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private ArrayList<BlockView> blockViews = new ArrayList<>();
+
+
+    public ArrayList<Bonus> getChocos() {
+        return chocos;
+    }
+
+    public void setChocos(ArrayList<Bonus> chocos) {
+        this.chocos = chocos;
+    }
+
+
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
+
+    public void addToChocos( Bonus bonus) {
+        chocos.add(bonus);
+    }
     public  Pane root;
     private Label scoreLabel;
     private Label heartLabel;
@@ -271,6 +290,8 @@ public class Main extends Application implements GameEngine.OnAction {
     private Ball ball;
     private BallView ballView;
     private GameEngine gameEngine;
+    private PhysicsUpdater physicsUpdater;
+    private UpdateElements updateElements;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
 
@@ -299,6 +320,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
+
             physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
             inputHandler = new InputHandler(breakPaddle, ball, this);
 
@@ -318,6 +340,9 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
+        updateElements = new UpdateElements(this, breakPaddle, ball, physicsEngine, root);
+
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
@@ -335,14 +360,12 @@ public class Main extends Application implements GameEngine.OnAction {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
         if (loadFromSave == false) {
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-                gameEngine = new GameEngine();
-                gameEngine.setOnAction(this);
-                gameEngine.setFps(120);
-                gameEngine.start();
+                initGameEngine();
             }
 
             load.setOnAction(new EventHandler<ActionEvent>() {
@@ -358,20 +381,14 @@ public class Main extends Application implements GameEngine.OnAction {
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    gameEngine = new GameEngine();
-                    gameEngine.setOnAction(Main.this);
-                    gameEngine.setFps(120);
-                    gameEngine.start();
+                    initGameEngine();
 
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
             });
         } else {
-            gameEngine = new GameEngine();
-            gameEngine.setOnAction(this);
-            gameEngine.setFps(120);
-            gameEngine.start();
+            initGameEngine();
             loadFromSave = false;
         }
     }
@@ -380,7 +397,14 @@ public class Main extends Application implements GameEngine.OnAction {
         launch(args);
     }
 
-    private void checkDestroyedCount() {
+    private void initGameEngine(){
+        gameEngine = new GameEngine();
+        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, updateElements);
+        gameEngine.setFps(120);
+        gameEngine.start();
+    }
+
+    public void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
             //TODO win level todo...
             //System.out.println("You Win");
@@ -500,118 +524,28 @@ public class Main extends Application implements GameEngine.OnAction {
         }
     }
 
+    //Updating score and heart labels - for use in UpdateElements class
+    public void updateScoreLabel(int newScore) {
+        scoreLabel.setText("Score: " + newScore);
+    }
+    public void updateHeartLabel(int newHeart) {
+        heartLabel.setText("Heart: " + newHeart);
+    }
+
+
     @Override
     public void onUpdate() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
 
-                scoreLabel.setText("Score: " + score);
-                heartLabel.setText("Heart : " + heart);
-
-                breakPaddle.rect.setX(breakPaddle.getxBreak());
-                breakPaddle.rect.setY(breakPaddle.getyBreak());
-                ballView.setCenterX(ball.getxBall());
-                ballView.setCenterY(ball.getyBall());
-
-                for (Bonus choco : chocos) {
-                    choco.choco.setY(choco.y);
-                }
-            }
-        });
-
-
-        if (ball.getyBall() >= Block.getPaddingTop() && ball.getyBall() <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
-            for (final Block block : blocks) {
-                int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
-                if (hitCode != GameConstants.NO_HIT.getIntValue()) {
-                    score += 1;
-
-                    new Score().show(block.x, block.y, 1, this);
-
-                    block.getBlockView().getRect().setVisible(false);
-                    block.isDestroyed = true;
-                    destroyedBlockCount++;
-                    //System.out.println("size is " + blocks.size());
-                    physicsEngine.resetCollideFlags();
-
-                    if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
-                        final Bonus choco = new Bonus(block.row, block.column);
-                        choco.timeCreated = time;
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                root.getChildren().add(choco.choco);
-                            }
-                        });
-                        chocos.add(choco);
-                    }
-
-                    if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
-                        goldTime = time;
-                        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-                        ball.setFill(imagePattern);
-                        System.out.println("gold ball");
-                        root.getStyleClass().add("goldRoot");
-                        isGoldStauts = true;
-                    }
-
-                    if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
-                        heart++;
-                    }
-
-                    if (hitCode == GameConstants.HIT_RIGHT.getIntValue()) {
-                        colideToRightBlock = true;
-                    } else if (hitCode == GameConstants.HIT_BOTTOM.getIntValue()) {
-                        colideToBottomBlock = true;
-                    } else if (hitCode == GameConstants.HIT_LEFT.getIntValue()) {
-                        colideToLeftBlock = true;
-                    } else if (hitCode == GameConstants.HIT_TOP.getIntValue()) {
-                        colideToTopBlock = true;
-                    }
-
-                }
-
-                //TODO hit to break and some work here....
-                //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
-            }
-        }
     }
 
     @Override
     public void onInit() {
 
     }
-
     @Override
     public void onPhysicsUpdate() {
 
-        checkDestroyedCount();
-        physicsEngine.setPhysicsToBall();
-
-
-        if (time - goldTime > 5000) {
-            ball.setFill(new ImagePattern(new Image("ball.png")));
-            root.getStyleClass().remove("goldRoot");
-            isGoldStauts = false;
-        }
-
-        for (Bonus choco : chocos) {
-            if (choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken) {
-                continue;
-            }
-            if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + GameConstants.BREAK_WIDTH.getIntValue()  && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue()) {
-                System.out.println("You Got it and +3 score for you");
-                choco.taken = true;
-                choco.choco.setVisible(false);
-                score += 3;
-                new Score().show(choco.x, choco.y, 3, this);
-            }
-            choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
-        }
-        //System.out.println("time is:" + time + " goldTime is " + goldTime);
     }
-
     @Override
     public void onTime(long time) {
         this.time = time;

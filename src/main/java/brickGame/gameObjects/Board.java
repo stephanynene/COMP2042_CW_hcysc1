@@ -1,6 +1,6 @@
 package brickGame.gameObjects;
 
-import brickGame.GameConstants;
+import brickGame.constants.GameConstants;
 import brickGame.Main;
 import javafx.scene.paint.Color;
 
