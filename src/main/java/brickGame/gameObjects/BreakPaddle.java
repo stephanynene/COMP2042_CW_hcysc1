@@ -42,23 +42,11 @@ public class BreakPaddle {
         return breakPaddleView;
     }
 
-    //Paddle initialisation
-//    public void initBreak() {
-//        rect = new Rectangle();
-//        rect.setWidth(GameConstants.BREAK_WIDTH.getIntValue());
-//        rect.setHeight(GameConstants.BREAK_HEIGHT.getIntValue());
-//        rect.setX(xBreak);
-//        rect.setY(yBreak);
-//
-//        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
-//        rect.setFill(pattern);
-//    }
 
     public void initBreak() {
     rect = new Rectangle();
     breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
     }
-
 
 
     //    Split into two methods
