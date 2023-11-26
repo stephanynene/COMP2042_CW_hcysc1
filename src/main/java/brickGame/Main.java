@@ -254,6 +254,7 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
+    private ArrayList<BlockView> blockViews = new ArrayList<>();
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
     public  Pane root;
     private Label scoreLabel;
@@ -288,6 +289,7 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
 
+            drawBlocks();
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
             ballView = ball.getBallView();
@@ -323,7 +325,7 @@ public class Main extends Application implements GameEngine.OnAction {
         }
 
         for (Block block : blocks) {
-            root.getChildren().add(block.rect);
+            root.getChildren().add(block.getBlockView().getRect());
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
@@ -384,6 +386,13 @@ public class Main extends Application implements GameEngine.OnAction {
             //System.out.println("You Win");
 
             nextLevel();
+        }
+    }
+    private void drawBlocks() {
+        for (Block block : blocks) {
+            BlockView blockView = block.getBlockView();
+            blockViews.add(blockView);
+            root.getChildren().add(blockView.getRect());
         }
     }
     private void loadGame() {
@@ -520,7 +529,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
                     new Score().show(block.x, block.y, 1, this);
 
-                    block.rect.setVisible(false);
+                    block.getBlockView().getRect().setVisible(false);
                     block.isDestroyed = true;
                     destroyedBlockCount++;
                     //System.out.println("size is " + blocks.size());
