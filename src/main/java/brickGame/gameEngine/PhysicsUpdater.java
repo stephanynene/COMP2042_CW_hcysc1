@@ -6,6 +6,7 @@ import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Bonus;
 import brickGame.gameObjects.BreakPaddle;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
@@ -86,11 +87,14 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     }
 
     private void resetGoldStatus() {
-        if (this.root != null) {
-            this.root.getStyleClass().remove("goldRoot");
-        }
-        ball.setFill(new ImagePattern(new Image("ball.png")));
-        root.getStyleClass().remove("goldRoot");
-        game.setGoldStauts(false);
+        Platform.runLater(() -> {
+            if (root != null) {
+                root.getStyleClass().remove("goldRoot");
+            }
+            ball.setFill(new ImagePattern(new Image("ball.png")));
+            root.getStyleClass().remove("goldRoot");
+            game.setGoldStatus(false);
+        });
     }
+
 }

@@ -102,13 +102,13 @@ public class UpdateElements implements GameEngine.OnAction {
 
     // Handle hit to star block
     private void handleStarBlockHit() {
-        // Set  gold ball status and update UI
+        // Set gold ball status and update UI
         game.setGoldTime(game.getTime());
         ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
         ball.setFill(imagePattern);
         System.out.println("gold ball");
         root.getStyleClass().add("goldRoot");
-        game.setGoldStauts(true);
+        game.setGoldStatus(true);
     }
 
     // Update position of chocos

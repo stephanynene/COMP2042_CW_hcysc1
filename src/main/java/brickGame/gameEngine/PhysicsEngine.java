@@ -78,7 +78,7 @@ public class PhysicsEngine {
         if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
 
             game.setGoDownBall(false);
-            if (!game.isGoldStauts()) {
+            if (!game.isGoldStatus()) {
                 //TODO gameover
                 game.setHeart(game.getHeart() - 1);
                 new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
