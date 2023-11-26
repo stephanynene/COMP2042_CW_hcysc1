@@ -268,6 +268,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private BreakPaddle breakPaddle;
     private Ball ball;
+    private BallView ballView;
     private GameEngine gameEngine;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
@@ -287,10 +288,13 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
 
-            ball = new Ball();
+            ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
+            ballView = ball.getBallView();
+
             board = new Board(this);
             board.initBoard();
+
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
             physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
@@ -313,11 +317,11 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
-
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel);
         }
+
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
@@ -498,8 +502,8 @@ public class Main extends Application implements GameEngine.OnAction {
 
                 breakPaddle.rect.setX(breakPaddle.getxBreak());
                 breakPaddle.rect.setY(breakPaddle.getyBreak());
-                ball.setCenterX(ball.getxBall());
-                ball.setCenterY(ball.getyBall());
+                ballView.setCenterX(ball.getxBall());
+                ballView.setCenterY(ball.getyBall());
 
                 for (Bonus choco : chocos) {
                     choco.choco.setY(choco.y);
