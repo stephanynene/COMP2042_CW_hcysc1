@@ -12,11 +12,10 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateElements implements GameEngine.OnAction {
+public class ElementsUpdater implements GameEngine.OnAction {
 
     private Main game;
     private BreakPaddle breakPaddle;
@@ -24,7 +23,7 @@ public class UpdateElements implements GameEngine.OnAction {
     private PhysicsEngine physicsEngine;
     private Pane root;
 
-    public UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
+    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
@@ -47,8 +46,8 @@ public class UpdateElements implements GameEngine.OnAction {
         // Update positions of UI elements
         breakPaddle.rect.setX(breakPaddle.getxBreak());
         breakPaddle.rect.setY(breakPaddle.getyBreak());
-        ball.setCenterX(ball.getxBall());
-        ball.setCenterY(ball.getyBall());
+        ball.getBallView().setCenterX(ball.getxBall());
+        ball.getBallView().setCenterY(ball.getyBall());
 
         // Update positions of bonus item
         updateChocos();
@@ -79,7 +78,7 @@ public class UpdateElements implements GameEngine.OnAction {
     private void handleBlockHit(Block block) {
         // Show score, hide block, and update game state
         new Score().show(block.x, block.y, 1, game);
-        block.rect.setVisible(false);
+        block.getBlockView().getRect().setVisible(false);
         block.isDestroyed = true;
         game.setDestroyedBlockCount(game.getDestroyedBlockCount() + 1);
         physicsEngine.resetCollideFlags();

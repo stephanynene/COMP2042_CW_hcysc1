@@ -256,6 +256,8 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private ArrayList<Block> blocks = new ArrayList<Block>();
+    private ArrayList<BlockView> blockViews = new ArrayList<>();
+
 
     public ArrayList<Bonus> getChocos() {
         return chocos;
@@ -264,6 +266,7 @@ public class Main extends Application implements GameEngine.OnAction {
     public void setChocos(ArrayList<Bonus> chocos) {
         this.chocos = chocos;
     }
+
 
     private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
 
@@ -283,9 +286,10 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private BreakPaddle breakPaddle;
     private Ball ball;
+    private BallView ballView;
     private GameEngine gameEngine;
     private PhysicsUpdater physicsUpdater;
-    private UpdateElements updateElements;
+    private ElementsUpdater elementsUpdater;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
 
@@ -306,8 +310,10 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
 
-            ball = new Ball();
+            drawBlocks();
+            ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
+            ballView = ball.getBallView();
 
             board = new Board(this);
             board.initBoard();
@@ -335,16 +341,16 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
-        updateElements = new UpdateElements(this, breakPaddle, ball, physicsEngine, root);
+        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, physicsEngine, root);
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
-
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ball, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel);
         }
+
         for (Block block : blocks) {
-            root.getChildren().add(block.rect);
+            root.getChildren().add(block.getBlockView().getRect());
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
@@ -393,7 +399,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private void initGameEngine(){
         gameEngine = new GameEngine();
-        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, updateElements);
+        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, elementsUpdater);
         gameEngine.setFps(120);
         gameEngine.start();
     }
@@ -404,6 +410,13 @@ public class Main extends Application implements GameEngine.OnAction {
             //System.out.println("You Win");
 
             nextLevel();
+        }
+    }
+    private void drawBlocks() {
+        for (Block block : blocks) {
+            BlockView blockView = block.getBlockView();
+            blockViews.add(blockView);
+            root.getChildren().add(blockView.getRect());
         }
     }
     private void loadGame() {
@@ -519,6 +532,7 @@ public class Main extends Application implements GameEngine.OnAction {
     public void updateHeartLabel(int newHeart) {
         heartLabel.setText("Heart: " + newHeart);
     }
+
 
     @Override
     public void onUpdate() {
