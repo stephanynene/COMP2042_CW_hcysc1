@@ -11,6 +11,10 @@ public enum GameConstants {
     RESTART_MESSAGE("Restart"),
 
     NORMAL_BALL_IMG("/ball.png"),
+
+    CHOCO_BLOCK_IMG("choco.jpg"),
+    HEART_BLOCK_IMG("heart.jpg"),
+    STAR_BLOCK_IMG("star.jpg"),
     BREAK_WIDTH(130),
     BREAK_HEIGHT(30),
 

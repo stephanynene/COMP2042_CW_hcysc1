@@ -21,15 +21,15 @@ public class BlockView {
         rect.setY(y);
 
         if (type == GameConstants.BLOCK_CHOCO.getIntValue()) {
-            Image image = new Image("choco.jpg");
+            Image image = new Image(GameConstants.CHOCO_BLOCK_IMG.getStringValue());
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == GameConstants.BLOCK_HEART.getIntValue()) {
-            Image image = new Image("heart.jpg");
+            Image image = new Image(GameConstants.HEART_BLOCK_IMG.getStringValue());
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == GameConstants.BLOCK_STAR.getIntValue()) {
-            Image image = new Image("star.jpg");
+            Image image = new Image(GameConstants.STAR_BLOCK_IMG.getStringValue());
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else {
