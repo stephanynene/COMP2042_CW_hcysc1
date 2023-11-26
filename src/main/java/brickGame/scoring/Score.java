@@ -10,6 +10,9 @@ import javafx.scene.control.Label;
 //import sun.plugin2.message.Message;
 
 public class Score {
+
+
+    private int  score    = 0;
     public void show(final double x, final double y, int score, final Main main) {
         String sign;
         if (score >= 0) {

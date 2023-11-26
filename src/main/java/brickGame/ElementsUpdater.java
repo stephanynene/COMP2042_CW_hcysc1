@@ -12,6 +12,8 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ElementsUpdater implements GameEngine.OnAction {
 
@@ -95,25 +97,29 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private void handleChocoBlockHit(Block block) {
         final Bonus choco = new Bonus(block.row, block.column);
         choco.timeCreated = game.getTime();
-        // Add the choco to the UI and the game state
+        // Add choco to UI
         Platform.runLater(() -> root.getChildren().add(choco.choco));
-        game.getChocos().add(choco);
+        // Update game state on JavaFX thread
+        Platform.runLater(() -> game.getChocos().add(choco));
     }
 
     // Handle hit to star block
     private void handleStarBlockHit() {
-        // Set  gold ball status and update UI
+        // Set gold ball status and update UI
         game.setGoldTime(game.getTime());
         ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
         ball.setFill(imagePattern);
         System.out.println("gold ball");
         root.getStyleClass().add("goldRoot");
-        game.setGoldStauts(true);
+        game.setGoldStatus(true);
     }
 
     // Update position of chocos
     private void updateChocos() {
-        for (Bonus choco : game.getChocos()) {
+        // Create a copy of the list to avoid ConcurrentModificationException
+        List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
+
+        for (Bonus choco : chocosCopy) {
             choco.choco.setY(choco.y);
         }
     }

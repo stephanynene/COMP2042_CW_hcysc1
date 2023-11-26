@@ -26,15 +26,15 @@ import java.util.Random;
 
 public class Main extends Application implements GameEngine.OnAction {
 
-    public boolean isGoldStauts() {
-        return isGoldStauts;
+    public boolean isGoldStatus() {
+        return isGoldStatus;
     }
 
-    public void setGoldStauts(boolean goldStauts) {
-        isGoldStauts = goldStauts;
+    public void setGoldStatus(boolean goldStatus) {
+        isGoldStatus = goldStatus;
     }
 
-    private boolean isGoldStauts  = false;
+    private boolean isGoldStatus = false;
 
     public boolean isExistHeartBlock() {
         return isExistHeartBlock;
@@ -294,6 +294,8 @@ public class Main extends Application implements GameEngine.OnAction {
     private InputHandler inputHandler;
 
     private Board board;
+    private Score scoreManager = new Score();
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -423,7 +425,7 @@ public class Main extends Application implements GameEngine.OnAction {
         loadSave.read();
 
         isExistHeartBlock = loadSave.isExistHeartBlock;
-        isGoldStauts = loadSave.isGoldStauts;
+        isGoldStatus = loadSave.isGoldStauts;
         goDownBall = loadSave.goDownBall;
         goRightBall = loadSave.goRightBall;
         colideToBreak = loadSave.colideToBreak;
@@ -476,7 +478,7 @@ public class Main extends Application implements GameEngine.OnAction {
                     physicsEngine.resetCollideFlags();
                     goDownBall = true;
 
-                    isGoldStauts = false;
+                    isGoldStatus = false;
                     isExistHeartBlock = false;
 
                     hitTime = 0;
@@ -507,7 +509,7 @@ public class Main extends Application implements GameEngine.OnAction {
             physicsEngine.resetCollideFlags();
             goDownBall = true;
 
-            isGoldStauts = false;
+            isGoldStatus = false;
             isExistHeartBlock = false;
             hitTime = 0;
             time = 0;
@@ -521,6 +523,7 @@ public class Main extends Application implements GameEngine.OnAction {
             e.printStackTrace();
         }
     }
+
 
     //Updating score and heart labels - for use in UpdateElements class
     public void updateScoreLabel(int newScore) {

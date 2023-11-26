@@ -54,7 +54,7 @@ public class GameSaver {
 
 
                     outputStream.writeBoolean(gameInstance.isExistHeartBlock());
-                    outputStream.writeBoolean(gameInstance.isGoldStauts());
+                    outputStream.writeBoolean(gameInstance.isGoldStatus());
                     outputStream.writeBoolean(gameInstance.isGoDownBall());
                     outputStream.writeBoolean(gameInstance.isGoRightBall());
                     outputStream.writeBoolean(gameInstance.isColideToBreak());
