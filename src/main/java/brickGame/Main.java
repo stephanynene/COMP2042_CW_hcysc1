@@ -16,10 +16,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import brickGame.gameObjects.Bonus;
 
@@ -291,7 +289,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private BallView ballView;
     private GameEngine gameEngine;
     private PhysicsUpdater physicsUpdater;
-    private UpdateElements updateElements;
+    private ElementsUpdater elementsUpdater;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
 
@@ -341,7 +339,7 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
-        updateElements = new UpdateElements(this, breakPaddle, ball, physicsEngine, root);
+        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, physicsEngine, root);
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
@@ -399,7 +397,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private void initGameEngine(){
         gameEngine = new GameEngine();
-        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, updateElements);
+        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, elementsUpdater);
         gameEngine.setFps(120);
         gameEngine.start();
     }

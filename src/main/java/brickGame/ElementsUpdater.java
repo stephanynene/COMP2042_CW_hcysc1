@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 
-public class UpdateElements implements GameEngine.OnAction {
+public class ElementsUpdater implements GameEngine.OnAction {
 
     private Main game;
     private BreakPaddle breakPaddle;
@@ -21,7 +21,7 @@ public class UpdateElements implements GameEngine.OnAction {
     private PhysicsEngine physicsEngine;
     private Pane root;
 
-    public UpdateElements(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
+    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
