@@ -31,7 +31,6 @@ public class BlockView {
         rect.setFill(pattern);
     }
 
-
     private void setOnImageType(int type, Color color) {
         if (type == GameConstants.BLOCK_CHOCO.getIntValue()) {
             setBlockImage(GameConstants.CHOCO_BLOCK_IMG.getStringValue());

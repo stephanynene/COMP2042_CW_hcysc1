@@ -1,7 +1,8 @@
-package brickGame.gameEngine;
+package brickGame.controller;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
+import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.BreakPaddle;
@@ -86,6 +87,9 @@ public class PhysicsEngine {
                 if (game.getHeart() == 0) {
                     new Score().showGameOver(game);
                     gameEngine.stop();
+                    game.setGoDownBall(false);
+                    game.setGoRightBall(false);
+                    return;
                 }
 
             }

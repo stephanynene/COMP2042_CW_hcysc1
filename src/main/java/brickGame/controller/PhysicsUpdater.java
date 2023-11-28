@@ -1,7 +1,9 @@
-package brickGame.gameEngine;
+package brickGame.controller;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
+import brickGame.controller.PhysicsEngine;
+import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Bonus;

@@ -94,16 +94,4 @@ public class GameSaver {
             }
         }).start();
     }
-
-    // Method for saving/writing  all game states
-
-    public void writeGameState(){
-
-    }
-
-
-
-
-
-
 }

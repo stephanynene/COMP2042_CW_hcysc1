@@ -1,5 +1,6 @@
 package brickGame.gameEngine;
-import brickGame.ElementsUpdater;
+import brickGame.controller.ElementsUpdater;
+import brickGame.controller.PhysicsUpdater;
 
 public class GameEngine {
 
