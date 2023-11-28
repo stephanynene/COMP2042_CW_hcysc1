@@ -114,7 +114,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
         Platform.runLater(() -> game.getChocos().add(choco));
     }
 
-    // Handle hit to star block
     private void handleStarBlockHit() {
         // Set gold ball status and update UI
         game.setGoldTime(game.getTime());
@@ -123,8 +122,26 @@ public class ElementsUpdater implements GameEngine.OnAction {
         System.out.println("gold ball");
         root.getStyleClass().add("goldRoot");
         game.setGoldStatus(true);
+
+        // Use Animation Timeline to reset gold status after a certain duration
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
+            resetGoldStatus();
+        }));
+        timeline.setCycleCount(1);  // Make sure it runs only once
+        timeline.play();
     }
 
+    private void resetGoldStatus() {
+        // Reset gold status
+        Platform.runLater(() -> {
+            if (root != null) {
+                root.getStyleClass().remove("goldRoot");
+            }
+            ball.setFill(new ImagePattern(new Image("ball.png")));
+            root.getStyleClass().remove("goldRoot");
+            game.setGoldStatus(false);
+        });
+    }
     // Update position of chocos
     private void updateChocoList() {
         List<Bonus> chocos = new ArrayList<>(game.getChocos());
