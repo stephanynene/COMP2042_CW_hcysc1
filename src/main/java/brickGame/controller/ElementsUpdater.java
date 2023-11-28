@@ -9,10 +9,14 @@ import brickGame.gameObjects.Block;
 import brickGame.gameObjects.Bonus;
 import brickGame.gameObjects.BreakPaddle;
 import brickGame.scoring.Score;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
+import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +28,18 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private PhysicsEngine physicsEngine;
     private Pane root;
 
+    private Timeline chocoListTimeline;
+
     public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
         this.physicsEngine = physicsEngine;
         this.root = root;
+
+        chocoListTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocoList()));
+        chocoListTimeline.setCycleCount(Timeline.INDEFINITE);
+        chocoListTimeline.play();
     }
 
     public void onUpdate() {
@@ -51,7 +61,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
         ball.getBallView().setCenterY(ball.getyBall());
 
         // Update positions of bonus item
-        updateChocos();
+        updateChocoList();
     }
 
     // Check if ball is within vertical game bounds
@@ -116,12 +126,15 @@ public class ElementsUpdater implements GameEngine.OnAction {
     }
 
     // Update position of chocos
-    private void updateChocos() {
-        // Create a copy of the list to avoid ConcurrentModificationException
-        List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
-
-        for (Bonus choco : chocosCopy) {
-            choco.choco.setY(choco.y);
+    private void updateChocoList() {
+        List<Bonus> chocos = new ArrayList<>(game.getChocos());
+        for (Bonus choco : chocos) {
+            if (choco.taken) {
+                // Remove taken choco from the game
+                game.getChocos().remove(choco);
+                // Remove choco from the UI on the JavaFX thread
+                Platform.runLater(() -> root.getChildren().remove(choco.choco));
+            }
         }
     }
 

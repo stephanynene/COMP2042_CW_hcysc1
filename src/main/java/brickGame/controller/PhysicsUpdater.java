@@ -8,12 +8,16 @@ import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Bonus;
 import brickGame.gameObjects.BreakPaddle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PhysicsUpdater implements GameEngine.OnAction {
     private Main game;
@@ -22,12 +26,18 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     private Bonus bonus;
     private BreakPaddle breakPaddle;
     private PhysicsEngine physicsEngine;
+
+    private Timeline chocoTimeline;
     public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, PhysicsEngine physicsEngine ) {
         this.game = game;
         this.ball = ball;
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.physicsEngine = physicsEngine;
+
+        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
+        chocoTimeline.setCycleCount(Timeline.INDEFINITE);
+        chocoTimeline.play();
     }
 
     @Override
@@ -54,14 +64,14 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     }
 
     private void updateChocos() {
-        for (Bonus choco : game.getChocos()) {
+        Iterator<Bonus> iterator = game.getChocos().iterator();
+        while (iterator.hasNext()) {
+            Bonus choco = iterator.next();
             if (shouldSkipChocoUpdate(choco)) {
                 continue;
             }
-            Platform.runLater(() -> {
-                handleChocoCollision(choco);
-                updateChocoPosition(choco);
-            });
+            handleChocoCollision(choco);
+            updateChocoPosition(choco);
         }
     }
 
@@ -79,7 +89,8 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         new Score().show(choco.x, choco.y, 3, game);
     }
     private void updateChocoPosition(Bonus choco) {
-        choco.y += ((game.getTime() - choco.timeCreated) / 1000.000) + 1.000;
+        choco.y += ((game.getTime() - choco.timeCreated) / 1000.0) + 1.0;
+        Platform.runLater(() -> choco.choco.setY(choco.y));
     }
     private boolean shouldSkipChocoUpdate(Bonus choco) {
         return choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken;
