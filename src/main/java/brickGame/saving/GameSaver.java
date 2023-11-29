@@ -66,13 +66,17 @@ public class GameSaver {
                     outputStream.writeBoolean(gameInstance.isColideToLeftBlock());
                     outputStream.writeBoolean(gameInstance.isColideToTopBlock());
 
-                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<BlockSerializable>();
-                    for (Block block : gameInstance.getBlocks()) {
-                        if (block.isDestroyed) {
-                            continue;
+                    ArrayList<BlockSerializable> blockSerializables = new ArrayList<>();
+
+                    synchronized (gameInstance.getBlocks()) {
+                        for (Block block : gameInstance.getBlocks()) {
+                            if (block.isDestroyed) {
+                                continue;
+                            }
+                            blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
                         }
-                        blockSerializables.add(new BlockSerializable(block.row, block.column, block.type));
                     }
+
 
                     outputStream.writeObject(blockSerializables);
 

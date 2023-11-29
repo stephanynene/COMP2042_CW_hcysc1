@@ -18,6 +18,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PhysicsUpdater implements GameEngine.OnAction {
     private Main game;
@@ -34,10 +35,10 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.physicsEngine = physicsEngine;
-
-        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
-        chocoTimeline.setCycleCount(Timeline.INDEFINITE);
-        chocoTimeline.play();
+//
+//        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
+//        chocoTimeline.setCycleCount(Timeline.INDEFINITE);
+//        chocoTimeline.play();
     }
 
     @Override
@@ -64,16 +65,25 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     }
 
     private void updateChocos() {
-        Iterator<Bonus> iterator = game.getChocos().iterator();
-        while (iterator.hasNext()) {
-            Bonus choco = iterator.next();
-            if (shouldSkipChocoUpdate(choco)) {
-                continue;
+        // Use iterator and chocoscopy
+        synchronized (game.getChocos()) {
+            List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
+            Iterator<Bonus> iterator = chocosCopy.iterator();
+            while (iterator.hasNext()) {
+                Bonus choco = iterator.next();
+                if (shouldSkipChocoUpdate(choco)) {
+                    continue;
+                }
+                handleChocoCollision(choco);
+                updateChocoPosition(choco);
             }
-            handleChocoCollision(choco);
-            updateChocoPosition(choco);
+            // Update the game's chocos list with the modified list
+            game.getChocos().clear();
+            game.getChocos().addAll(chocosCopy);
         }
     }
+
+
 
     private void handleChocoCollision(Bonus choco) {
         if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + GameConstants.BREAK_WIDTH.getIntValue()

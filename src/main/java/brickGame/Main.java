@@ -312,6 +312,8 @@ public class Main extends Application implements GameEngine.OnAction {
             }
 
             drawBlocks();
+
+
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
             ballView = ball.getBallView();
@@ -352,6 +354,8 @@ public class Main extends Application implements GameEngine.OnAction {
 
         for (Block block : blocks) {
             root.getChildren().add(block.getBlockView().getRect());
+//            System.out.println("Current thread: " + Thread.currentThread().getName());
+
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
@@ -414,9 +418,12 @@ public class Main extends Application implements GameEngine.OnAction {
     }
     private void drawBlocks() {
         for (Block block : blocks) {
+
             BlockView blockView = block.getBlockView();
             blockViews.add(blockView);
             root.getChildren().add(blockView.getRect());
+
+
         }
     }
     private void loadGame() {
@@ -456,6 +463,8 @@ public class Main extends Application implements GameEngine.OnAction {
             int r = new Random().nextInt(200);
             Color[] colors = GameConstants.COLORS.getValue();
             blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
+
+
         }
 
         try {

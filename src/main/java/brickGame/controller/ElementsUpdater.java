@@ -18,6 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ElementsUpdater implements GameEngine.OnAction {
@@ -75,12 +76,16 @@ public class ElementsUpdater implements GameEngine.OnAction {
     }
 
     private void handleBlockCollisions() {
-        for (Block block : game.getBlocks()) {
-            int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
-            if (hitCode != GameConstants.NO_HIT.getIntValue()) {
-                // Increase the score and handle the specific block hit
-                game.setScore(game.getScore() + 1);
-                handleBlockHit(block);
+        // Synchronize access to the game's blocks list
+        synchronized (game.getBlocks()) {
+            List<Block> blocksCopy = new ArrayList<>(game.getBlocks());
+            for (Block block : blocksCopy) {
+                int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
+                if (hitCode != GameConstants.NO_HIT.getIntValue()) {
+                    // Increase the score and handle the specific block hit
+                    game.setScore(game.getScore() + 1);
+                    handleBlockHit(block);
+                }
             }
         }
     }
@@ -108,27 +113,35 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private void handleChocoBlockHit(Block block) {
         final Bonus choco = new Bonus(block.row, block.column);
         choco.timeCreated = game.getTime();
-        // Add choco to UI
-        Platform.runLater(() -> root.getChildren().add(choco.choco));
-        // Update game state on JavaFX thread
-        Platform.runLater(() -> game.getChocos().add(choco));
+
+        // Use synchronized block to add choco to UI and update game state
+        synchronized (game.getChocos()) {
+            Platform.runLater(() -> root.getChildren().add(choco.choco));
+            game.getChocos().add(choco);
+        }
     }
 
-    private void handleStarBlockHit() {
-        // Set gold ball status and update UI
-        game.setGoldTime(game.getTime());
-        ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-        ball.setFill(imagePattern);
-        System.out.println("gold ball");
-        root.getStyleClass().add("goldRoot");
-        game.setGoldStatus(true);
 
-        // Use Animation Timeline to reset gold status after a certain duration
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
-            resetGoldStatus();
-        }));
-        timeline.setCycleCount(1);  // Make sure it runs only once
-        timeline.play();
+    private void handleStarBlockHit() {
+        Platform.runLater(() -> {
+            // UI-related code here
+            game.setGoldTime(game.getTime());
+            ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
+            ball.setFill(imagePattern);
+            Image goldBallImage = new Image("goldball.png");
+            System.out.println("Image width: " + goldBallImage.getWidth());
+            System.out.println("Image height: " + goldBallImage.getHeight());
+            root.getStyleClass().add("goldRoot");
+            game.setGoldStatus(true);
+
+            // Use Animation Timeline to reset gold status after a certain duration
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
+                resetGoldStatus();
+            }));
+            timeline.setCycleCount(1);  // Make sure it runs only once
+            timeline.play();
+        });
+
     }
 
     private void resetGoldStatus() {
@@ -144,16 +157,21 @@ public class ElementsUpdater implements GameEngine.OnAction {
     }
     // Update position of chocos
     private void updateChocoList() {
-        List<Bonus> chocos = new ArrayList<>(game.getChocos());
-        for (Bonus choco : chocos) {
-            if (choco.taken) {
-                // Remove taken choco from the game
-                game.getChocos().remove(choco);
-                // Remove choco from the UI on the JavaFX thread
-                Platform.runLater(() -> root.getChildren().remove(choco.choco));
+        synchronized (game.getChocos()) {
+            Iterator<Bonus> iterator = game.getChocos().iterator();
+            while (iterator.hasNext()) {
+                Bonus choco = iterator.next();
+                if (choco.taken) {
+                    // Remove taken choco from the game
+                    iterator.remove();
+                    // Remove choco from the UI on the JavaFX thread
+                    Platform.runLater(() -> root.getChildren().remove(choco.choco));
+                }
             }
         }
     }
+
+
 
 
     @Override
