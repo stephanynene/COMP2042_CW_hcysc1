@@ -54,7 +54,9 @@ public class PhysicsUpdater implements GameEngine.OnAction {
 
     public void onPhysicsUpdate() {
         game.checkDestroyedCount();
-        physicsEngine.setPhysicsToBall();
+       physicsEngine.setPhysicsToBall();
+
+
         updateGoldStatus();
         updateChocos();
 
@@ -65,22 +67,52 @@ public class PhysicsUpdater implements GameEngine.OnAction {
 
     }
 
+//    private void updateChocos() {
+//        // Use iterator and chocoscopy
+//        synchronized (game.getChocos()) {
+//            List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
+//            Iterator<Bonus> iterator = chocosCopy.iterator();
+//            while (iterator.hasNext()) {
+//                Bonus choco = iterator.next();
+//                if (shouldSkipChocoUpdate(choco)) {
+//                    continue;
+//                }
+//                handleChocoCollision(choco);
+//                updateChocoPosition(choco);
+//            }
+//            // Update the game's chocos list with the modified list
+//            game.getChocos().clear();
+//            game.getChocos().addAll(chocosCopy);
+//        }
+//    }
+
     private void updateChocos() {
-        // Use iterator and chocoscopy
         synchronized (game.getChocos()) {
-            List<Bonus> chocosCopy = new ArrayList<>(game.getChocos());
-            Iterator<Bonus> iterator = chocosCopy.iterator();
-            while (iterator.hasNext()) {
-                Bonus choco = iterator.next();
+            List<Bonus> chocos = game.getChocos();
+            List<Bonus> chocosToRemove = new ArrayList<>();
+
+            for (int i = 0; i < chocos.size(); i++) {
+                Bonus choco = chocos.get(i);
                 if (shouldSkipChocoUpdate(choco)) {
                     continue;
                 }
                 handleChocoCollision(choco);
                 updateChocoPosition(choco);
+
+                if (choco.taken) {
+                    chocosToRemove.add(choco);
+                }
             }
-            // Update the game's chocos list with the modified list
-            game.getChocos().clear();
-            game.getChocos().addAll(chocosCopy);
+
+            // Remove taken chocos from the game
+            chocos.removeAll(chocosToRemove);
+
+            // Remove chocos from the UI on the JavaFX thread
+            Platform.runLater(() -> {
+                for (Bonus choco : chocosToRemove) {
+                    root.getChildren().remove(choco.choco);
+                }
+            });
         }
     }
 

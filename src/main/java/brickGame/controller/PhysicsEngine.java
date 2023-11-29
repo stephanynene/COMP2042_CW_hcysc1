@@ -6,6 +6,7 @@ import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.BreakPaddle;
+import javafx.application.Platform;
 
 public class PhysicsEngine {
 
@@ -87,14 +88,14 @@ public class PhysicsEngine {
 
                 if (game.getHeart() == 0) {
                     new Score().showGameOver(game);
-                    gameEngine.stop();
+                    if (gameEngine != null) {
+                        gameEngine.stop();
+                    }
                     game.setGoDownBall(false);
                     game.setGoRightBall(false);
                     return;
                 }
-
             }
-            //return;
         }
 
         // Check if the ball hits the right boundary

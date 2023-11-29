@@ -153,21 +153,35 @@ public class ElementsUpdater implements GameEngine.OnAction {
         });
     }
     // Update position of chocos
+//    private void updateChocoList() {
+//        synchronized (game.getChocos()) {
+//            Iterator<Bonus> iterator = game.getChocos().iterator();
+//            while (iterator.hasNext()) {
+//                Bonus choco = iterator.next();
+//                if (choco.taken) {
+//                    // Remove taken choco from the game
+//                    iterator.remove();
+//                    // Remove choco from the UI on the JavaFX thread
+//                    Platform.runLater(() -> root.getChildren().remove(choco.choco));
+//                }
+//            }
+//        }
+//    }
+
     private void updateChocoList() {
         synchronized (game.getChocos()) {
-            Iterator<Bonus> iterator = game.getChocos().iterator();
-            while (iterator.hasNext()) {
-                Bonus choco = iterator.next();
+            List<Bonus> chocos = game.getChocos();
+            for (int i = chocos.size() - 1; i >= 0; i--) {
+                Bonus choco = chocos.get(i);
                 if (choco.taken) {
                     // Remove taken choco from the game
-                    iterator.remove();
+                    chocos.remove(i);
                     // Remove choco from the UI on the JavaFX thread
                     Platform.runLater(() -> root.getChildren().remove(choco.choco));
                 }
             }
         }
     }
-
 
 
 

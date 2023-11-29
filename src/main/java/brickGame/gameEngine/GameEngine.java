@@ -105,6 +105,7 @@ private synchronized void Update() {
     }
 
     public void start() {
+
         time = 0;
         Initialize();
         Update();
