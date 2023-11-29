@@ -472,63 +472,6 @@ public class Main extends Application implements GameEngine.OnAction {
 
     }
 
-//    private void nextLevel() {
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    velocityX = 1.000;
-//
-//                    gameEngine.stop();
-//                    physicsEngine.resetCollideFlags();
-//                    goDownBall = true;
-//
-//                    isGoldStatus = false;
-//                    isExistHeartBlock = false;
-//
-//                    hitTime = 0;
-//                    time = 0;
-//                    goldTime = 0;
-//
-//                    gameEngine.stop();
-//                    blocks.clear();
-//                    chocos.clear();
-//                    destroyedBlockCount = 0;
-//                    start(primaryStage);
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//    }
-
-//    public void restartGame() {
-//
-//        try {
-//            level = 0;
-//            heart = 3;
-//            score = 0;
-//            velocityX = 1.000;
-//            destroyedBlockCount = 0;
-//            physicsEngine.resetCollideFlags();
-//            goDownBall = true;
-//
-//            isGoldStatus = false;
-//            isExistHeartBlock = false;
-//            hitTime = 0;
-//            time = 0;
-//            goldTime = 0;
-//
-//            blocks.clear();
-//            chocos.clear();
-//
-//            start(primaryStage);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
         public void restartGameLevel(){
         levelManager.restartGame();
  }
