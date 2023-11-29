@@ -35,6 +35,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.physicsEngine = physicsEngine;
+
 //
 //        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
 //        chocoTimeline.setCycleCount(Timeline.INDEFINITE);

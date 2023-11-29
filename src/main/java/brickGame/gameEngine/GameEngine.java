@@ -8,11 +8,9 @@ public class GameEngine {
     private int fps = 15;
     private Thread updateThread;
     private Thread physicsThread;
-    public boolean isStopped = true;
-
+    private boolean isStopped = true;
     private PhysicsUpdater physicsUpdater;
     private ElementsUpdater elementsUpdater;
-
     private volatile boolean stopRequested = false;
 
 

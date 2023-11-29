@@ -2,6 +2,7 @@ package brickGame.scoring;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
+import brickGame.controller.LevelManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +11,6 @@ import javafx.scene.control.Label;
 //import sun.plugin2.message.Message;
 
 public class Score {
-
 
     private int  score    = 0;
     public void show(final double x, final double y, int score, final Main main) {
@@ -84,7 +84,7 @@ Label label = ScoreLabel.createLabel(message, 220, 340, main);
                 restart.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        main.restartGame();
+                        main.restartGameLevel();
                     }
                 });
 

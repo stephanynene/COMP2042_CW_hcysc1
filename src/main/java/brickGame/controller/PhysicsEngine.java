@@ -14,11 +14,12 @@ public class PhysicsEngine {
     private BreakPaddle breakPaddle;
     private GameEngine gameEngine;
 
-    public PhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, GameEngine gameEngine) {
+    public PhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, GameEngine gameEnginer) {
         this.game = game;
         this.ball = ball;
         this.breakPaddle = breakPaddle;
         this.gameEngine = gameEngine;
+
     }
     public void setPhysicsToBall() {
         calculateVelocity();

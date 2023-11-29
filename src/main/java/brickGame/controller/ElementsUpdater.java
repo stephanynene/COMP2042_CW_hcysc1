@@ -124,22 +124,22 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void handleStarBlockHit() {
         Platform.runLater(() -> {
+
             game.setGoldTime(game.getTime());
-            Image goldBallImage = new Image("goldball.png");
-            ImagePattern imagePattern = new ImagePattern(goldBallImage);
+            ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
             ball.setFill(imagePattern);
+            Image goldBallImage = new Image("goldball.png");
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
 
             // Use Animation Timeline to reset gold status after a certain duration
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.millis(5000), event -> resetGoldStatus())
-            );
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
+                resetGoldStatus();
+            }));
             timeline.setCycleCount(1);  // Make sure it runs only once
             timeline.play();
         });
     }
-
 
     private void resetGoldStatus() {
         // Reset gold status
