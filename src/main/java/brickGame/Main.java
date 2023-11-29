@@ -293,6 +293,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private ElementsUpdater elementsUpdater;
     private PhysicsEngine physicsEngine;
     private InputHandler inputHandler;
+    private BlockManager blockManager;
 
     private Board board;
     private Score scoreManager = new Score();
@@ -311,7 +312,8 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
 
-            drawBlocks();
+            blockManager = new BlockManager(root);
+            blockManager.drawBlocks();
 
 
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
@@ -416,16 +418,14 @@ public class Main extends Application implements GameEngine.OnAction {
             nextLevel();
         }
     }
-    private void drawBlocks() {
-        for (Block block : blocks) {
-
-            BlockView blockView = block.getBlockView();
-            blockViews.add(blockView);
-            root.getChildren().add(blockView.getRect());
-
-
-        }
-    }
+//    private void drawBlocks() {
+//        for (Block block : blocks) {
+//
+//            BlockView blockView = block.getBlockView();
+//            blockViews.add(blockView);
+//            root.getChildren().add(blockView.getRect());
+//        }
+//    }
     private void loadGame() {
 
         LoadSave loadSave = new LoadSave();
