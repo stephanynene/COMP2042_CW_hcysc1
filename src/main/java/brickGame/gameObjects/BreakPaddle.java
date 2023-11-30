@@ -45,7 +45,6 @@ public class BreakPaddle {
     }
 
     public void moveRight() {
-        // Adjust speed as needed
         double speed = 10.0;
         xBreak = Math.min(xBreak + speed, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
         centerBreakX = xBreak + halfBreakWidth;
@@ -53,7 +52,6 @@ public class BreakPaddle {
     }
 
     public void moveLeft() {
-        // Adjust speed as needed
         double speed = 10.0;
         xBreak = Math.max(xBreak - speed, 0);
         centerBreakX = xBreak + halfBreakWidth;
