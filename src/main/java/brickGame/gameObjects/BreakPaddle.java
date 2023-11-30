@@ -1,10 +1,14 @@
 package brickGame.gameObjects;
 import brickGame.constants.GameConstants;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class BreakPaddle {
 
     private BreakPaddleView breakPaddleView;
+
     public void setxBreak(double xBreak) {
         this.xBreak = xBreak;
     }
@@ -35,71 +39,38 @@ public class BreakPaddle {
 
     public Rectangle rect;
 
-    public BreakPaddleView getBreakPaddleView() {
 
-        return breakPaddleView;
-    }
+
+    private static final double SPEED = 13.0;
+    private static final Duration ANIMATION_DURATION = Duration.millis(16);
 
 
     public void initBreak() {
-    rect = new Rectangle();
-    breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
+        rect = new Rectangle();
+        breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
     }
 
-
-    //    Split into two methods
     public void moveRight() {
-        //System.out.println("Move right");
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == (GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue())) {
-                        return;
-                    }
-                    xBreak++;
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
+        animateMovement(SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
     }
 
-
-
-     public void moveLeft() {
-      //   System.out.println("Move left");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == 0) {
-                        return;
-                    }
-                    xBreak--;
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
+    public void moveLeft() {
+        animateMovement(-SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
     }
 
+    private void animateMovement(double deltaX, double maxX) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(ANIMATION_DURATION, e -> {
+                    xBreak = Math.min(Math.max(xBreak + deltaX, 0), maxX);
+                    centerBreakX = xBreak + halfBreakWidth;
+                    updateBreakPaddleView();
+                })
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
+    }
 
+    private void updateBreakPaddleView() {
+        breakPaddleView.updatePosition(xBreak, yBreak);
+    }
 }

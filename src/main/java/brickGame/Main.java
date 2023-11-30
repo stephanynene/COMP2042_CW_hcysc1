@@ -2,9 +2,11 @@ package brickGame;
 
 import brickGame.constants.BlockSerializable;
 import brickGame.constants.GameConstants;
+import brickGame.controller.ElementsUpdater;
+import brickGame.controller.LevelManager;
 import brickGame.gameEngine.GameEngine;
-import brickGame.gameEngine.PhysicsEngine;
-import brickGame.gameEngine.PhysicsUpdater;
+import brickGame.controller.ConcretePhysicsEngine;
+import brickGame.controller.PhysicsUpdater;
 import brickGame.input.InputHandler;
 import brickGame.saving.LoadSave;
 import brickGame.scoring.Score;
@@ -55,8 +57,6 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private int destroyedBlockCount = 0;
-
-
 
     public int getHeart() {
         return heart;
@@ -280,7 +280,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private boolean loadFromSave = false;
 
-    Stage  primaryStage;
+    public Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
 
@@ -290,11 +290,13 @@ public class Main extends Application implements GameEngine.OnAction {
     private GameEngine gameEngine;
     private PhysicsUpdater physicsUpdater;
     private ElementsUpdater elementsUpdater;
-    private PhysicsEngine physicsEngine;
+    private ConcretePhysicsEngine concretePhysicsEngine;
     private InputHandler inputHandler;
+    private BlockManager blockManager;
 
+    private LevelManager levelManager;
     private Board board;
-    private Score scoreManager = new Score();
+    private Score scoreManager;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -310,7 +312,10 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
 
-            drawBlocks();
+            blockManager = new BlockManager(root);
+            blockManager.drawBlocks();
+
+
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
             ballView = ball.getBallView();
@@ -321,7 +326,6 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-            physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
             inputHandler = new InputHandler(breakPaddle, ball, this);
 
             load = new Button("Resume Load Game");
@@ -340,9 +344,6 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
-        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
-        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, physicsEngine, root);
-
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
@@ -351,6 +352,8 @@ public class Main extends Application implements GameEngine.OnAction {
 
         for (Block block : blocks) {
             root.getChildren().add(block.getBlockView().getRect());
+
+
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
@@ -365,14 +368,13 @@ public class Main extends Application implements GameEngine.OnAction {
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-                initGameEngine();
+                initGameComponents();
             }
 
             load.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     loadGame();
-
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
@@ -381,14 +383,13 @@ public class Main extends Application implements GameEngine.OnAction {
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    initGameEngine();
-
+                    initGameComponents();
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
             });
         } else {
-            initGameEngine();
+            initGameComponents();
             loadFromSave = false;
         }
     }
@@ -397,28 +398,33 @@ public class Main extends Application implements GameEngine.OnAction {
         launch(args);
     }
 
-    private void initGameEngine(){
-        gameEngine = new GameEngine();
-        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, elementsUpdater);
+
+    private void initGameComponents(){
+        // Create instances of classes that implement the PhysicsEngine interface
+        concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle);
+
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
+        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root);
+        levelManager = new LevelManager(this, concretePhysicsEngine);
+
+        // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
+        gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
         gameEngine.setFps(120);
         gameEngine.start();
+
+        // Set game engine in the physics engine and level manager
+        ((ConcretePhysicsEngine) concretePhysicsEngine).setPEGameEngine(gameEngine);
+        ((LevelManager) levelManager).setLMGameEngine(gameEngine);
+
+
     }
 
     public void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size()) {
-            //TODO win level todo...
-            //System.out.println("You Win");
+            Platform.runLater(() -> levelManager.nextLevel());
+        }
+    }
 
-            nextLevel();
-        }
-    }
-    private void drawBlocks() {
-        for (Block block : blocks) {
-            BlockView blockView = block.getBlockView();
-            blockViews.add(blockView);
-            root.getChildren().add(blockView.getRect());
-        }
-    }
     private void loadGame() {
 
         LoadSave loadSave = new LoadSave();
@@ -456,6 +462,8 @@ public class Main extends Application implements GameEngine.OnAction {
             int r = new Random().nextInt(200);
             Color[] colors = GameConstants.COLORS.getValue();
             blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
+
+
         }
 
         try {
@@ -467,63 +475,9 @@ public class Main extends Application implements GameEngine.OnAction {
 
     }
 
-    private void nextLevel() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    velocityX = 1.000;
-
-                    gameEngine.stop();
-                    physicsEngine.resetCollideFlags();
-                    goDownBall = true;
-
-                    isGoldStatus = false;
-                    isExistHeartBlock = false;
-
-                    hitTime = 0;
-                    time = 0;
-                    goldTime = 0;
-
-                    gameEngine.stop();
-                    blocks.clear();
-                    chocos.clear();
-                    destroyedBlockCount = 0;
-                    start(primaryStage);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void restartGame() {
-
-        try {
-            level = 0;
-            heart = 3;
-            score = 0;
-            velocityX = 1.000;
-            destroyedBlockCount = 0;
-            physicsEngine.resetCollideFlags();
-            goDownBall = true;
-
-            isGoldStatus = false;
-            isExistHeartBlock = false;
-            hitTime = 0;
-            time = 0;
-            goldTime = 0;
-
-            blocks.clear();
-            chocos.clear();
-
-            start(primaryStage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    public void restartGameLevel(){
+        levelManager.restartGame();
+ }
 
     //Updating score and heart labels - for use in UpdateElements class
     public void updateScoreLabel(int newScore) {
@@ -550,5 +504,12 @@ public class Main extends Application implements GameEngine.OnAction {
     @Override
     public void onTime(long time) {
         this.time = time;
+    }
+    public void clearBlocks() {
+        blocks.clear();
+    }
+
+    public void clearChocos() {
+        chocos.clear();
     }
 }

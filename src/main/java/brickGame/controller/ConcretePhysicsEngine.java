@@ -1,24 +1,30 @@
-package brickGame.gameEngine;
+package brickGame.controller;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
+import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.BreakPaddle;
 
-public class PhysicsEngine {
+public class ConcretePhysicsEngine implements PhysicsEngine {
 
     private Main game;
     private Ball ball;
     private BreakPaddle breakPaddle;
     private GameEngine gameEngine;
 
-    public PhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, GameEngine gameEngine) {
+    public ConcretePhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle) {
         this.game = game;
         this.ball = ball;
         this.breakPaddle = breakPaddle;
-        this.gameEngine = gameEngine;
     }
+
+    public void setPEGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+        System.out.println(gameEngine);
+    }
+
     public void setPhysicsToBall() {
         calculateVelocity();
         ballPositioning();
@@ -28,7 +34,7 @@ public class PhysicsEngine {
         wallCollisons();
         ballCollision();
     }
-    private void ballCollision(){
+    public void ballCollision(){
         if (game.isColideToRightBlock()) {
             game.setGoRightBall(true);
         }
@@ -46,7 +52,7 @@ public class PhysicsEngine {
         }
     }
 
-    private void wallCollisons(){
+    public void wallCollisons(){
 
         if (game.isColideToRightWall()) {
             game.setGoRightBall(false);
@@ -59,12 +65,12 @@ public class PhysicsEngine {
     }
 
     // Calculate velocity based on time and hit time
-    private void calculateVelocity(){
+    public void calculateVelocity(){
         game.setVelocity(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
     }
 
     //Handle boundary collisions
-    private void boundaryCollisons(){
+    public void boundaryCollisons(){
 
         // Check if  ball hits the top boundary
         if (ball.getyBall() <= 0) {
@@ -85,11 +91,14 @@ public class PhysicsEngine {
 
                 if (game.getHeart() == 0) {
                     new Score().showGameOver(game);
-                    gameEngine.stop();
+//                    if (gameEngine != null) {
+                        gameEngine.stop();
+//                    }
+//                    game.setGoDownBall(false);
+//                    game.setGoRightBall(false);
+                    return;
                 }
-
             }
-            //return;
         }
 
         // Check if the ball hits the right boundary
@@ -109,7 +118,7 @@ public class PhysicsEngine {
 
 
     //Update ball positioning
-    private void ballPositioning(){
+    public void ballPositioning(){
         if (game.isGoDownBall()) {
             double currentY = ball.getyBall(); // Get the current yBall value
             currentY += game.getVelocityY(); // Update the yBall value
@@ -133,7 +142,7 @@ public class PhysicsEngine {
 
 
     //Handle collisions to break paddle
-    private void breakCollisonDirection(){
+    public void breakCollisonDirection(){
         if (game.isColideToBreak()) {
             if (game.isColideToBreakAndMoveToRight()) {
                 game.setGoRightBall(true);
@@ -143,7 +152,7 @@ public class PhysicsEngine {
         }
     }
 
-    private void handleBreakCollision(){
+    public void handleBreakCollision(){
         // Check if the ball collides with the BreakPaddle
         if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
             //System.out.println("Colide1");

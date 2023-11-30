@@ -16,4 +16,6 @@ module brickGame {
     opens brickGame.gameEngine to javafx.fxml;
     exports brickGame.constants;
     opens brickGame.constants to javafx.fxml;
+    exports brickGame.controller;
+    opens brickGame.controller to javafx.fxml;
 }
