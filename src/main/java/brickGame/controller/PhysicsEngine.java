@@ -88,11 +88,11 @@ public class PhysicsEngine {
 
                 if (game.getHeart() == 0) {
                     new Score().showGameOver(game);
-                    if (gameEngine != null) {
+//                    if (gameEngine != null) {
                         gameEngine.stop();
-                    }
-                    game.setGoDownBall(false);
-                    game.setGoRightBall(false);
+//                    }
+//                    game.setGoDownBall(false);
+//                    game.setGoRightBall(false);
                     return;
                 }
             }
