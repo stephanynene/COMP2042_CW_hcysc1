@@ -358,7 +358,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         for (Block block : blocks) {
             root.getChildren().add(block.getBlockView().getRect());
-//            System.out.println("Current thread: " + Thread.currentThread().getName());
+
 
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
