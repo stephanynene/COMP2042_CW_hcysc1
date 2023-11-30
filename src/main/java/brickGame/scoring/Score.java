@@ -3,108 +3,83 @@ package brickGame.scoring;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.controller.LevelManager;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-//import sun.plugin2.message.Message;
+import javafx.util.Duration;
 
 public class Score {
 
-    private int  score    = 0;
+    private int score = 0;
+
     public void show(final double x, final double y, int score, final Main main) {
-        String sign;
-        if (score >= 0) {
-            sign = "+";
-        } else {
-            sign = "";
+        String sign = (score >= 0) ? "+" : "";
+        Label label = ScoreLabel.createLabel(sign + score, x, y, main);
+        Platform.runLater(() -> main.root.getChildren().add(label));
+
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < 21; i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 15), event -> {
+                label.setScaleX(finalI);
+                label.setScaleY(finalI);
+                label.setOpacity((20 - finalI) / 20.0);
+            });
+            timeline.getKeyFrames().add(keyFrame);
         }
-        Label label = ScoreLabel.createLabel(sign + score, x,y, main);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.root.getChildren().add(label);
-            }
+
+        timeline.setOnFinished(event -> {
+            System.out.println("Animation finished");
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) {
-                    try {
-                        label.setScaleX(i);
-                        label.setScaleY(i);
-                        label.setOpacity((20 - i) / 20.0);
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        timeline.play();
     }
 
     public void showMessage(String message, final Main main) {
-Label label = ScoreLabel.createLabel(message, 220, 340, main);
+        Label label = ScoreLabel.createLabel(message, 220, 340, main);
+        Platform.runLater(() -> main.root.getChildren().add(label));
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                main.root.getChildren().add(label);
-            }
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < 21; i++) {
+            int finalI = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 15), event -> {
+                label.setScaleX(Math.abs(finalI - 10));
+                label.setScaleY(Math.abs(finalI - 10));
+                label.setOpacity((20 - finalI) / 20.0);
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        timeline.setOnFinished(event -> {
+            System.out.println("Animation finished");
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) {
-                    try {
-                        label.setScaleX(Math.abs(i-10));
-                        label.setScaleY(Math.abs(i-10));
-                        label.setOpacity((20 - i) / 20.0);
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        timeline.play();
     }
 
     public void showGameOver(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Label label = ScoreLabel.createLabel(GameConstants.GAME_OVER_MESSAGE.getStringValue(),200,250, main);
-                label.setScaleX(2);
-                label.setScaleY(2);
+        Platform.runLater(() -> {
+            Label label = ScoreLabel.createLabel(GameConstants.GAME_OVER_MESSAGE.getStringValue(), 200, 250, main);
+            label.setScaleX(2);
+            label.setScaleY(2);
 
-                Button restart = ScoreLabel.createButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220,300,main);
-                restart.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        main.restartGameLevel();
-                    }
-                });
+            Button restart = ScoreLabel.createButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220, 300, main);
+            restart.setOnAction(event -> main.restartGameLevel());
 
-                main.root.getChildren().addAll(label, restart);
-
-            }
+            main.root.getChildren().addAll(label, restart);
         });
     }
 
     public void showWin(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200,250,main);
-                label.setScaleX(2);
-                label.setScaleY(2);
-                main.root.getChildren().addAll(label);
-
-            }
+        Platform.runLater(() -> {
+            Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200, 250, main);
+            label.setScaleX(2);
+            label.setScaleY(2);
+            main.root.getChildren().addAll(label);
         });
     }
 }

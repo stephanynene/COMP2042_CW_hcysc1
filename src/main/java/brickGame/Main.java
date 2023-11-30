@@ -472,9 +472,10 @@ public class Main extends Application implements GameEngine.OnAction {
 
     }
 
-        public void restartGameLevel(){
+    public void restartGameLevel(){
         levelManager.restartGame();
  }
+
     //Updating score and heart labels - for use in UpdateElements class
     public void updateScoreLabel(int newScore) {
         scoreLabel.setText("Score: " + newScore);

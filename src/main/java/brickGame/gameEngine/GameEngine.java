@@ -10,7 +10,7 @@ public class GameEngine {
 
     private OnAction onAction;
     private int fps = 15;
-    private boolean isStopped = true;
+//    private boolean isStopped = true;
     private PhysicsUpdater physicsUpdater;
     private ElementsUpdater elementsUpdater;
 
@@ -46,14 +46,14 @@ public class GameEngine {
     public void start() {
         Initialize();
         Update();
-        isStopped = false;
+//        isStopped = false;
     }
 
     public void stop() {
-        if (!isStopped) {
-            isStopped = true;
+//        if (!isStopped) {
+//            isStopped = true;
             updateTimeline.stop();
-        }
+//        }
     }
 
     public interface OnAction {

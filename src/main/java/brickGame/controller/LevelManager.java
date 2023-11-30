@@ -7,7 +7,6 @@ public class LevelManager {
 
     private Main game;
     private PhysicsEngine physicsEngine;
-
     private GameEngine gameEngine;
     public LevelManager(Main game, PhysicsEngine physicsEngine , GameEngine gameEngine) {
         this.game = game;
