@@ -58,8 +58,6 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int destroyedBlockCount = 0;
 
-
-
     public int getHeart() {
         return heart;
     }
@@ -328,7 +326,6 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-//            concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, gameEngine);
             inputHandler = new InputHandler(breakPaddle, ball, this);
 
             load = new Button("Resume Load Game");
@@ -346,9 +343,6 @@ public class Main extends Application implements GameEngine.OnAction {
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
-
-//        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
-//        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root);
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
@@ -415,13 +409,14 @@ public class Main extends Application implements GameEngine.OnAction {
 
         // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
         gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
+        gameEngine.setFps(120);
+        gameEngine.start();
 
         // Set game engine in the physics engine and level manager
         ((ConcretePhysicsEngine) concretePhysicsEngine).setPEGameEngine(gameEngine);
         ((LevelManager) levelManager).setLMGameEngine(gameEngine);
 
-        gameEngine.setFps(120);
-        gameEngine.start();
+
     }
 
     public void checkDestroyedCount() {
