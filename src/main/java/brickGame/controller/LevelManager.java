@@ -6,19 +6,23 @@ import brickGame.gameEngine.GameEngine;
 public class LevelManager {
 
     private Main game;
-    private PhysicsEngine physicsEngine;
+    private ConcretePhysicsEngine concretePhysicsEngine;
     private GameEngine gameEngine;
-    public LevelManager(Main game, PhysicsEngine physicsEngine , GameEngine gameEngine) {
+    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine) {
         this.game = game;
-        this.physicsEngine = physicsEngine;
+        this.concretePhysicsEngine = concretePhysicsEngine;
+    }
+
+    public void setLMGameEngine(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
+        System.out.println(gameEngine);
     }
 
     public void nextLevel() {
         // Logic for transitioning to the next level
         game.setVelocityX(1.000);
         gameEngine.stop();
-        physicsEngine.resetCollideFlags();
+        concretePhysicsEngine.resetCollideFlags();
         game.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);
@@ -47,7 +51,7 @@ public class LevelManager {
         game.setScore(0);
         game.setVelocityX(1.000);
         game.setDestroyedBlockCount(0);
-        physicsEngine.resetCollideFlags();
+        concretePhysicsEngine.resetCollideFlags();
         game.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);

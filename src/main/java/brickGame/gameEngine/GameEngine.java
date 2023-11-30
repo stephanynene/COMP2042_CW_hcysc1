@@ -10,13 +10,11 @@ public class GameEngine {
 
     private OnAction onAction;
     private int fps = 15;
-//    private boolean isStopped = true;
     private PhysicsUpdater physicsUpdater;
     private ElementsUpdater elementsUpdater;
-
     private Timeline updateTimeline;
 
-    public void setOnActionAndPhysicsUpdater(OnAction onAction, PhysicsUpdater physicsUpdater, ElementsUpdater elementsUpdater) {
+    public GameEngine(OnAction onAction, PhysicsUpdater physicsUpdater, ElementsUpdater elementsUpdater) {
         this.onAction = onAction;
         this.physicsUpdater = physicsUpdater;
         this.elementsUpdater = elementsUpdater;
@@ -50,10 +48,8 @@ public class GameEngine {
     }
 
     public void stop() {
-//        if (!isStopped) {
-//            isStopped = true;
             updateTimeline.stop();
-//        }
+
     }
 
     public interface OnAction {

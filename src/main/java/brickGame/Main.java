@@ -5,7 +5,7 @@ import brickGame.constants.GameConstants;
 import brickGame.controller.ElementsUpdater;
 import brickGame.controller.LevelManager;
 import brickGame.gameEngine.GameEngine;
-import brickGame.controller.PhysicsEngine;
+import brickGame.controller.ConcretePhysicsEngine;
 import brickGame.controller.PhysicsUpdater;
 import brickGame.input.InputHandler;
 import brickGame.saving.LoadSave;
@@ -292,7 +292,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private GameEngine gameEngine;
     private PhysicsUpdater physicsUpdater;
     private ElementsUpdater elementsUpdater;
-    private PhysicsEngine physicsEngine;
+    private ConcretePhysicsEngine concretePhysicsEngine;
     private InputHandler inputHandler;
     private BlockManager blockManager;
 
@@ -328,7 +328,7 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-            physicsEngine = new PhysicsEngine(this, ball, breakPaddle, gameEngine);
+//            concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, gameEngine);
             inputHandler = new InputHandler(breakPaddle, ball, this);
 
             load = new Button("Resume Load Game");
@@ -347,8 +347,8 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
-        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, physicsEngine);
-        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, physicsEngine, root);
+//        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
+//        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root);
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
@@ -374,14 +374,13 @@ public class Main extends Application implements GameEngine.OnAction {
             if (level > 1 && level < 18) {
                 load.setVisible(false);
                 newGame.setVisible(false);
-                initGameEngine();
+                initGameComponents();
             }
 
             load.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     loadGame();
-
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
@@ -390,30 +389,39 @@ public class Main extends Application implements GameEngine.OnAction {
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    initGameEngine();
-
+                    initGameComponents();
                     load.setVisible(false);
                     newGame.setVisible(false);
                 }
             });
         } else {
-            initGameEngine();
+            initGameComponents();
             loadFromSave = false;
         }
-
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private void initGameEngine(){
-        gameEngine = new GameEngine();
-        gameEngine.setOnActionAndPhysicsUpdater(this, physicsUpdater, elementsUpdater);
+
+    private void initGameComponents(){
+        // Create instances of classes that implement the PhysicsEngine interface
+        concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle);
+
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
+        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root);
+        levelManager = new LevelManager(this, concretePhysicsEngine);
+
+        // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
+        gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
+
+        // Set game engine in the physics engine and level manager
+        ((ConcretePhysicsEngine) concretePhysicsEngine).setPEGameEngine(gameEngine);
+        ((LevelManager) levelManager).setLMGameEngine(gameEngine);
+
         gameEngine.setFps(120);
         gameEngine.start();
-        levelManager = new LevelManager(this, physicsEngine, gameEngine);
-
     }
 
     public void checkDestroyedCount() {

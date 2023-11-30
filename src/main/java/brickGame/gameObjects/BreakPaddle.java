@@ -8,6 +8,7 @@ import javafx.util.Duration;
 public class BreakPaddle {
 
     private BreakPaddleView breakPaddleView;
+
     public void setxBreak(double xBreak) {
         this.xBreak = xBreak;
     }
@@ -38,9 +39,7 @@ public class BreakPaddle {
 
     public Rectangle rect;
 
-    public BreakPaddleView getBreakPaddleView() {
-        return breakPaddleView;
-    }
+
 
     private static final double SPEED = 13.0;
     private static final Duration ANIMATION_DURATION = Duration.millis(16);

@@ -2,22 +2,18 @@ package brickGame.controller;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
-import brickGame.controller.PhysicsEngine;
 import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Bonus;
 import brickGame.gameObjects.BreakPaddle;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class PhysicsUpdater implements GameEngine.OnAction {
@@ -26,15 +22,15 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     private Pane root;
     private Bonus bonus;
     private BreakPaddle breakPaddle;
-    private PhysicsEngine physicsEngine;
+    private ConcretePhysicsEngine concretePhysicsEngine;
 
     private Timeline chocoTimeline;
-    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, PhysicsEngine physicsEngine ) {
+    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, ConcretePhysicsEngine concretePhysicsEngine) {
         this.game = game;
         this.ball = ball;
         this.root = root;
         this.breakPaddle = breakPaddle;
-        this.physicsEngine = physicsEngine;
+        this.concretePhysicsEngine = concretePhysicsEngine;
 
 //
 //        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
@@ -54,7 +50,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
 
     public void onPhysicsUpdate() {
         game.checkDestroyedCount();
-       physicsEngine.setPhysicsToBall();
+       concretePhysicsEngine.setPhysicsToBall();
 
 
         updateGoldStatus();

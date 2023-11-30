@@ -3,7 +3,6 @@ package brickGame.controller;
 import brickGame.Main;
 import brickGame.constants.GameConstants;
 import brickGame.gameEngine.GameEngine;
-import brickGame.controller.PhysicsEngine;
 import brickGame.gameObjects.Ball;
 import brickGame.gameObjects.Block;
 import brickGame.gameObjects.Bonus;
@@ -18,7 +17,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ElementsUpdater implements GameEngine.OnAction {
@@ -26,16 +24,16 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private Main game;
     private BreakPaddle breakPaddle;
     private Ball ball;
-    private PhysicsEngine physicsEngine;
+    private ConcretePhysicsEngine concretePhysicsEngine;
     private Pane root;
 
     private Timeline chocoListTimeline;
 
-    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, PhysicsEngine physicsEngine, Pane root) {
+    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, ConcretePhysicsEngine concretePhysicsEngine, Pane root) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
-        this.physicsEngine = physicsEngine;
+        this.concretePhysicsEngine = concretePhysicsEngine;
         this.root = root;
 
         chocoListTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocoList()));
@@ -97,7 +95,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
         block.getBlockView().getRect().setVisible(false);
         block.isDestroyed = true;
         game.setDestroyedBlockCount(game.getDestroyedBlockCount() + 1);
-        physicsEngine.resetCollideFlags();
+        concretePhysicsEngine.resetCollideFlags();
 
         // Handle different block types
         if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
