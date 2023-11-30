@@ -15,4 +15,9 @@ public class BreakPaddleView extends Rectangle {
         ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
         rect.setFill(pattern);
     }
+
+    public void updatePosition(double x, double y) {
+        this.setX(x);
+        this.setY(y);
+    }
 }

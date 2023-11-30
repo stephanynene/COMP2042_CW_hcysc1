@@ -36,70 +36,31 @@ public class BreakPaddle {
     public Rectangle rect;
 
     public BreakPaddleView getBreakPaddleView() {
-
         return breakPaddleView;
     }
 
-
     public void initBreak() {
-    rect = new Rectangle();
-    breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
+        rect = new Rectangle();
+        breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
     }
 
-
-    //    Split into two methods
     public void moveRight() {
-        //System.out.println("Move right");
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == (GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue())) {
-                        return;
-                    }
-                    xBreak++;
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
+        // Adjust speed as needed
+        double speed = 10.0;
+        xBreak = Math.min(xBreak + speed, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
+        centerBreakX = xBreak + halfBreakWidth;
+        updateBreakPaddleView();
     }
 
-
-
-     public void moveLeft() {
-      //   System.out.println("Move left");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int sleepTime = 4;
-                for (int i = 0; i < 30; i++) {
-                    if (xBreak == 0) {
-                        return;
-                    }
-                    xBreak--;
-                    centerBreakX = xBreak + halfBreakWidth;
-                    try {
-                        Thread.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (i >= 20) {
-                        sleepTime = i;
-                    }
-                }
-            }
-        }).start();
+    public void moveLeft() {
+        // Adjust speed as needed
+        double speed = 10.0;
+        xBreak = Math.max(xBreak - speed, 0);
+        centerBreakX = xBreak + halfBreakWidth;
+        updateBreakPaddleView();
     }
 
-
+    private void updateBreakPaddleView() {
+        breakPaddleView.updatePosition(xBreak, yBreak);
+    }
 }
