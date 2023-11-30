@@ -1,6 +1,9 @@
 package brickGame.gameObjects;
 import brickGame.constants.GameConstants;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class BreakPaddle {
 
@@ -39,23 +42,33 @@ public class BreakPaddle {
         return breakPaddleView;
     }
 
+    private static final double SPEED = 13.0;
+    private static final Duration ANIMATION_DURATION = Duration.millis(16);
+
+
     public void initBreak() {
         rect = new Rectangle();
         breakPaddleView = new BreakPaddleView(rect, xBreak, yBreak);
     }
 
     public void moveRight() {
-        double speed = 10.0;
-        xBreak = Math.min(xBreak + speed, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
-        centerBreakX = xBreak + halfBreakWidth;
-        updateBreakPaddleView();
+        animateMovement(SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
     }
 
     public void moveLeft() {
-        double speed = 10.0;
-        xBreak = Math.max(xBreak - speed, 0);
-        centerBreakX = xBreak + halfBreakWidth;
-        updateBreakPaddleView();
+        animateMovement(-SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
+    }
+
+    private void animateMovement(double deltaX, double maxX) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(ANIMATION_DURATION, e -> {
+                    xBreak = Math.min(Math.max(xBreak + deltaX, 0), maxX);
+                    centerBreakX = xBreak + halfBreakWidth;
+                    updateBreakPaddleView();
+                })
+        );
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     private void updateBreakPaddleView() {
