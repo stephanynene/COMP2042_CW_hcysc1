@@ -121,12 +121,15 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
 
     private void handleStarBlockHit() {
+        System.out.println("hello\n");
         Platform.runLater(() -> {
 
             game.setGoldTime(game.getTime());
-            ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-            ball.setFill(imagePattern);
-            Image goldBallImage = new Image("goldball.png");
+            System.out.println(ball.getFill());
+            ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
+//            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));
+            System.out.println(ball.getFill());
+//            Image goldBallImage = new Image("goldball.png");
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
 

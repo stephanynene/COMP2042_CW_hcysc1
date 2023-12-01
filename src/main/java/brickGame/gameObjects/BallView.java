@@ -11,7 +11,7 @@ public class BallView extends Circle {
         super(radius);
     }
 
-    public void setBallImage() {
-        this.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL_IMG.getStringValue())));
+    public void setBallImage(GameConstants ballType) {
+        this.setFill(new ImagePattern(new Image(ballType.getStringValue())));
     }
 }

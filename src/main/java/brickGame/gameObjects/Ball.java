@@ -32,7 +32,7 @@ public class Ball extends Circle {
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;
         yBall = random.nextInt(GameConstants.SCENE_HEIGHT.getIntValue() - 200) + ((level + 1) * Block.getHeight()) + 15;
 
-        ballView.setBallImage();
+        ballView.setBallImage(GameConstants.NORMAL_BALL);
 
         // Set other properties of the Circle (Ball)
         this.setRadius(GameConstants.BALL_RADIUS.getIntValue());
