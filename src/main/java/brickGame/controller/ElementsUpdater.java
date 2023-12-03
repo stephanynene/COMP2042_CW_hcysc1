@@ -111,7 +111,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
     // Handle hit to choco block
     private void handleChocoBlockHit(Block block) {
         final Bonus choco = new Bonus(block.row, block.column);
-        choco.timeCreated = game.getTime();
+        choco.timeCreated = stats.getTime();
 
         // Use synchronized block to add choco to UI and update game state
         synchronized (game.getChocos()) {
@@ -125,7 +125,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
         System.out.println("hello\n");
         Platform.runLater(() -> {
 
-            game.setGoldTime(game.getTime());
+            game.setGoldTime(stats.getTime());
             System.out.println(ball.getFill());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
 //            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));

@@ -68,7 +68,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     // Calculate velocity based on time and hit time
     public void calculateVelocity(){
-        game.setVelocity(((game.getTime() - game.getHitTime()) / 1000.000) + 1.000);
+        game.setVelocity(((stats.getTime() - game.getHitTime()) / 1000.000) + 1.000);
     }
 
     //Handle boundary collisions
@@ -159,7 +159,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
             //System.out.println("Colide1");
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
-                game.setHitTime(game.getTime());
+                game.setHitTime(stats.getTime());
                 resetCollideFlags();
                 game.setColideToBreak(true);
                 game.setGoDownBall(false);

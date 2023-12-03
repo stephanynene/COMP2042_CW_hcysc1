@@ -31,6 +31,15 @@ public class Stats {
     }
     private int  heart    = 3;
 
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    private long time = 0;
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";
         Label label = ScoreLabel.createLabel(sign + score, x, y, main);

@@ -54,15 +54,6 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private boolean isExistHeartBlock = false;
 
-
-//    public int getHeart() {
-//        return heart;
-//    }
-//
-//    public void setHeart(int heart) {
-//        this.heart = heart;
-//    }
-//    private int  heart    = 3;
     public int getLevel() {
         return level;
     }
@@ -82,16 +73,16 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private int  score    = 0;
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    private long time = 0;
+//
+//    public long getTime() {
+//        return time;
+//    }
+//
+//    public void setTime(long time) {
+//        this.time = time;
+//    }
+//
+//    private long time = 0;
 
     public long getHitTime() {
         return hitTime;
@@ -400,7 +391,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
-        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
         levelManager = new LevelManager(this, concretePhysicsEngine, stats);
 
@@ -448,7 +439,7 @@ public class Main extends Application implements GameEngine.OnAction {
         breakPaddle.setxBreak(loadSave.xBreak);
         breakPaddle.setyBreak(loadSave.yBreak);
         breakPaddle.setCenterBreakX(loadSave.centerBreakX);
-        time = loadSave.time;
+        stats.setTime(loadSave.time);
         goldTime = loadSave.goldTime;
         velocityX = loadSave.vX;
 
@@ -500,7 +491,7 @@ public class Main extends Application implements GameEngine.OnAction {
     }
     @Override
     public void onTime(long time) {
-        this.time = time;
+        stats.setTime(time);
     }
     public void clearBlocks() {
         blocks.clear();

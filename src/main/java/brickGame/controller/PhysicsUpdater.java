@@ -23,14 +23,16 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     private Bonus bonus;
     private BreakPaddle breakPaddle;
     private ConcretePhysicsEngine concretePhysicsEngine;
+    private Stats stats;
 
     private Timeline chocoTimeline;
-    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, ConcretePhysicsEngine concretePhysicsEngine) {
+    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, ConcretePhysicsEngine concretePhysicsEngine, Stats stats) {
         this.game = game;
         this.ball = ball;
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.concretePhysicsEngine = concretePhysicsEngine;
+        this.stats = stats;
 
 //
 //        chocoTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocos()));
@@ -128,14 +130,14 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         new Stats().show(choco.x, choco.y, 3, game);
     }
     private void updateChocoPosition(Bonus choco) {
-        choco.y += ((game.getTime() - choco.timeCreated) / 1000.0) + 1.0;
+        choco.y += ((stats.getTime() - choco.timeCreated) / 1000.0) + 1.0;
         Platform.runLater(() -> choco.choco.setY(choco.y));
     }
     private boolean shouldSkipChocoUpdate(Bonus choco) {
         return choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken;
     }
     private void updateGoldStatus() {
-        if (game.getTime() - game.getGoldTime() > 5000) {
+        if (stats.getTime() - game.getGoldTime() > 5000) {
             resetGoldStatus();
         }
     }
