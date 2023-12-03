@@ -148,7 +148,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }
-            ball.setFill(new ImagePattern(new Image("ball.png")));
+     //      ball.setFill(new ImagePattern(new Image("ball.png")));
+            ball.getBallView().setBallImage(GameConstants.NORMAL_BALL);
             root.getStyleClass().remove("goldRoot");
             game.setGoldStatus(false);
         });
