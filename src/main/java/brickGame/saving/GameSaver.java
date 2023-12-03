@@ -3,7 +3,7 @@ package brickGame.saving;
 import brickGame.constants.BlockSerializable;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
-import brickGame.scoring.Score;
+import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.block.Block;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GameSaver {
 
-    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
+    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball, Stats stats) {
         new File(GameConstants.SAVE_PATH_DIR.getStringValue()).mkdirs();
         File file = new File(GameConstants.SAVE_PATH.getStringValue());
 
@@ -34,7 +34,7 @@ public class GameSaver {
             outputStream.writeInt(gameInstance.getLevel());
             outputStream.writeInt(gameInstance.getScore());
             outputStream.writeInt(gameInstance.getHeart());
-            outputStream.writeInt(gameInstance.getDestroyedBlockCount());
+            outputStream.writeInt(stats.getDestroyedBlockCount());
 
             outputStream.writeDouble(ball.getxBall());
             outputStream.writeDouble(ball.getyBall());
@@ -72,7 +72,7 @@ public class GameSaver {
             outputStream.writeObject(blockSerializables);
 
             Platform.runLater(() -> {
-                new Score().showMessage("Game Saved", gameInstance);
+                new Stats().showMessage("Game Saved", gameInstance);
                 System.out.println("Game Saved");
             });
 

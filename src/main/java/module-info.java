@@ -6,8 +6,8 @@ module brickGame {
     exports brickGame;
     exports brickGame.saving;
     opens brickGame.saving to javafx.fxml;
-    exports brickGame.scoring;
-    opens brickGame.scoring to javafx.fxml;
+    exports brickGame.stats;
+    opens brickGame.stats to javafx.fxml;
     exports brickGame.input;
     opens brickGame.input to javafx.fxml;
     exports brickGame.gameEngine;

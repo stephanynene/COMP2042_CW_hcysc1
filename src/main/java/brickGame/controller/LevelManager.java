@@ -2,15 +2,18 @@ package brickGame.controller;
 
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
+import brickGame.stats.Stats;
 
 public class LevelManager {
 
     private Main game;
     private ConcretePhysicsEngine concretePhysicsEngine;
     private GameEngine gameEngine;
-    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine) {
+    private Stats stats;
+    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine, Stats stats) {
         this.game = game;
         this.concretePhysicsEngine = concretePhysicsEngine;
+        this.stats = stats;
     }
 
     public void setLMGameEngine(GameEngine gameEngine) {
@@ -35,7 +38,7 @@ public class LevelManager {
         game.clearBlocks();
         game.clearChocos();
 
-        game.setDestroyedBlockCount(0);
+        stats.setDestroyedBlockCount(0);
 
         try {
             game.start(game.primaryStage);
@@ -50,7 +53,7 @@ public class LevelManager {
         game.setHeart(3);
         game.setScore(0);
         game.setVelocityX(1.000);
-        game.setDestroyedBlockCount(0);
+        stats.setDestroyedBlockCount(0);
         concretePhysicsEngine.resetCollideFlags();
         game.setGoDownBall(true);
         game.setGoldStatus(false);

@@ -16,7 +16,7 @@ import brickGame.gameObjects.board.Board;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import brickGame.input.InputHandler;
 import brickGame.saving.LoadSave;
-import brickGame.scoring.Score;
+import brickGame.stats.Stats;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -54,15 +54,15 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private boolean isExistHeartBlock = false;
 
-    public int getDestroyedBlockCount() {
-        return destroyedBlockCount;
-    }
-
-    public void setDestroyedBlockCount(int destroyedBlockCount) {
-        this.destroyedBlockCount = destroyedBlockCount;
-    }
-
-    private int destroyedBlockCount = 0;
+//    public int getDestroyedBlockCount() {
+//        return destroyedBlockCount;
+//    }
+//
+//    public void setDestroyedBlockCount(int destroyedBlockCount) {
+//        this.destroyedBlockCount = destroyedBlockCount;
+//    }
+//
+//    private int destroyedBlockCount = 0;
 
     public int getHeart() {
         return heart;
@@ -302,7 +302,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private LevelManager levelManager;
     private Board board;
-    private Score scoreManager;
+    private Stats stats;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -311,13 +311,13 @@ public class Main extends Application implements GameEngine.OnAction {
         if (loadFromSave == false) {
             level++;
             if (level >1){
-                new Score().showMessage("Level Up :)", this);
+                new Stats().showMessage("Level Up :)", this);
             }
             if (level == 18) {
-                new Score().showWin(this);
+                new Stats().showWin(this);
                 return;
             }
-
+            stats = new Stats();
             blockManager = new BlockManager(root);
             blockManager.drawBlocks();
 
@@ -332,7 +332,7 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-            inputHandler = new InputHandler(breakPaddle, ball, this);
+            inputHandler = new InputHandler(breakPaddle, ball, this, stats);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -410,8 +410,8 @@ public class Main extends Application implements GameEngine.OnAction {
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
-        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root);
-        levelManager = new LevelManager(this, concretePhysicsEngine);
+        elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
+        levelManager = new LevelManager(this, concretePhysicsEngine, stats);
 
         // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
         gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
@@ -426,7 +426,7 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     public void checkDestroyedCount() {
-        if (destroyedBlockCount == blocks.size()) {
+        if (stats.getDestroyedBlockCount() == blocks.size()) {
             Platform.runLater(() -> levelManager.nextLevel());
         }
     }
@@ -451,7 +451,7 @@ public class Main extends Application implements GameEngine.OnAction {
         level = loadSave.level;
         score = loadSave.score;
         heart = loadSave.heart;
-        destroyedBlockCount = loadSave.destroyedBlockCount;
+        stats.setDestroyedBlockCount(loadSave.destroyedBlockCount);
         ball.setxBall(loadSave.xBall);
         ball.setyBall(loadSave.yBall);
         breakPaddle.setxBreak(loadSave.xBreak);

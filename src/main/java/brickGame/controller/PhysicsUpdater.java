@@ -3,7 +3,7 @@ package brickGame.controller;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
-import brickGame.scoring.Score;
+import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.bonus.Bonus;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
@@ -125,7 +125,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         choco.taken = true;
         choco.choco.setVisible(false);
         game.setScore(game.getScore() +3 );
-        new Score().show(choco.x, choco.y, 3, game);
+        new Stats().show(choco.x, choco.y, 3, game);
     }
     private void updateChocoPosition(Bonus choco) {
         choco.y += ((game.getTime() - choco.timeCreated) / 1000.0) + 1.0;

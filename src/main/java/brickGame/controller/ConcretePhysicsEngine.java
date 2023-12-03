@@ -3,7 +3,7 @@ package brickGame.controller;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
-import brickGame.scoring.Score;
+import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
 
@@ -87,10 +87,10 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             if (!game.isGoldStatus()) {
                 //TODO gameover
                 game.setHeart(game.getHeart() - 1);
-                new Score().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
+                new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
 
                 if (game.getHeart() == 0) {
-                    new Score().showGameOver(game);
+                    new Stats().showGameOver(game);
 //                    if (gameEngine != null) {
                         gameEngine.stop();
 //                    }
