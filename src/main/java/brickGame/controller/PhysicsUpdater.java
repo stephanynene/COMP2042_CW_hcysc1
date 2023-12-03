@@ -137,7 +137,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         return choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken;
     }
     private void updateGoldStatus() {
-        if (stats.getTime() - game.getGoldTime() > 5000) {
+        if (stats.getTime() - stats.getGoldTime() > 5000) {
             resetGoldStatus();
         }
     }

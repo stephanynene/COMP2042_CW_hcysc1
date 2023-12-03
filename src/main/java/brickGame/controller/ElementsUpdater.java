@@ -125,7 +125,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
         System.out.println("hello\n");
         Platform.runLater(() -> {
 
-            game.setGoldTime(stats.getTime());
+            stats.setGoldTime(stats.getTime());
             System.out.println(ball.getFill());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
 //            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));

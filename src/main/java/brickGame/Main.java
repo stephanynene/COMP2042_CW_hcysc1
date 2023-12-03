@@ -74,25 +74,16 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int  score    = 0;
 
-//    public long getHitTime() {
-//        return hitTime;
+//
+//    public long getGoldTime() {
+//        return goldTime;
 //    }
 //
-//    public void setHitTime(long hitTime) {
-//        this.hitTime = hitTime;
+//    public void setGoldTime(long goldTime) {
+//        this.goldTime = goldTime;
 //    }
 //
-//    private long hitTime  = 0;
-
-    public long getGoldTime() {
-        return goldTime;
-    }
-
-    public void setGoldTime(long goldTime) {
-        this.goldTime = goldTime;
-    }
-
-    private long goldTime = 0;
+//    private long goldTime = 0;
     float oldXBreak;
 
     public boolean isGoDownBall() {
@@ -430,7 +421,7 @@ public class Main extends Application implements GameEngine.OnAction {
         breakPaddle.setyBreak(loadSave.yBreak);
         breakPaddle.setCenterBreakX(loadSave.centerBreakX);
         stats.setTime(loadSave.time);
-        goldTime = loadSave.goldTime;
+        stats.setGoldTime(loadSave.goldTime);
         velocityX = loadSave.vX;
 
         blocks.clear();
