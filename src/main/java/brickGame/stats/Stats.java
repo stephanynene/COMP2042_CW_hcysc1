@@ -40,6 +40,17 @@ public class Stats {
     }
 
     private long time = 0;
+
+    public long getHitTime() {
+        return hitTime;
+    }
+
+    public void setHitTime(long hitTime) {
+        this.hitTime = hitTime;
+    }
+
+    private long hitTime  = 0;
+
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";
         Label label = ScoreLabel.createLabel(sign + score, x, y, main);

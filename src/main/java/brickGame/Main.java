@@ -73,26 +73,16 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     private int  score    = 0;
-//
-//    public long getTime() {
-//        return time;
+
+//    public long getHitTime() {
+//        return hitTime;
 //    }
 //
-//    public void setTime(long time) {
-//        this.time = time;
+//    public void setHitTime(long hitTime) {
+//        this.hitTime = hitTime;
 //    }
 //
-//    private long time = 0;
-
-    public long getHitTime() {
-        return hitTime;
-    }
-
-    public void setHitTime(long hitTime) {
-        this.hitTime = hitTime;
-    }
-
-    private long hitTime  = 0;
+//    private long hitTime  = 0;
 
     public long getGoldTime() {
         return goldTime;

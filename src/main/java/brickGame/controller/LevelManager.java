@@ -29,7 +29,7 @@ public class LevelManager {
         game.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);
-        game.setHitTime(0);
+        stats.setHitTime(0);
         stats.setTime(0);
         game.setGoldTime(0);
 
@@ -58,7 +58,7 @@ public class LevelManager {
         game.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);
-        game.setHitTime(0);
+        stats.setHitTime(0);
         stats.setTime(0);
         game.setGoldTime(0);
         game.clearBlocks();
