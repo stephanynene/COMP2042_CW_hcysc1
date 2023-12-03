@@ -74,15 +74,15 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int  score    = 0;
 
-    public boolean isGoDownBall() {
-        return goDownBall;
-    }
-
-    public void setGoDownBall(boolean goDownBall) {
-        this.goDownBall = goDownBall;
-    }
-
-    private boolean goDownBall  = true;
+//    public boolean isGoDownBall() {
+//        return goDownBall;
+//    }
+//
+//    public void setGoDownBall(boolean goDownBall) {
+//        this.goDownBall = goDownBall;
+//    }
+//
+//    private boolean goDownBall  = true;
 
     public boolean isGoRightBall() {
         return goRightBall;
@@ -362,7 +362,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
-        levelManager = new LevelManager(this, concretePhysicsEngine, stats);
+        levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball);
 
         // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
         gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
@@ -389,7 +389,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         isExistHeartBlock = loadSave.isExistHeartBlock;
         isGoldStatus = loadSave.isGoldStauts;
-        goDownBall = loadSave.goDownBall;
+        ball.setGoDownBall(loadSave.goDownBall);
         goRightBall = loadSave.goRightBall;
         colideToBreak = loadSave.colideToBreak;
         colideToBreakAndMoveToRight = loadSave.colideToBreakAndMoveToRight;

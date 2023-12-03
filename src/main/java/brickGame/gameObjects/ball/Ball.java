@@ -28,6 +28,17 @@ public class Ball extends Circle {
         return yBall;
     }
 
+    public boolean isGoDownBall() {
+        return goDownBall;
+    }
+
+    public void setGoDownBall(boolean goDownBall) {
+        this.goDownBall = goDownBall;
+    }
+
+    private boolean goDownBall  = true;
+
+
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;

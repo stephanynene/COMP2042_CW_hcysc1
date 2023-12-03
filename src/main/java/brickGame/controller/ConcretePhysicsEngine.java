@@ -46,11 +46,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         }
 
         if (game.isColideToTopBlock()) {
-            game.setGoDownBall(false);
+            ball.setGoDownBall(false);
         }
 
         if (game.isColideToBottomBlock()) {
-            game.setGoDownBall(true);
+            ball.setGoDownBall(true);
         }
     }
 
@@ -78,14 +78,14 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         if (ball.getyBall() <= 0) {
             //vX = 1.000;
             resetCollideFlags();
-            game.setGoDownBall(true);
+            ball.setGoDownBall(true);
             return;
 
         }
         // Check if the ball goes beyond the bottom boundary
         if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
 
-            game.setGoDownBall(false);
+            ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
                 //TODO gameover
                 stats.setHeart(stats.getHeart() - 1);
@@ -121,7 +121,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     //Update ball positioning
     public void ballPositioning(){
-        if (game.isGoDownBall()) {
+        if (ball.isGoDownBall()) {
             double currentY = ball.getyBall(); // Get the current yBall value
             currentY += game.getVelocityY(); // Update the yBall value
             ball.setyBall(currentY);
@@ -162,7 +162,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
                 stats.setHitTime(stats.getTime());
                 resetCollideFlags();
                 game.setColideToBreak(true);
-                game.setGoDownBall(false);
+                ball.setGoDownBall(false);
 
                 // Calculate relation and update velocity based on collision
                 double relation = (ball.getxBall() - breakPaddle.getCenterBreakX()) / (GameConstants.BREAK_WIDTH.getIntValue() / 2);
