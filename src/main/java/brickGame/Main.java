@@ -74,25 +74,16 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int  score    = 0;
 
-//    public boolean isGoDownBall() {
-//        return goDownBall;
+//
+//    public boolean isGoRightBall() {
+//        return goRightBall;
 //    }
 //
-//    public void setGoDownBall(boolean goDownBall) {
-//        this.goDownBall = goDownBall;
+//    public void setGoRightBall(boolean goRightBall) {
+//        this.goRightBall = goRightBall;
 //    }
 //
-//    private boolean goDownBall  = true;
-
-    public boolean isGoRightBall() {
-        return goRightBall;
-    }
-
-    public void setGoRightBall(boolean goRightBall) {
-        this.goRightBall = goRightBall;
-    }
-
-    private boolean goRightBall  = true;
+//    private boolean goRightBall  = true;
 
     public boolean isColideToBreak() {
         return colideToBreak;
@@ -390,7 +381,7 @@ public class Main extends Application implements GameEngine.OnAction {
         isExistHeartBlock = loadSave.isExistHeartBlock;
         isGoldStatus = loadSave.isGoldStauts;
         ball.setGoDownBall(loadSave.goDownBall);
-        goRightBall = loadSave.goRightBall;
+        ball.setGoRightBall(loadSave.goRightBall);
         colideToBreak = loadSave.colideToBreak;
         colideToBreakAndMoveToRight = loadSave.colideToBreakAndMoveToRight;
         colideToRightWall = loadSave.colideToRightWall;

@@ -38,11 +38,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     }
     public void ballCollision(){
         if (game.isColideToRightBlock()) {
-            game.setGoRightBall(true);
+            ball.setGoRightBall(true);
         }
 
         if (game.isColideToLeftBlock()) {
-            game.setGoRightBall(true);
+            ball.setGoRightBall(true);
         }
 
         if (game.isColideToTopBlock()) {
@@ -57,11 +57,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     public void wallCollisons(){
 
         if (game.isColideToRightWall()) {
-            game.setGoRightBall(false);
+            ball.setGoRightBall(false);
         }
 
         if (game.isColideToLeftWall()) {
-            game.setGoRightBall(true);
+            ball.setGoRightBall(true);
         }
 
     }
@@ -131,7 +131,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             ball.setyBall(currentY);
         }
 
-        if (game.isGoRightBall()) {
+        if (ball.isGoRightBall()) {
             double currentX = ball.getxBall();
             currentX += game.getVelocityX();
             ball.setxBall(currentX);
@@ -147,9 +147,9 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     public void breakCollisonDirection(){
         if (game.isColideToBreak()) {
             if (game.isColideToBreakAndMoveToRight()) {
-                game.setGoRightBall(true);
+                ball.setGoRightBall(true);
             } else {
-                game.setGoRightBall(false);
+                ball.setGoRightBall(false);
             }
         }
     }

@@ -35,9 +35,17 @@ public class Ball extends Circle {
     public void setGoDownBall(boolean goDownBall) {
         this.goDownBall = goDownBall;
     }
-
     private boolean goDownBall  = true;
 
+    public boolean isGoRightBall() {
+        return goRightBall;
+    }
+
+    public void setGoRightBall(boolean goRightBall) {
+        this.goRightBall = goRightBall;
+    }
+
+    private boolean goRightBall  = true;
 
     public void initBall(int level) {
         Random random = new Random();
