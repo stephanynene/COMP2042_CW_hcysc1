@@ -4,8 +4,8 @@ import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
 import brickGame.scoring.Score;
-import brickGame.gameObjects.Ball;
-import brickGame.gameObjects.BreakPaddle;
+import brickGame.gameObjects.ball.Ball;
+import brickGame.gameObjects.breakpaddle.BreakPaddle;
 
 public class ConcretePhysicsEngine implements PhysicsEngine {
 

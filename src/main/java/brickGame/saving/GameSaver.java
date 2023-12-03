@@ -4,9 +4,9 @@ import brickGame.constants.BlockSerializable;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.scoring.Score;
-import brickGame.gameObjects.Ball;
-import brickGame.gameObjects.Block;
-import brickGame.gameObjects.BreakPaddle;
+import brickGame.gameObjects.ball.Ball;
+import brickGame.gameObjects.block.Block;
+import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import javafx.application.Platform;
 
 

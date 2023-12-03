@@ -1,4 +1,4 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.bonus;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;

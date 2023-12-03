@@ -1,5 +1,6 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.ball;
 import brickGame.constants.GameConstants;
+import brickGame.gameObjects.block.Block;
 import javafx.scene.shape.Circle;
 
 

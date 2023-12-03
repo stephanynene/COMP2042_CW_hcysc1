@@ -1,9 +1,7 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.block;
 
 import java.util.ArrayList;
 
-import brickGame.gameObjects.Block;
-import brickGame.gameObjects.BlockView;
 import javafx.scene.layout.Pane;
 
 public class BlockManager {
