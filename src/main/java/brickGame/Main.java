@@ -54,24 +54,15 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private boolean isExistHeartBlock = false;
 
-//    public int getDestroyedBlockCount() {
-//        return destroyedBlockCount;
+
+//    public int getHeart() {
+//        return heart;
 //    }
 //
-//    public void setDestroyedBlockCount(int destroyedBlockCount) {
-//        this.destroyedBlockCount = destroyedBlockCount;
+//    public void setHeart(int heart) {
+//        this.heart = heart;
 //    }
-//
-//    private int destroyedBlockCount = 0;
-
-    public int getHeart() {
-        return heart;
-    }
-
-    public void setHeart(int heart) {
-        this.heart = heart;
-    }
-    private int  heart    = 3;
+//    private int  heart    = 3;
     public int getLevel() {
         return level;
     }
@@ -347,7 +338,7 @@ public class Main extends Application implements GameEngine.OnAction {
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
-        heartLabel = new Label("Heart : " + heart);
+        heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
         if (loadFromSave == false) {
@@ -407,7 +398,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private void initGameComponents(){
         // Create instances of classes that implement the PhysicsEngine interface
-        concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle);
+        concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
@@ -450,7 +441,7 @@ public class Main extends Application implements GameEngine.OnAction {
         colideToTopBlock = loadSave.colideToTopBlock;
         level = loadSave.level;
         score = loadSave.score;
-        heart = loadSave.heart;
+        stats.setHeart(loadSave.heart);
         stats.setDestroyedBlockCount(loadSave.destroyedBlockCount);
         ball.setxBall(loadSave.xBall);
         ball.setyBall(loadSave.yBall);

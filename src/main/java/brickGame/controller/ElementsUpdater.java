@@ -52,7 +52,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void updateUI() {
         game.updateScoreLabel(game.getScore());
-        game.updateHeartLabel(game.getHeart());
+        game.updateHeartLabel(stats.getHeart());
 
         // Update positions of UI elements
         breakPaddle.rect.setX(breakPaddle.getxBreak());
@@ -104,7 +104,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
         } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
-            game.setHeart(game.getHeart() + 1);
+            stats.setHeart(stats.getHeart() + 1);
         }
     }
 

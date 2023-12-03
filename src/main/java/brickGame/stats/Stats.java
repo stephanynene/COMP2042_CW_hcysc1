@@ -22,6 +22,15 @@ public class Stats {
 
     private int destroyedBlockCount = 0;
 
+    public int getHeart() {
+        return heart;
+    }
+
+    public void setHeart(int heart) {
+        this.heart = heart;
+    }
+    private int  heart    = 3;
+
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";
         Label label = ScoreLabel.createLabel(sign + score, x, y, main);

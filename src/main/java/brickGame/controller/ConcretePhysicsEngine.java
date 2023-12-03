@@ -13,11 +13,13 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     private Ball ball;
     private BreakPaddle breakPaddle;
     private GameEngine gameEngine;
+    private Stats stats;
 
-    public ConcretePhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle) {
+    public ConcretePhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, Stats stats) {
         this.game = game;
         this.ball = ball;
         this.breakPaddle = breakPaddle;
+        this.stats = stats;
     }
 
     public void setPEGameEngine(GameEngine gameEngine) {
@@ -86,10 +88,10 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             game.setGoDownBall(false);
             if (!game.isGoldStatus()) {
                 //TODO gameover
-                game.setHeart(game.getHeart() - 1);
+                stats.setHeart(stats.getHeart() - 1);
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
 
-                if (game.getHeart() == 0) {
+                if (stats.getHeart() == 0) {
                     new Stats().showGameOver(game);
 //                    if (gameEngine != null) {
                         gameEngine.stop();

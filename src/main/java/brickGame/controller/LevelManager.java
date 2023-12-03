@@ -50,7 +50,7 @@ public class LevelManager {
     public void restartGame() {
         // Logic for restarting the game
         game.setLevel(0);
-        game.setHeart(3);
+        stats.setHeart(3);
         game.setScore(0);
         game.setVelocityX(1.000);
         stats.setDestroyedBlockCount(0);

@@ -33,7 +33,7 @@ public class GameSaver {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
             outputStream.writeInt(gameInstance.getLevel());
             outputStream.writeInt(gameInstance.getScore());
-            outputStream.writeInt(gameInstance.getHeart());
+            outputStream.writeInt(stats.getHeart());
             outputStream.writeInt(stats.getDestroyedBlockCount());
 
             outputStream.writeDouble(ball.getxBall());
