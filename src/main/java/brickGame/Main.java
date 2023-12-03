@@ -74,18 +74,6 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int  score    = 0;
 
-//
-//    public long getGoldTime() {
-//        return goldTime;
-//    }
-//
-//    public void setGoldTime(long goldTime) {
-//        this.goldTime = goldTime;
-//    }
-//
-//    private long goldTime = 0;
-    float oldXBreak;
-
     public boolean isGoDownBall() {
         return goDownBall;
     }
