@@ -49,7 +49,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             ball.setGoDownBall(false);
         }
 
-        if (game.isColideToBottomBlock()) {
+        if (ball.isColideToBottomBlock()) {
             ball.setGoDownBall(true);
         }
     }
@@ -202,7 +202,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         ball.setColideToLeftWall(false);
 
         ball.setColideToRightBlock(false);
-        game.setColideToBottomBlock(false);
+        ball.setColideToBottomBlock(false);
         game.setColideToLeftBlock(false);
         game.setColideToTopBlock(false);
     }

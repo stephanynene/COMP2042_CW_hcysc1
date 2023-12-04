@@ -54,7 +54,7 @@ public class GameSaver {
             outputStream.writeBoolean(ball.isColideToRightWall());
             outputStream.writeBoolean(ball.isColideToLeftWall());
             outputStream.writeBoolean(ball.isColideToRightBlock());
-            outputStream.writeBoolean(gameInstance.isColideToBottomBlock());
+            outputStream.writeBoolean(ball.isColideToBottomBlock());
             outputStream.writeBoolean(gameInstance.isColideToLeftBlock());
             outputStream.writeBoolean(gameInstance.isColideToTopBlock());
 
