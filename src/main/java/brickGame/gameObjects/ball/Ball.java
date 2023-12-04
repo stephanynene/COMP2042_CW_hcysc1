@@ -107,6 +107,25 @@ public class Ball extends Circle {
 
     private boolean colideToBottomBlock         = false;
 
+    public boolean isColideToLeftBlock() {
+        return colideToLeftBlock;
+    }
+
+    public void setColideToLeftBlock(boolean colideToLeftBlock) {
+        this.colideToLeftBlock = colideToLeftBlock;
+    }
+
+    private boolean colideToLeftBlock           = false;
+
+    public boolean isColideToTopBlock() {
+        return colideToTopBlock;
+    }
+
+    public void setColideToTopBlock(boolean colideToTopBlock) {
+        this.colideToTopBlock = colideToTopBlock;
+    }
+
+    private boolean colideToTopBlock = false;
 
     public void initBall(int level) {
         Random random = new Random();

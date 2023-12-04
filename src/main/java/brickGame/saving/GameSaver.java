@@ -55,8 +55,8 @@ public class GameSaver {
             outputStream.writeBoolean(ball.isColideToLeftWall());
             outputStream.writeBoolean(ball.isColideToRightBlock());
             outputStream.writeBoolean(ball.isColideToBottomBlock());
-            outputStream.writeBoolean(gameInstance.isColideToLeftBlock());
-            outputStream.writeBoolean(gameInstance.isColideToTopBlock());
+            outputStream.writeBoolean(ball.isColideToLeftBlock());
+            outputStream.writeBoolean(ball.isColideToTopBlock());
 
             ArrayList<BlockSerializable> blockSerializables = new ArrayList<>();
 

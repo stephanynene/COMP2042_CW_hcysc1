@@ -145,25 +145,25 @@ public class Main extends Application implements GameEngine.OnAction {
 //
 //    private boolean colideToBottomBlock         = false;
 
-    public boolean isColideToLeftBlock() {
-        return colideToLeftBlock;
-    }
-
-    public void setColideToLeftBlock(boolean colideToLeftBlock) {
-        this.colideToLeftBlock = colideToLeftBlock;
-    }
-
-    private boolean colideToLeftBlock           = false;
-
-    public boolean isColideToTopBlock() {
-        return colideToTopBlock;
-    }
-
-    public void setColideToTopBlock(boolean colideToTopBlock) {
-        this.colideToTopBlock = colideToTopBlock;
-    }
-
-    private boolean colideToTopBlock = false;
+//    public boolean isColideToLeftBlock() {
+//        return colideToLeftBlock;
+//    }
+//
+//    public void setColideToLeftBlock(boolean colideToLeftBlock) {
+//        this.colideToLeftBlock = colideToLeftBlock;
+//    }
+//
+//    private boolean colideToLeftBlock           = false;
+//
+//    public boolean isColideToTopBlock() {
+//        return colideToTopBlock;
+//    }
+//
+//    public void setColideToTopBlock(boolean colideToTopBlock) {
+//        this.colideToTopBlock = colideToTopBlock;
+//    }
+//
+//    private boolean colideToTopBlock = false;
     public double getVelocity() {
         return velocity;
     }
@@ -388,8 +388,8 @@ public class Main extends Application implements GameEngine.OnAction {
         ball.setColideToLeftWall(loadSave.colideToLeftWall);
         ball.setColideToRightBlock(loadSave.colideToRightBlock);
         ball.setColideToBottomBlock(loadSave.colideToBottomBlock);
-        colideToLeftBlock = loadSave.colideToLeftBlock;
-        colideToTopBlock = loadSave.colideToTopBlock;
+        ball.setColideToLeftBlock(loadSave.colideToLeftBlock);
+        ball.setColideToTopBlock(loadSave.colideToTopBlock);
         level = loadSave.level;
         score = loadSave.score;
         stats.setHeart(loadSave.heart);
