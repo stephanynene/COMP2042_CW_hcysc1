@@ -95,15 +95,15 @@ public class Main extends Application implements GameEngine.OnAction {
 //
 //    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
 
-    public boolean isColideToBreakAndMoveToRight() {
-        return colideToBreakAndMoveToRight;
-    }
-
-    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
-        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
-    }
-
-    private boolean colideToBreakAndMoveToRight = true;
+//    public boolean isColideToBreakAndMoveToRight() {
+//        return colideToBreakAndMoveToRight;
+//    }
+//
+//    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
+//        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
+//    }
+//
+//    private boolean colideToBreakAndMoveToRight = true;
 
     public boolean isColideToRightWall() {
         return colideToRightWall;
@@ -383,7 +383,7 @@ public class Main extends Application implements GameEngine.OnAction {
         ball.setGoDownBall(loadSave.goDownBall);
         ball.setGoRightBall(loadSave.goRightBall);
         ball.setColideToBreak(loadSave.colideToBreak);
-        colideToBreakAndMoveToRight = loadSave.colideToBreakAndMoveToRight;
+        ball.setColideToBreakAndMoveToRight(loadSave.colideToBreakAndMoveToRight);
         colideToRightWall = loadSave.colideToRightWall;
         colideToLeftWall = loadSave.colideToLeftWall;
         colideToRightBlock = loadSave.colideToRightBlock;

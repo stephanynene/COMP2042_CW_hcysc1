@@ -58,6 +58,16 @@ public class Ball extends Circle {
 
     private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
 
+    public boolean isColideToBreakAndMoveToRight() {
+        return colideToBreakAndMoveToRight;
+    }
+
+    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
+        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
+    }
+
+    private boolean colideToBreakAndMoveToRight = true;
+
 
     public void initBall(int level) {
         Random random = new Random();

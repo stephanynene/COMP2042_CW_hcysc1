@@ -146,7 +146,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     //Handle collisions to break paddle
     public void breakCollisonDirection(){
         if (ball.isColideToBreak()) {
-            if (game.isColideToBreakAndMoveToRight()) {
+            if (ball.isColideToBreakAndMoveToRight()) {
                 ball.setGoRightBall(true);
             } else {
                 ball.setGoRightBall(false);
@@ -183,9 +183,9 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
                 // Determine the direction of the collision
                 if (ball.getxBall() - breakPaddle.getCenterBreakX() > 0) {
-                    game.setColideToBreakAndMoveToRight(true);
+                    ball.setColideToBreakAndMoveToRight(true);
                 } else {
-                    game.setColideToBreakAndMoveToRight(false);
+                    ball.setColideToBreakAndMoveToRight(false);
                 }
                 //System.out.println("Colide2");
             }
@@ -195,7 +195,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     public void resetCollideFlags() {
 
         ball.setColideToBreak(false);
-        game.setColideToBreakAndMoveToRight(false);
+        ball.setColideToBreakAndMoveToRight(false);
         game.setColideToRightWall(false);
         game.setColideToLeftWall(false);
 
