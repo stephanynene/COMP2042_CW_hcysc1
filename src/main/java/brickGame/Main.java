@@ -84,16 +84,16 @@ public class Main extends Application implements GameEngine.OnAction {
 //    }
 //
 //    private boolean goRightBall  = true;
-
-    public boolean isColideToBreak() {
-        return colideToBreak;
-    }
-
-    public void setColideToBreak(boolean colideToBreak) {
-        this.colideToBreak = colideToBreak;
-    }
-
-    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
+//
+//    public boolean isColideToBreak() {
+//        return colideToBreak;
+//    }
+//
+//    public void setColideToBreak(boolean colideToBreak) {
+//        this.colideToBreak = colideToBreak;
+//    }
+//
+//    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
 
     public boolean isColideToBreakAndMoveToRight() {
         return colideToBreakAndMoveToRight;
@@ -382,7 +382,7 @@ public class Main extends Application implements GameEngine.OnAction {
         isGoldStatus = loadSave.isGoldStauts;
         ball.setGoDownBall(loadSave.goDownBall);
         ball.setGoRightBall(loadSave.goRightBall);
-        colideToBreak = loadSave.colideToBreak;
+        ball.setColideToBreak(loadSave.colideToBreak);
         colideToBreakAndMoveToRight = loadSave.colideToBreakAndMoveToRight;
         colideToRightWall = loadSave.colideToRightWall;
         colideToLeftWall = loadSave.colideToLeftWall;

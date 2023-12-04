@@ -47,6 +47,18 @@ public class Ball extends Circle {
 
     private boolean goRightBall  = true;
 
+
+    public boolean isColideToBreak() {
+        return colideToBreak;
+    }
+
+    public void setColideToBreak(boolean colideToBreak) {
+        this.colideToBreak = colideToBreak;
+    }
+
+    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
+
+
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;
