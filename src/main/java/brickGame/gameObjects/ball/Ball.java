@@ -68,6 +68,17 @@ public class Ball extends Circle {
 
     private boolean colideToBreakAndMoveToRight = true;
 
+    public boolean isColideToRightWall() {
+        return colideToRightWall;
+    }
+
+    public void setColideToRightWall(boolean colideToRightWall) {
+        this.colideToRightWall = colideToRightWall;
+    }
+
+    private boolean colideToRightWall = false;
+
+
 
     public void initBall(int level) {
         Random random = new Random();

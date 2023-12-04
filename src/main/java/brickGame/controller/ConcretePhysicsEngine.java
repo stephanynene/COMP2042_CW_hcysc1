@@ -56,7 +56,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     public void wallCollisons(){
 
-        if (game.isColideToRightWall()) {
+        if (ball.isColideToRightWall()) {
             ball.setGoRightBall(false);
         }
 
@@ -107,7 +107,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
             resetCollideFlags();
             //vX = 1.000;
-            game.setColideToRightWall(true);
+            ball.setColideToRightWall(true);
         }
 
         // Check if the ball hits the left boundary
@@ -196,7 +196,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
         ball.setColideToBreak(false);
         ball.setColideToBreakAndMoveToRight(false);
-        game.setColideToRightWall(false);
+        ball.setColideToRightWall(false);
         game.setColideToLeftWall(false);
 
         game.setColideToRightBlock(false);
