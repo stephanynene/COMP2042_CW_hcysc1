@@ -137,6 +137,28 @@ public class Ball extends Circle {
 
     private double velocity = 1.000;
 
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
+    }
+
+    private double velocityX = 1.000;
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    private double velocityY = 1.000;
+
+
+
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;

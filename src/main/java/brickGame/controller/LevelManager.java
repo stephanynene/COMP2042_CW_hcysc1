@@ -26,7 +26,7 @@ public class LevelManager {
 
     public void nextLevel() {
         // Logic for transitioning to the next level
-        game.setVelocityX(1.000);
+        ball.setVelocityX(1.000);
         gameEngine.stop();
         concretePhysicsEngine.resetCollideFlags();
         ball.setGoDownBall(true);
@@ -55,7 +55,7 @@ public class LevelManager {
         game.setLevel(0);
         stats.setHeart(3);
         game.setScore(0);
-        game.setVelocityX(1.000);
+        ball.setVelocityX(1.000);
         stats.setDestroyedBlockCount(0);
         concretePhysicsEngine.resetCollideFlags();
         ball.setGoDownBall(true);

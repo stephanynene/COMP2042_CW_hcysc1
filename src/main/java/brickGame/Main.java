@@ -173,26 +173,26 @@ public class Main extends Application implements GameEngine.OnAction {
 //    }
 //
 //    private double velocity = 1.000;
-    public double getVelocityX() {
-        return velocityX;
-    }
+//    public double getVelocityX() {
+//        return velocityX;
+//    }
+//
+//    public void setVelocityX(double velocityX) {
+//        this.velocityX = velocityX;
+//    }
+//
+//    private double velocityX = 1.000;
 
-    public void setVelocityX(double velocityX) {
-        this.velocityX = velocityX;
-    }
-
-    private double velocityX = 1.000;
-
-    public double getVelocityY() {
-        return velocityY;
-    }
-
-    public void setVelocityY(double velocityY) {
-        this.velocityY = velocityY;
-    }
-
-    private double velocityY = 1.000;
-
+//    public double getVelocityY() {
+//        return velocityY;
+//    }
+//
+//    public void setVelocityY(double velocityY) {
+//        this.velocityY = velocityY;
+//    }
+//
+//    private double velocityY = 1.000;
+//
 
 
     public ArrayList<Block> getBlocks() {
@@ -401,7 +401,7 @@ public class Main extends Application implements GameEngine.OnAction {
         breakPaddle.setCenterBreakX(loadSave.centerBreakX);
         stats.setTime(loadSave.time);
         stats.setGoldTime(loadSave.goldTime);
-        velocityX = loadSave.vX;
+        ball.setVelocityX(loadSave.vX);
 
         blocks.clear();
         chocos.clear();

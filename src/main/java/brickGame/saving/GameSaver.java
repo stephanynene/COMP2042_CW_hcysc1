@@ -43,7 +43,7 @@ public class GameSaver {
             outputStream.writeDouble(breakPaddle.getCenterBreakX());
             outputStream.writeLong(stats.getTime());
             outputStream.writeLong(stats.getGoldTime());
-            outputStream.writeDouble(gameInstance.getVelocityX());
+            outputStream.writeDouble(ball.getVelocityX());
 
             outputStream.writeBoolean(gameInstance.isExistHeartBlock());
             outputStream.writeBoolean(gameInstance.isGoldStatus());
