@@ -115,15 +115,15 @@ public class Main extends Application implements GameEngine.OnAction {
 //
 //    private boolean colideToRightWall = false;
 
-    public boolean isColideToLeftWall() {
-        return colideToLeftWall;
-    }
-
-    public void setColideToLeftWall(boolean colideToLeftWall) {
-        this.colideToLeftWall = colideToLeftWall;
-    }
-
-    private boolean colideToLeftWall = false;
+//    public boolean isColideToLeftWall() {
+//        return colideToLeftWall;
+//    }
+//
+//    public void setColideToLeftWall(boolean colideToLeftWall) {
+//        this.colideToLeftWall = colideToLeftWall;
+//    }
+//
+//    private boolean colideToLeftWall = false;
 
     public boolean isColideToRightBlock() {
         return colideToRightBlock;
@@ -385,7 +385,7 @@ public class Main extends Application implements GameEngine.OnAction {
         ball.setColideToBreak(loadSave.colideToBreak);
         ball.setColideToBreakAndMoveToRight(loadSave.colideToBreakAndMoveToRight);
         ball.setColideToRightWall(loadSave.colideToRightWall);
-        colideToLeftWall = loadSave.colideToLeftWall;
+        ball.setColideToLeftWall(loadSave.colideToLeftWall);
         colideToRightBlock = loadSave.colideToRightBlock;
         colideToBottomBlock = loadSave.colideToBottomBlock;
         colideToLeftBlock = loadSave.colideToLeftBlock;

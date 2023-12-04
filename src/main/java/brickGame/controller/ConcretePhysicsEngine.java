@@ -60,7 +60,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             ball.setGoRightBall(false);
         }
 
-        if (game.isColideToLeftWall()) {
+        if (ball.isColideToLeftWall()) {
             ball.setGoRightBall(true);
         }
 
@@ -114,7 +114,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         if (ball.getxBall() <= 0) {
             resetCollideFlags();
             //vX = 1.000;
-            game.setColideToLeftWall(true);
+            ball.setColideToLeftWall(true);
         }
     }
 
@@ -197,7 +197,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         ball.setColideToBreak(false);
         ball.setColideToBreakAndMoveToRight(false);
         ball.setColideToRightWall(false);
-        game.setColideToLeftWall(false);
+        ball.setColideToLeftWall(false);
 
         game.setColideToRightBlock(false);
         game.setColideToBottomBlock(false);
