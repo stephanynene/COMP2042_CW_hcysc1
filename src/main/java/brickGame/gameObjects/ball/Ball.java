@@ -87,6 +87,15 @@ public class Ball extends Circle {
     }
 
     private boolean colideToLeftWall = false;
+    public boolean isColideToRightBlock() {
+        return colideToRightBlock;
+    }
+
+    public void setColideToRightBlock(boolean colideToRightBlock) {
+        this.colideToRightBlock = colideToRightBlock;
+    }
+
+    private boolean colideToRightBlock          = false;
 
 
     public void initBall(int level) {

@@ -52,7 +52,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
 
     public void onPhysicsUpdate() {
         game.checkDestroyedCount();
-       concretePhysicsEngine.setPhysicsToBall();
+        concretePhysicsEngine.setPhysicsToBall();
 
 
         updateGoldStatus();
