@@ -164,15 +164,15 @@ public class Main extends Application implements GameEngine.OnAction {
 //    }
 //
 //    private boolean colideToTopBlock = false;
-    public double getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
-    }
-
-    private double velocity = 1.000;
+//    public double getVelocity() {
+//        return velocity;
+//    }
+//
+//    public void setVelocity(double velocity) {
+//        this.velocity = velocity;
+//    }
+//
+//    private double velocity = 1.000;
     public double getVelocityX() {
         return velocityX;
     }

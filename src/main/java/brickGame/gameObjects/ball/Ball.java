@@ -127,6 +127,16 @@ public class Ball extends Circle {
 
     private boolean colideToTopBlock = false;
 
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    private double velocity = 1.000;
+
     public void initBall(int level) {
         Random random = new Random();
         xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;
