@@ -133,7 +133,7 @@ public class Main extends Application implements GameEngine.OnAction {
         if (loadFromSave == false) {
             level++;
             if (level >1){
-                new Stats().showMessage("Level Up :)", this);
+                new Stats().showMessage(GameConstants.LEVEL_UP_MESSAGE.getStringValue(), this);
             }
             if (level == 18) {
                 new Stats().showWin(this);
