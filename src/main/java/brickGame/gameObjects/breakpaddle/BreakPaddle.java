@@ -38,12 +38,7 @@ public class BreakPaddle {
     private int halfBreakWidth = GameConstants.BREAK_WIDTH.getIntValue() / 2;
 
     public Rectangle rect;
-
-
-
-    private static final double SPEED = 13.0;
-    private static final Duration ANIMATION_DURATION = Duration.millis(16);
-
+    private static final Duration ANIMATION_DURATION = Duration.millis(1);
 
     public void initBreak() {
         rect = new Rectangle();
@@ -51,11 +46,11 @@ public class BreakPaddle {
     }
 
     public void moveRight() {
-        animateMovement(SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
+        animateMovement(GameConstants.BREAKPADDLE_SPEED.getIntValue(), GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
     }
 
     public void moveLeft() {
-        animateMovement(-SPEED, GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
+        animateMovement(-GameConstants.BREAKPADDLE_SPEED.getIntValue(), GameConstants.SCENE_WIDTH.getIntValue() - GameConstants.BREAK_WIDTH.getIntValue());
     }
 
     private void animateMovement(double deltaX, double maxX) {
