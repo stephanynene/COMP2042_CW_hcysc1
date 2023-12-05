@@ -24,7 +24,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -111,7 +110,7 @@ public class Main extends Application implements GameEngine.OnAction {
     public Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
-
+    private Timer timer;
     private BreakPaddle breakPaddle;
     private Ball ball;
     private BallView ballView;
@@ -121,7 +120,6 @@ public class Main extends Application implements GameEngine.OnAction {
     private ConcretePhysicsEngine concretePhysicsEngine;
     private InputHandler inputHandler;
     private BlockManager blockManager;
-
     private LevelManager levelManager;
     private Board board;
     private Stats stats;
@@ -141,8 +139,9 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
             stats = new Stats();
-            stats.setGameTimeLimit(300000); // 5 minutes (milliseconds)
-            stats.setGameStartTime(System.currentTimeMillis());
+            timer = new Timer();
+            timer.setGameTimeLimit(300000); // 5 minutes (milliseconds)
+            timer.setGameStartTime(System.currentTimeMillis());
 
             blockManager = new BlockManager(root);
             blockManager.drawBlocks();
@@ -176,7 +175,7 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
-        countdownLabel = new Label("Timer: " + (stats.getGameTimeLimit() / 1000) + "s");
+        countdownLabel = new Label("Timer: " + (timer.getGameTimeLimit() / 1000) + "s");
         countdownLabel.setTranslateX(200);
 
 
@@ -251,6 +250,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Set game engine in the physics engine and level manager
         ((ConcretePhysicsEngine) concretePhysicsEngine).setPEGameEngine(gameEngine);
         ((LevelManager) levelManager).setLMGameEngine(gameEngine);
+        ((Timer) timer).setGameEngineTimer(gameEngine);
 
 
     }
@@ -342,31 +342,17 @@ public class Main extends Application implements GameEngine.OnAction {
         stats.setTime(time);
 
         // Calculate elapsed time
-        long elapsedTime = System.currentTimeMillis() - stats.getGameStartTime();
+        long elapsedTime = System.currentTimeMillis() - timer.getGameStartTime();
 
         // Check if the player has exceeded the time limit
-        if (elapsedTime > stats.getGameTimeLimit()) {
-            handleGameOver(); // Implement this method to handle the game-over condition
+        if (elapsedTime > timer.getGameTimeLimit()) {
+            timer.timeUpGameOver(this); // Implement this method to handle the game-over condition
         }
 
         // Update the countdown timer on the game screen (you may need to convert milliseconds to seconds or minutes)
-        updateCountdownTimer(stats.getGameTimeLimit() - elapsedTime);
+        timer.updateCountdownTimer(timer.getGameTimeLimit() - elapsedTime, countdownLabel);
     }
 
-    private void updateCountdownTimer(long remainingTimeMillis) {
-        // Convert milliseconds to seconds or minutes as needed
-        long remainingSeconds = remainingTimeMillis / 1000;
-
-        // Update the countdown timer UI element
-        Platform.runLater(() -> countdownLabel.setText("Timer: " + remainingSeconds + "s"));
-    }
-
-    private void handleGameOver() {
-        Platform.runLater(() -> {
-            new Stats().showGameOver(Main.this);
-            gameEngine.stop(); // Assuming you have a method to stop the game engine
-        });
-    }
 
     public void clearBlocks() {
         blocks.clear();

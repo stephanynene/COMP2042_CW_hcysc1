@@ -21,7 +21,6 @@ public class LevelManager {
 
     public void setLMGameEngine(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        System.out.println(gameEngine);
     }
 
     public void nextLevel() {
