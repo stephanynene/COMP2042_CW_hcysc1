@@ -3,17 +3,15 @@ package brickGame.controller;
 import brickGame.Main;
 import brickGame.constants.GameConstants;
 import brickGame.gameEngine.GameEngine;
-import brickGame.gameObjects.Ball;
-import brickGame.gameObjects.Block;
-import brickGame.gameObjects.Bonus;
-import brickGame.gameObjects.BreakPaddle;
-import brickGame.scoring.Score;
+import brickGame.gameObjects.ball.Ball;
+import brickGame.gameObjects.block.Block;
+import brickGame.gameObjects.bonus.Bonus;
+import brickGame.stats.Stats;
+import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -26,15 +24,18 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private Ball ball;
     private ConcretePhysicsEngine concretePhysicsEngine;
     private Pane root;
+    private Stats stats;
+
 
     private Timeline chocoListTimeline;
 
-    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, ConcretePhysicsEngine concretePhysicsEngine, Pane root) {
+    public ElementsUpdater(Main game, BreakPaddle breakPaddle, Ball ball, ConcretePhysicsEngine concretePhysicsEngine, Pane root, Stats stats) {
         this.game = game;
         this.breakPaddle = breakPaddle;
         this.ball = ball;
         this.concretePhysicsEngine = concretePhysicsEngine;
         this.root = root;
+        this.stats = stats;
 
         chocoListTimeline = new Timeline(new KeyFrame(Duration.millis(16), event -> updateChocoList()));
         chocoListTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -51,7 +52,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void updateUI() {
         game.updateScoreLabel(game.getScore());
-        game.updateHeartLabel(game.getHeart());
+        game.updateHeartLabel(stats.getHeart());
 
         // Update positions of UI elements
         breakPaddle.rect.setX(breakPaddle.getxBreak());
@@ -91,10 +92,10 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void handleBlockHit(Block block) {
         // Show score, hide block, and update game state
-        new Score().show(block.x, block.y, 1, game);
+        new Stats().show(block.x, block.y, 1, game);
         block.getBlockView().getRect().setVisible(false);
         block.isDestroyed = true;
-        game.setDestroyedBlockCount(game.getDestroyedBlockCount() + 1);
+        stats.setDestroyedBlockCount(stats.getDestroyedBlockCount() + 1);
         concretePhysicsEngine.resetCollideFlags();
 
         // Handle different block types
@@ -103,14 +104,14 @@ public class ElementsUpdater implements GameEngine.OnAction {
         } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
-            game.setHeart(game.getHeart() + 1);
+            stats.setHeart(stats.getHeart() + 1);
         }
     }
 
     // Handle hit to choco block
     private void handleChocoBlockHit(Block block) {
         final Bonus choco = new Bonus(block.row, block.column);
-        choco.timeCreated = game.getTime();
+        choco.timeCreated = stats.getTime();
 
         // Use synchronized block to add choco to UI and update game state
         synchronized (game.getChocos()) {
@@ -121,12 +122,15 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
 
     private void handleStarBlockHit() {
+        System.out.println("hello\n");
         Platform.runLater(() -> {
 
-            game.setGoldTime(game.getTime());
-            ImagePattern imagePattern = new ImagePattern(new Image("goldball.png"));
-            ball.setFill(imagePattern);
-            Image goldBallImage = new Image("goldball.png");
+            stats.setGoldTime(stats.getTime());
+            System.out.println(ball.getFill());
+            ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
+//            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));
+            System.out.println(ball.getFill());
+//            Image goldBallImage = new Image("goldball.png");
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
 
@@ -145,7 +149,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }
-            ball.setFill(new ImagePattern(new Image("ball.png")));
+     //      ball.setFill(new ImagePattern(new Image("ball.png")));
+            ball.getBallView().setBallImage(GameConstants.NORMAL_BALL);
             root.getStyleClass().remove("goldRoot");
             game.setGoldStatus(false);
         });

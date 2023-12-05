@@ -2,15 +2,21 @@ package brickGame.controller;
 
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
+import brickGame.gameObjects.ball.Ball;
+import brickGame.stats.Stats;
 
 public class LevelManager {
 
     private Main game;
     private ConcretePhysicsEngine concretePhysicsEngine;
     private GameEngine gameEngine;
-    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine) {
+    private Stats stats;
+    private Ball ball;
+    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine, Stats stats, Ball ball) {
         this.game = game;
         this.concretePhysicsEngine = concretePhysicsEngine;
+        this.stats = stats;
+        this.ball = ball;
     }
 
     public void setLMGameEngine(GameEngine gameEngine) {
@@ -20,22 +26,22 @@ public class LevelManager {
 
     public void nextLevel() {
         // Logic for transitioning to the next level
-        game.setVelocityX(1.000);
+        ball.setVelocityX(1.000);
         gameEngine.stop();
         concretePhysicsEngine.resetCollideFlags();
-        game.setGoDownBall(true);
+        ball.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);
-        game.setHitTime(0);
-        game.setTime(0);
-        game.setGoldTime(0);
+        stats.setHitTime(0);
+        stats.setTime(0);
+        stats.setGoldTime(0);
 
         gameEngine.stop();
 
         game.clearBlocks();
         game.clearChocos();
 
-        game.setDestroyedBlockCount(0);
+        stats.setDestroyedBlockCount(0);
 
         try {
             game.start(game.primaryStage);
@@ -47,17 +53,17 @@ public class LevelManager {
     public void restartGame() {
         // Logic for restarting the game
         game.setLevel(0);
-        game.setHeart(3);
+        stats.setHeart(3);
         game.setScore(0);
-        game.setVelocityX(1.000);
-        game.setDestroyedBlockCount(0);
+        ball.setVelocityX(1.000);
+        stats.setDestroyedBlockCount(0);
         concretePhysicsEngine.resetCollideFlags();
-        game.setGoDownBall(true);
+        ball.setGoDownBall(true);
         game.setGoldStatus(false);
         game.setExistHeartBlock(false);
-        game.setHitTime(0);
-        game.setTime(0);
-        game.setGoldTime(0);
+        stats.setHitTime(0);
+        stats.setTime(0);
+        stats.setGoldTime(0);
         game.clearBlocks();
         game.clearChocos();
         try {

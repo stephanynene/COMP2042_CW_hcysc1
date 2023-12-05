@@ -1,18 +1,66 @@
-package brickGame.scoring;
+package brickGame.stats;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
-import brickGame.controller.LevelManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-public class Score {
+public class Stats {
+
+
+    public int getDestroyedBlockCount() {
+        return destroyedBlockCount;
+    }
+
+    public void setDestroyedBlockCount(int destroyedBlockCount) {
+        this.destroyedBlockCount = destroyedBlockCount;
+    }
+
+    private int destroyedBlockCount = 0;
+
+    public int getHeart() {
+        return heart;
+    }
+
+    public void setHeart(int heart) {
+        this.heart = heart;
+    }
+    private int  heart    = 3;
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    private long time = 0;
+
+    public long getHitTime() {
+        return hitTime;
+    }
+
+    public void setHitTime(long hitTime) {
+        this.hitTime = hitTime;
+    }
+
+    private long hitTime  = 0;
+
+
+    public long getGoldTime() {
+        return goldTime;
+    }
+
+    public void setGoldTime(long goldTime) {
+        this.goldTime = goldTime;
+    }
+
+    private long goldTime = 0;
 
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";

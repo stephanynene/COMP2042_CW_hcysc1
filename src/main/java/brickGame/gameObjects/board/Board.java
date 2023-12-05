@@ -1,8 +1,8 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.board;
 
 import brickGame.Main;
 import brickGame.constants.GameConstants;
-import brickGame.gameObjects.Block;
+import brickGame.gameObjects.block.Block;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

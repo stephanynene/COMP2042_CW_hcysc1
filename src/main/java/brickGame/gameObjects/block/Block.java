@@ -1,4 +1,4 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.block;
 
 
 import brickGame.constants.GameConstants;

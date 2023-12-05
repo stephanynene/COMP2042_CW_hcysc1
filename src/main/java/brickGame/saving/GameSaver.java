@@ -3,10 +3,10 @@ package brickGame.saving;
 import brickGame.constants.BlockSerializable;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
-import brickGame.scoring.Score;
-import brickGame.gameObjects.Ball;
-import brickGame.gameObjects.Block;
-import brickGame.gameObjects.BreakPaddle;
+import brickGame.stats.Stats;
+import brickGame.gameObjects.ball.Ball;
+import brickGame.gameObjects.block.Block;
+import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import javafx.application.Platform;
 
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GameSaver {
 
-    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball) {
+    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball, Stats stats) {
         new File(GameConstants.SAVE_PATH_DIR.getStringValue()).mkdirs();
         File file = new File(GameConstants.SAVE_PATH.getStringValue());
 
@@ -33,30 +33,30 @@ public class GameSaver {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file))) {
             outputStream.writeInt(gameInstance.getLevel());
             outputStream.writeInt(gameInstance.getScore());
-            outputStream.writeInt(gameInstance.getHeart());
-            outputStream.writeInt(gameInstance.getDestroyedBlockCount());
+            outputStream.writeInt(stats.getHeart());
+            outputStream.writeInt(stats.getDestroyedBlockCount());
 
             outputStream.writeDouble(ball.getxBall());
             outputStream.writeDouble(ball.getyBall());
             outputStream.writeDouble(breakPaddle.getxBreak());
             outputStream.writeDouble(breakPaddle.getyBreak());
             outputStream.writeDouble(breakPaddle.getCenterBreakX());
-            outputStream.writeLong(gameInstance.getTime());
-            outputStream.writeLong(gameInstance.getGoldTime());
-            outputStream.writeDouble(gameInstance.getVelocityX());
+            outputStream.writeLong(stats.getTime());
+            outputStream.writeLong(stats.getGoldTime());
+            outputStream.writeDouble(ball.getVelocityX());
 
             outputStream.writeBoolean(gameInstance.isExistHeartBlock());
             outputStream.writeBoolean(gameInstance.isGoldStatus());
-            outputStream.writeBoolean(gameInstance.isGoDownBall());
-            outputStream.writeBoolean(gameInstance.isGoRightBall());
-            outputStream.writeBoolean(gameInstance.isColideToBreak());
-            outputStream.writeBoolean(gameInstance.isColideToBreakAndMoveToRight());
-            outputStream.writeBoolean(gameInstance.isColideToRightWall());
-            outputStream.writeBoolean(gameInstance.isColideToLeftWall());
-            outputStream.writeBoolean(gameInstance.isColideToRightBlock());
-            outputStream.writeBoolean(gameInstance.isColideToBottomBlock());
-            outputStream.writeBoolean(gameInstance.isColideToLeftBlock());
-            outputStream.writeBoolean(gameInstance.isColideToTopBlock());
+            outputStream.writeBoolean(ball.isGoDownBall());
+            outputStream.writeBoolean(ball.isGoRightBall());
+            outputStream.writeBoolean(ball.isColideToBreak());
+            outputStream.writeBoolean(ball.isColideToBreakAndMoveToRight());
+            outputStream.writeBoolean(ball.isColideToRightWall());
+            outputStream.writeBoolean(ball.isColideToLeftWall());
+            outputStream.writeBoolean(ball.isColideToRightBlock());
+            outputStream.writeBoolean(ball.isColideToBottomBlock());
+            outputStream.writeBoolean(ball.isColideToLeftBlock());
+            outputStream.writeBoolean(ball.isColideToTopBlock());
 
             ArrayList<BlockSerializable> blockSerializables = new ArrayList<>();
 
@@ -72,7 +72,7 @@ public class GameSaver {
             outputStream.writeObject(blockSerializables);
 
             Platform.runLater(() -> {
-                new Score().showMessage("Game Saved", gameInstance);
+                new Stats().showMessage("Game Saved", gameInstance);
                 System.out.println("Game Saved");
             });
 

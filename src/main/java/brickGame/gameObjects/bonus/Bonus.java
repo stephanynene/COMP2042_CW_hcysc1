@@ -1,4 +1,5 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.bonus;
+import brickGame.gameObjects.block.Block;
 import javafx.scene.shape.Rectangle;
 import java.io.Serializable;
 

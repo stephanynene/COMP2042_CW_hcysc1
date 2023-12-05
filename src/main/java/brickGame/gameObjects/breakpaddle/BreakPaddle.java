@@ -1,4 +1,4 @@
-package brickGame.gameObjects;
+package brickGame.gameObjects.breakpaddle;
 import brickGame.constants.GameConstants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

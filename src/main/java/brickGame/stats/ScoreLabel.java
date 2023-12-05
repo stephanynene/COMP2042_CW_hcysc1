@@ -1,4 +1,4 @@
-package brickGame.scoring;
+package brickGame.stats;
 
 import brickGame.Main;
 import javafx.scene.control.Button;
