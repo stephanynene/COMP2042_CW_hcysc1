@@ -105,7 +105,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private Label scoreLabel;
     private Label heartLabel;
     private Label levelLabel;
-
+    private Label countdownLabel;
     private boolean loadFromSave = false;
 
     public Stage  primaryStage;
@@ -126,6 +126,7 @@ public class Main extends Application implements GameEngine.OnAction {
     private Board board;
     private Stats stats;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -140,6 +141,9 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
             stats = new Stats();
+            stats.setGameTimeLimit(300000); // 5 minutes (milliseconds)
+            stats.setGameStartTime(System.currentTimeMillis());
+
             blockManager = new BlockManager(root);
             blockManager.drawBlocks();
 
@@ -172,11 +176,14 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
+        countdownLabel = new Label("Timer: " + (stats.getGameTimeLimit() / 1000) + "s");
+        countdownLabel.setTranslateX(200);
+
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel);
         }
 
         for (Block block : blocks) {
@@ -333,7 +340,34 @@ public class Main extends Application implements GameEngine.OnAction {
     @Override
     public void onTime(long time) {
         stats.setTime(time);
+
+        // Calculate elapsed time
+        long elapsedTime = System.currentTimeMillis() - stats.getGameStartTime();
+
+        // Check if the player has exceeded the time limit
+        if (elapsedTime > stats.getGameTimeLimit()) {
+            handleGameOver(); // Implement this method to handle the game-over condition
+        }
+
+        // Update the countdown timer on the game screen (you may need to convert milliseconds to seconds or minutes)
+        updateCountdownTimer(stats.getGameTimeLimit() - elapsedTime);
     }
+
+    private void updateCountdownTimer(long remainingTimeMillis) {
+        // Convert milliseconds to seconds or minutes as needed
+        long remainingSeconds = remainingTimeMillis / 1000;
+
+        // Update the countdown timer UI element
+        Platform.runLater(() -> countdownLabel.setText("Timer: " + remainingSeconds + "s"));
+    }
+
+    private void handleGameOver() {
+        Platform.runLater(() -> {
+            new Stats().showGameOver(Main.this);
+            gameEngine.stop(); // Assuming you have a method to stop the game engine
+        });
+    }
+
     public void clearBlocks() {
         blocks.clear();
     }
