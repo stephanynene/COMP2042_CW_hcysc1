@@ -1,4 +1,4 @@
-package brickGame;
+package brickGame.labels;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

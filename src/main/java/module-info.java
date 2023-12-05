@@ -26,4 +26,8 @@ module brickGame {
     opens brickGame.gameObjects.breakpaddle to javafx.fxml;
     exports brickGame.gameObjects.board;
     opens brickGame.gameObjects.board to javafx.fxml;
+    exports brickGame.timer;
+    opens brickGame.timer to javafx.fxml;
+    exports brickGame.labels;
+    opens brickGame.labels to javafx.fxml;
 }

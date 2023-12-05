@@ -4,6 +4,7 @@ import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.stats.Stats;
+import brickGame.timer.Timer;
 
 public class LevelManager {
 
@@ -12,19 +13,21 @@ public class LevelManager {
     private GameEngine gameEngine;
     private Stats stats;
     private Ball ball;
-    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine, Stats stats, Ball ball) {
+    private Timer timer;
+    public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine, Stats stats, Ball ball, Timer timer) {
         this.game = game;
         this.concretePhysicsEngine = concretePhysicsEngine;
         this.stats = stats;
         this.ball = ball;
+        this.timer = timer;
     }
 
     public void setLMGameEngine(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        System.out.println(gameEngine);
     }
 
     public void nextLevel() {
+
         // Logic for transitioning to the next level
         ball.setVelocityX(1.000);
         gameEngine.stop();

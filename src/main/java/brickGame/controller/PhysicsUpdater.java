@@ -1,6 +1,6 @@
 package brickGame.controller;
 
-import brickGame.BonusLabel;
+import brickGame.labels.BonusLabel;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
@@ -8,14 +8,10 @@ import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.bonus.Bonus;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,6 +17,7 @@ import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import brickGame.input.InputHandler;
 import brickGame.saving.LoadSave;
 import brickGame.stats.Stats;
+import brickGame.timer.Timer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,7 +25,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -105,13 +105,13 @@ public class Main extends Application implements GameEngine.OnAction {
     private Label scoreLabel;
     private Label heartLabel;
     private Label levelLabel;
-
+    private Label countdownLabel;
     private boolean loadFromSave = false;
 
     public Stage  primaryStage;
     Button load    = null;
     Button newGame = null;
-
+    private Timer timer;
     private BreakPaddle breakPaddle;
     private Ball ball;
     private BallView ballView;
@@ -121,10 +121,10 @@ public class Main extends Application implements GameEngine.OnAction {
     private ConcretePhysicsEngine concretePhysicsEngine;
     private InputHandler inputHandler;
     private BlockManager blockManager;
-
     private LevelManager levelManager;
     private Board board;
     private Stats stats;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -133,13 +133,23 @@ public class Main extends Application implements GameEngine.OnAction {
         if (loadFromSave == false) {
             level++;
             if (level >1){
-                new Stats().showMessage("Level Up :)", this);
+                new Stats().showMessage(GameConstants.LEVEL_UP_MESSAGE.getStringValue(), this);
             }
             if (level == 18) {
                 new Stats().showWin(this);
                 return;
             }
             stats = new Stats();
+
+            timer = new Timer();
+            if(level == 1){
+                timer.setGameTimeLimit(60000); // Set initial game time limit
+            } else {
+                timer.setGameTimeLimit(60000 * level); // Increase time limit according to level
+            }
+            timer.setGameStartTime(System.currentTimeMillis());
+
+
             blockManager = new BlockManager(root);
             blockManager.drawBlocks();
 
@@ -172,11 +182,14 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
+        countdownLabel = new Label("Timer: " + (timer.getGameTimeLimit() / 1000) + "s");
+        countdownLabel.setTranslateX(200);
+
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel);
         }
 
         for (Block block : blocks) {
@@ -234,7 +247,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
-        levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball);
+        levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball, timer);
 
         // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
         gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
@@ -244,6 +257,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Set game engine in the physics engine and level manager
         ((ConcretePhysicsEngine) concretePhysicsEngine).setPEGameEngine(gameEngine);
         ((LevelManager) levelManager).setLMGameEngine(gameEngine);
+        ((Timer) timer).setGameEngineTimer(gameEngine);
 
 
     }
@@ -333,7 +347,20 @@ public class Main extends Application implements GameEngine.OnAction {
     @Override
     public void onTime(long time) {
         stats.setTime(time);
+
+        // Calculate elapsed time
+        long elapsedTime = System.currentTimeMillis() - timer.getGameStartTime();
+
+        // Check if the player has exceeded the time limit
+        if (elapsedTime > timer.getGameTimeLimit()) {
+            timer.timeUpGameOver(this); // Implement this method to handle the game-over condition
+        }
+
+        // Update the countdown timer on the game screen (you may need to convert milliseconds to seconds or minutes)
+        timer.updateCountdownTimer(timer.getGameTimeLimit() - elapsedTime, countdownLabel);
     }
+
+
     public void clearBlocks() {
         blocks.clear();
     }
