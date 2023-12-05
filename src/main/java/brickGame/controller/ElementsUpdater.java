@@ -122,7 +122,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
 
     private void handleStarBlockHit() {
-        System.out.println("hello\n");
         Platform.runLater(() -> {
 
             stats.setGoldTime(stats.getTime());
