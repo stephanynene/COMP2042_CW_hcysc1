@@ -128,9 +128,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
             stats.setGoldTime(stats.getTime());
             System.out.println(ball.getFill());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
-//            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));
             System.out.println(ball.getFill());
-//            Image goldBallImage = new Image("goldball.png");
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
 
@@ -149,7 +147,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }
-     //      ball.setFill(new ImagePattern(new Image("ball.png")));
+
             ball.getBallView().setBallImage(GameConstants.NORMAL_BALL);
             root.getStyleClass().remove("goldRoot");
             game.setGoldStatus(false);

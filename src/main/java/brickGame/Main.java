@@ -24,7 +24,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import brickGame.gameObjects.bonus.Bonus;
@@ -170,6 +171,7 @@ public class Main extends Application implements GameEngine.OnAction {
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
+
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
