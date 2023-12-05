@@ -10,8 +10,8 @@ public enum GameConstants {
     WIN_MESSAGE("You Win!"),
     RESTART_MESSAGE("Restart"),
 
-    NORMAL_BALL("/ball.png"),
-    GOLD_BALL("goldball.png"),
+    NORMAL_BALL("/ball.jpg"),
+    GOLD_BALL("goldball.jpg"),
 
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),

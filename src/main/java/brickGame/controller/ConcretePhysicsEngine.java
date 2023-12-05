@@ -69,8 +69,6 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     // Calculate velocity based on time and hit time
     public void calculateVelocity() {
         ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 1.000);
-        System.out.println(ball.getVelocityX());
-        System.out.println(ball.getVelocityY());
     }
 
     //Handle boundary collisions
@@ -176,11 +174,9 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
                 } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
                     int v1 = (int) (1.5 * ((Math.abs(relation) * 1.5) + (game.getLevel() / 3.500)));
                     ball.setVelocityX(v1);
-                    System.out.println("vX " + ball.getVelocityX());
                 } else {
                     int v1 = (int) (1.2 * ((Math.abs(relation) * 2) + (game.getLevel() / 3.500)));
                     ball.setVelocityX(v1);
-                    System.out.println("vX " + ball.getVelocityX());
                 }
 
                 // Determine the direction of the collision
@@ -189,7 +185,6 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
                 } else {
                     ball.setColideToBreakAndMoveToRight(false);
                 }
-                //System.out.println("Colide2");
             }
         }
     }

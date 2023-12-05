@@ -122,15 +122,12 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
 
     private void handleStarBlockHit() {
-        System.out.println("hello\n");
         Platform.runLater(() -> {
 
             stats.setGoldTime(stats.getTime());
             System.out.println(ball.getFill());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
-//            ball.setFill(new ImagePattern(new Image(GameConstants.NORMAL_BALL.getStringValue())));
             System.out.println(ball.getFill());
-//            Image goldBallImage = new Image("goldball.png");
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
 
@@ -149,27 +146,12 @@ public class ElementsUpdater implements GameEngine.OnAction {
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }
-     //      ball.setFill(new ImagePattern(new Image("ball.png")));
+
             ball.getBallView().setBallImage(GameConstants.NORMAL_BALL);
             root.getStyleClass().remove("goldRoot");
             game.setGoldStatus(false);
         });
     }
-    // Update position of chocos
-//    private void updateChocoList() {
-//        synchronized (game.getChocos()) {
-//            Iterator<Bonus> iterator = game.getChocos().iterator();
-//            while (iterator.hasNext()) {
-//                Bonus choco = iterator.next();
-//                if (choco.taken) {
-//                    // Remove taken choco from the game
-//                    iterator.remove();
-//                    // Remove choco from the UI on the JavaFX thread
-//                    Platform.runLater(() -> root.getChildren().remove(choco.choco));
-//                }
-//            }
-//        }
-//    }
 
     private void updateChocoList() {
         synchronized (game.getChocos()) {

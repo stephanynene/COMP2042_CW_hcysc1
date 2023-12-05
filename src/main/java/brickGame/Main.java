@@ -24,7 +24,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import brickGame.gameObjects.bonus.Bonus;
@@ -171,6 +172,7 @@ public class Main extends Application implements GameEngine.OnAction {
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
+
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
@@ -231,7 +233,6 @@ public class Main extends Application implements GameEngine.OnAction {
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
-        physicsUpdater.initUI();
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
         levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball);
 
