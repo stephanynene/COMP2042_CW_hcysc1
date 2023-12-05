@@ -125,11 +125,11 @@ public class ElementsUpdater implements GameEngine.OnAction {
         Platform.runLater(() -> {
 
             stats.setGoldTime(stats.getTime());
-            System.out.println(ball.getFill());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
-            System.out.println(ball.getFill());
             root.getStyleClass().add("goldRoot");
             game.setGoldStatus(true);
+            ball.setVelocityX(ball.getVelocityX() * 2);
+            ball.setVelocityY(ball.getVelocityY() * 2);
 
             // Use Animation Timeline to reset gold status after a certain duration
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
@@ -146,7 +146,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
             if (root != null) {
                 root.getStyleClass().remove("goldRoot");
             }
-
+            ball.setVelocityX(ball.getVelocityX() / 2);
+            ball.setVelocityY(ball.getVelocityY() / 2);
             ball.getBallView().setBallImage(GameConstants.NORMAL_BALL);
             root.getStyleClass().remove("goldRoot");
             game.setGoldStatus(false);
