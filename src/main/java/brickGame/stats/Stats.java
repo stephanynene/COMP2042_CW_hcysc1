@@ -62,6 +62,25 @@ public class Stats {
 
     private long goldTime = 0;
 
+    private long gameTimeLimit; // Time limit for game
+
+    public long getGameTimeLimit() {
+        return gameTimeLimit;
+}
+
+    public void setGameTimeLimit(long gameTimeLimit) {
+        this.gameTimeLimit = gameTimeLimit;
+    }
+    private long gameStartTime; // Time when game started
+
+    public long getGameStartTime() {
+        return gameStartTime;
+    }
+
+    public void setGameStartTime(long gameStartTime) {
+        this.gameStartTime = gameStartTime;
+    }
+
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";
         Label label = ScoreLabel.createLabel(sign + score, x, y, main);
