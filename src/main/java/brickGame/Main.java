@@ -140,9 +140,15 @@ public class Main extends Application implements GameEngine.OnAction {
                 return;
             }
             stats = new Stats();
+
             timer = new Timer();
-            timer.setGameTimeLimit(300000); // 5 minutes (milliseconds)
+            if(level == 1){
+                timer.setGameTimeLimit(60000); // Set initial game time limit
+            } else {
+                timer.setGameTimeLimit(60000 * level); // Increase time limit according to level
+            }
             timer.setGameStartTime(System.currentTimeMillis());
+
 
             blockManager = new BlockManager(root);
             blockManager.drawBlocks();
@@ -241,7 +247,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
-        levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball);
+        levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball, timer);
 
         // Initialize game engine only after physicsUpdater and elementsUpdater are intialised
         gameEngine = new GameEngine(this, physicsUpdater, elementsUpdater);
