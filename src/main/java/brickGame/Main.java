@@ -74,127 +74,6 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private int  score    = 0;
 
-//
-//    public boolean isGoRightBall() {
-//        return goRightBall;
-//    }
-//
-//    public void setGoRightBall(boolean goRightBall) {
-//        this.goRightBall = goRightBall;
-//    }
-//
-//    private boolean goRightBall  = true;
-//
-//    public boolean isColideToBreak() {
-//        return colideToBreak;
-//    }
-//
-//    public void setColideToBreak(boolean colideToBreak) {
-//        this.colideToBreak = colideToBreak;
-//    }
-//
-//    private boolean colideToBreak = false; // Boolean, true when ball collides with Paddle
-
-//    public boolean isColideToBreakAndMoveToRight() {
-//        return colideToBreakAndMoveToRight;
-//    }
-//
-//    public void setColideToBreakAndMoveToRight(boolean colideToBreakAndMoveToRight) {
-//        this.colideToBreakAndMoveToRight = colideToBreakAndMoveToRight;
-//    }
-//
-//    private boolean colideToBreakAndMoveToRight = true;
-
-//    public boolean isColideToRightWall() {
-//        return colideToRightWall;
-//    }
-//
-//    public void setColideToRightWall(boolean colideToRightWall) {
-//        this.colideToRightWall = colideToRightWall;
-//    }
-//
-//    private boolean colideToRightWall = false;
-
-//    public boolean isColideToLeftWall() {
-//        return colideToLeftWall;
-//    }
-//
-//    public void setColideToLeftWall(boolean colideToLeftWall) {
-//        this.colideToLeftWall = colideToLeftWall;
-//    }
-//
-//    private boolean colideToLeftWall = false;
-
-//    public boolean isColideToRightBlock() {
-//        return colideToRightBlock;
-//    }
-//
-//    public void setColideToRightBlock(boolean colideToRightBlock) {
-//        this.colideToRightBlock = colideToRightBlock;
-//    }
-//
-//    private boolean colideToRightBlock          = false;
-
-//    public boolean isColideToBottomBlock() {
-//        return colideToBottomBlock;
-//    }
-//
-//    public void setColideToBottomBlock(boolean colideToBottomBlock) {
-//        this.colideToBottomBlock = colideToBottomBlock;
-//    }
-//
-//    private boolean colideToBottomBlock         = false;
-
-//    public boolean isColideToLeftBlock() {
-//        return colideToLeftBlock;
-//    }
-//
-//    public void setColideToLeftBlock(boolean colideToLeftBlock) {
-//        this.colideToLeftBlock = colideToLeftBlock;
-//    }
-//
-//    private boolean colideToLeftBlock           = false;
-//
-//    public boolean isColideToTopBlock() {
-//        return colideToTopBlock;
-//    }
-//
-//    public void setColideToTopBlock(boolean colideToTopBlock) {
-//        this.colideToTopBlock = colideToTopBlock;
-//    }
-//
-//    private boolean colideToTopBlock = false;
-//    public double getVelocity() {
-//        return velocity;
-//    }
-//
-//    public void setVelocity(double velocity) {
-//        this.velocity = velocity;
-//    }
-//
-//    private double velocity = 1.000;
-//    public double getVelocityX() {
-//        return velocityX;
-//    }
-//
-//    public void setVelocityX(double velocityX) {
-//        this.velocityX = velocityX;
-//    }
-//
-//    private double velocityX = 1.000;
-
-//    public double getVelocityY() {
-//        return velocityY;
-//    }
-//
-//    public void setVelocityY(double velocityY) {
-//        this.velocityY = velocityY;
-//    }
-//
-//    private double velocityY = 1.000;
-//
-
-
     public ArrayList<Block> getBlocks() {
         return blocks;
     }
@@ -352,6 +231,7 @@ public class Main extends Application implements GameEngine.OnAction {
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
         physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
+        physicsUpdater.initUI();
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
         levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball);
 
