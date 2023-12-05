@@ -90,8 +90,6 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         }
     }
     private void handleChocoCollision(Bonus choco) {
-        System.out.println(choco.y);
-        System.out.println(breakPaddle.getyBreak());
         if (choco.y >= breakPaddle.getyBreak() - 20 && choco.y <= breakPaddle.getyBreak()
                 && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue()) {
             handleChocoCollisionWithPaddle(choco);

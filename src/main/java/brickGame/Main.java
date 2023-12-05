@@ -157,6 +157,8 @@ public class Main extends Application implements GameEngine.OnAction {
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
             ballView = ball.getBallView();
+            ball.setVelocity(level);
+            System.out.println(ball.getVelocity());
 
             board = new Board(this);
             board.initBoard();
