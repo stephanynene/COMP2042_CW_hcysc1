@@ -153,21 +153,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
             game.setGoldStatus(false);
         });
     }
-    // Update position of chocos
-//    private void updateChocoList() {
-//        synchronized (game.getChocos()) {
-//            Iterator<Bonus> iterator = game.getChocos().iterator();
-//            while (iterator.hasNext()) {
-//                Bonus choco = iterator.next();
-//                if (choco.taken) {
-//                    // Remove taken choco from the game
-//                    iterator.remove();
-//                    // Remove choco from the UI on the JavaFX thread
-//                    Platform.runLater(() -> root.getChildren().remove(choco.choco));
-//                }
-//            }
-//        }
-//    }
 
     private void updateChocoList() {
         synchronized (game.getChocos()) {
