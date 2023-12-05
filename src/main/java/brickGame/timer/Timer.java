@@ -1,5 +1,6 @@
-package brickGame;
+package brickGame.timer;
 
+import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
 import brickGame.stats.Stats;
 import javafx.application.Platform;
@@ -33,7 +34,7 @@ public class Timer {
 
     public void timeUpGameOver(final Main main) {
         Platform.runLater(() -> {
-            new Stats().showGameOver(main);
+            new Stats().showGameOver(main, 0);
             gameEngine.stop();
         });
     }

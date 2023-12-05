@@ -87,17 +87,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
             ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
-                //TODO gameover
                 stats.setHeart(stats.getHeart() - 1);
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
-
                 if (stats.getHeart() == 0) {
-                    new Stats().showGameOver(game);
-//                    if (gameEngine != null) {
+                    new Stats().showGameOver(game, 1);
                         gameEngine.stop();
-//                    }
-//                    game.setGoDownBall(false);
-//                    game.setGoRightBall(false);
                     return;
                 }
             }

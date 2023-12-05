@@ -7,6 +7,7 @@ public enum GameConstants {
     SAVE_PATH("C:/save/save.mdds"),
     SAVE_PATH_DIR("C:/save/"),
     GAME_OVER_MESSAGE("Game Over!"),
+    TIMES_UP_MESSAGE("Times up!"),
     WIN_MESSAGE("You Win!"),
     RESTART_MESSAGE("Restart"),
 

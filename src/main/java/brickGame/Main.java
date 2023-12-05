@@ -17,6 +17,7 @@ import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import brickGame.input.InputHandler;
 import brickGame.saving.LoadSave;
 import brickGame.stats.Stats;
+import brickGame.timer.Timer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

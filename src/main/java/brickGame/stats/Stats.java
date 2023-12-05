@@ -2,6 +2,7 @@ package brickGame.stats;
 
 import brickGame.constants.GameConstants;
 import brickGame.Main;
+import brickGame.labels.ScoreLabel;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -62,24 +63,6 @@ public class Stats {
 
     private long goldTime = 0;
 
-//    private long gameTimeLimit; // Time limit for game
-//
-//    public long getGameTimeLimit() {
-//        return gameTimeLimit;
-//}
-//
-//    public void setGameTimeLimit(long gameTimeLimit) {
-//        this.gameTimeLimit = gameTimeLimit;
-//    }
-//    private long gameStartTime; // Time when game started
-//
-//    public long getGameStartTime() {
-//        return gameStartTime;
-//    }
-//
-//    public void setGameStartTime(long gameStartTime) {
-//        this.gameStartTime = gameStartTime;
-//    }
 
     public void show(final double x, final double y, int score, final Main main) {
         String sign = (score >= 0) ? "+" : "";
@@ -120,15 +103,20 @@ public class Stats {
         }
 
         timeline.setOnFinished(event -> {
-            System.out.println("Animation finished");
         });
 
         timeline.play();
     }
 
-    public void showGameOver(final Main main) {
+    public void showGameOver(final Main main, int num) {
         Platform.runLater(() -> {
-            Label label = ScoreLabel.createLabel(GameConstants.GAME_OVER_MESSAGE.getStringValue(), 200, 250, main);
+            String text;
+            if (num == 1) {
+                text = GameConstants.GAME_OVER_MESSAGE.getStringValue();
+            } else {
+                text = GameConstants.TIMES_UP_MESSAGE.getStringValue();
+            }
+            Label label = ScoreLabel.createLabel(text, 200, 250, main);
             label.setScaleX(2);
             label.setScaleY(2);
 
@@ -138,6 +126,7 @@ public class Stats {
             main.root.getChildren().addAll(label, restart);
         });
     }
+
 
     public void showWin(final Main main) {
         Platform.runLater(() -> {
