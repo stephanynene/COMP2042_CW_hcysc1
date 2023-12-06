@@ -1,5 +1,6 @@
 package brickGame.stats;
 
+import brickGame.Sounds;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.labels.ScoreLabel;
@@ -110,6 +111,10 @@ public class Stats {
 
     public void showGameOver(final Main main, int num) {
         Platform.runLater(() -> {
+
+            Sounds sounds = new Sounds();
+            sounds.playSound("game-over");
+
             String text;
             if (num == 1) {
                 text = GameConstants.GAME_OVER_MESSAGE.getStringValue();

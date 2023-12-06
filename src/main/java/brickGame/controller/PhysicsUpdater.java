@@ -1,5 +1,6 @@
 package brickGame.controller;
 
+import brickGame.Sounds;
 import brickGame.labels.BonusLabel;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
@@ -97,6 +98,8 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     }
     private void handleChocoCollisionWithPaddle(Bonus choco) {
 
+        Sounds sounds = new Sounds();
+        sounds.playSound("bonus-sound");
         BonusLabel bonuslabel = new BonusLabel(root);
         bonuslabel.showMessage("+3! Bonus", choco.x, choco.y);
 

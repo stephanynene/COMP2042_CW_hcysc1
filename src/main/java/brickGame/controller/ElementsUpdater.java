@@ -1,6 +1,7 @@
 package brickGame.controller;
 
 import brickGame.Main;
+import brickGame.Sounds;
 import brickGame.constants.GameConstants;
 import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
@@ -94,6 +95,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
         new Stats().show(block.x, block.y, 1, game);
         block.getBlockView().getRect().setVisible(false);
         block.isDestroyed = true;
+        Sounds sounds = new Sounds();
+        sounds.playSound("breakpaddle-hit-sound");
         stats.setDestroyedBlockCount(stats.getDestroyedBlockCount() + 1);
         concretePhysicsEngine.resetCollideFlags();
 
@@ -101,9 +104,13 @@ public class ElementsUpdater implements GameEngine.OnAction {
         if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
             handleChocoBlockHit(block);
         } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
+            sounds.stopSound("breakpaddle-hit-sound");
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
             stats.setHeart(stats.getHeart() + 1);
+//            Sounds sounds = new Sounds();
+            sounds.playSound("gain-heart-sound");
+
         }
     }
 
@@ -122,6 +129,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void handleStarBlockHit() {
         Platform.runLater(() -> {
+            Sounds sounds = new Sounds();
+            sounds.playSound("star-block-sound");
 
             stats.setGoldTime(stats.getTime());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
