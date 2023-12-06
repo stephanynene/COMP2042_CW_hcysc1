@@ -34,6 +34,7 @@ public class Timer {
 
     public void timeUpGameOver(final Main main) {
         Platform.runLater(() -> {
+            System.out.println("timer");
             new Stats().showGameOver(main, 0);
             gameEngine.stop();
         });

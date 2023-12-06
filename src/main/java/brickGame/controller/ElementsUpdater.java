@@ -80,7 +80,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
             for (Block block : blocksCopy) {
                 int hitCode = block.checkHitToBlock(ball.getxBall(), ball.getyBall());
                 if (hitCode != GameConstants.NO_HIT.getIntValue()) {
-                    System.out.println(hitCode);
                     // Increase the score and handle the specific block hit
                     game.setScore(game.getScore() + 1);
                     handleBlockHit(block);

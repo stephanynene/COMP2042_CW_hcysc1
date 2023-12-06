@@ -94,6 +94,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
                 if (stats.getHeart() == 0) {
+                    System.out.println("heart 0");
                     new Stats().showGameOver(game, 1);
                         gameEngine.stop();
                     return;
