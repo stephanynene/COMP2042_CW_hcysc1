@@ -45,10 +45,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
     public void onUpdate() {
         Platform.runLater(this::updateUI);
         handleBlockCollisions();
-//        System.out.println("popcorn");
-//        if (isBallWithinBounds()) {
-//            handleBlockCollisions();
-//        }
     }
 
 

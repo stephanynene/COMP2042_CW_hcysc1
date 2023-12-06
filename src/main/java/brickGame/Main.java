@@ -142,11 +142,7 @@ public class Main extends Application implements GameEngine.OnAction {
             stats = new Stats();
 
             timer = new Timer();
-            if(level == 1){
-                timer.setGameTimeLimit(60000); // Set initial game time limit
-            } else {
-                timer.setGameTimeLimit(60000 * level); // Increase time limit according to level
-            }
+            timer.setGameTimeLimit(100000); // Set initial game time limit
             timer.setGameStartTime(System.currentTimeMillis());
 
 
