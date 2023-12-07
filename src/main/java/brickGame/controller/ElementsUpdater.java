@@ -7,7 +7,6 @@ import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.block.Block;
 import brickGame.gameObjects.bonus.Bonus;
-import brickGame.labels.BonusLabel;
 import brickGame.stats.Stats;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import javafx.animation.KeyFrame;
@@ -108,8 +107,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
             stats.setHeart(stats.getHeart() + 1);
-            BonusLabel bonuslabel = new BonusLabel(root);
-            bonuslabel.showMessage("+1 Heart! ", 2,3);
+//            Sounds sounds = new Sounds();
             sounds.playSound("gain-heart-sound");
 
         }
