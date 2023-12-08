@@ -1,5 +1,7 @@
 package brickGame.controller;
 
+import brickGame.Sounds;
+import brickGame.input.InputHandler;
 import brickGame.labels.BonusLabel;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
@@ -24,14 +26,16 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     private BreakPaddle breakPaddle;
     private ConcretePhysicsEngine concretePhysicsEngine;
     private Stats stats;
+    private InputHandler inputHandler;
 
-    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, ConcretePhysicsEngine concretePhysicsEngine, Stats stats) {
+    public PhysicsUpdater(Main game, Ball ball, Pane root, ArrayList<Bonus> bonuses, BreakPaddle breakPaddle, ConcretePhysicsEngine concretePhysicsEngine, Stats stats, InputHandler inputHandler) {
         this.game = game;
         this.ball = ball;
         this.root = root;
         this.breakPaddle = breakPaddle;
         this.concretePhysicsEngine = concretePhysicsEngine;
         this.stats = stats;
+        this.inputHandler = inputHandler;
 
     }
 
@@ -49,7 +53,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         game.checkDestroyedCount();
         concretePhysicsEngine.setPhysicsToBall();
 
-
+inputHandler.movePaddle();
         updateGoldStatus();
         updateChocos();
 
@@ -90,13 +94,15 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         }
     }
     private void handleChocoCollision(Bonus choco) {
-        if (choco.y >= breakPaddle.getyBreak() && choco.y <= breakPaddle.getyBreak() + GameConstants.BREAK_WIDTH.getIntValue()
+        if (choco.y >= breakPaddle.getyBreak() - 20 && choco.y <= breakPaddle.getyBreak()
                 && choco.x >= breakPaddle.getxBreak() && choco.x <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue()) {
             handleChocoCollisionWithPaddle(choco);
         }
     }
     private void handleChocoCollisionWithPaddle(Bonus choco) {
 
+        Sounds sounds = new Sounds();
+        sounds.playSound("bonus-sound");
         BonusLabel bonuslabel = new BonusLabel(root);
         bonuslabel.showMessage("+3! Bonus", choco.x, choco.y);
 

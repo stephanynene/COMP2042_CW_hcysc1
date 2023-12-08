@@ -1,5 +1,6 @@
 package brickGame.controller;
 
+import brickGame.Sounds;
 import brickGame.constants.GameConstants;
 import brickGame.Main;
 import brickGame.gameEngine.GameEngine;
@@ -88,8 +89,12 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
                 stats.setHeart(stats.getHeart() - 1);
+                Sounds sounds = new Sounds();
+                sounds.playSound("lose-heart-sound");
+
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
                 if (stats.getHeart() == 0) {
+                    System.out.println("heart 0");
                     new Stats().showGameOver(game, 1);
                         gameEngine.stop();
                     return;
@@ -140,6 +145,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     //Handle collisions to break paddle
     public void breakCollisonDirection(){
         if (ball.isColideToBreak()) {
+
             if (ball.isColideToBreakAndMoveToRight()) {
                 ball.setGoRightBall(true);
             } else {
@@ -151,11 +157,13 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     public void handleBreakCollision(){
         // Check if the ball collides with the BreakPaddle
         if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
-            //System.out.println("Colide1");
+
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
                 stats.setHitTime(stats.getTime());
                 resetCollideFlags();
                 ball.setColideToBreak(true);
+                Sounds sounds = new Sounds();
+                sounds.playSound("breakpaddle-hit-sound");
                 ball.setGoDownBall(false);
 
                 // Calculate relation and update velocity based on collision

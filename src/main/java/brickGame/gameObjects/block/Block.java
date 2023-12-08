@@ -5,9 +5,7 @@ import brickGame.constants.GameConstants;
 import javafx.scene.paint.Color;
 import java.io.Serializable;
 
-import static brickGame.constants.GameConstants.BLOCK_HEIGHT;
-import static brickGame.constants.GameConstants.BLOCK_WIDTH;
-import static brickGame.constants.GameConstants.PADDING_H;
+import static brickGame.constants.GameConstants.*;
 
 
 public class Block implements Serializable {
@@ -56,19 +54,33 @@ public class Block implements Serializable {
             return GameConstants.NO_HIT.getIntValue();
         }
 
-        if (xBall >= x && xBall <= x + GameConstants.BLOCK_WIDTH.getIntValue() && yBall == y + BLOCK_HEIGHT.getIntValue()) {
+        double leftBall = xBall;
+        double topBall =  yBall;
+        double rightBall = xBall + BALL_RADIUS.getIntValue();
+        double botBall = yBall + BALL_RADIUS.getIntValue();
+
+        double leftBlock = x;
+        double topBlock = y;
+        double rightBlock = x + BLOCK_WIDTH.getIntValue();
+        double botBlock = y + BLOCK_HEIGHT.getIntValue();
+
+        // collision with bottom of block
+        if (topBall <= botBlock && botBall >= topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
             return GameConstants.HIT_BOTTOM.getIntValue();
         }
 
-        if (xBall >= x && xBall <= x + GameConstants.BLOCK_WIDTH.getIntValue() && yBall == y) {
+        // collision with top of the block
+        if (botBall == topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
             return GameConstants.HIT_TOP.getIntValue();
         }
 
-        if (yBall >= y && yBall <= y + BLOCK_HEIGHT.getIntValue() && xBall == x + GameConstants.BLOCK_WIDTH.getIntValue()) {
+        // collision with right side of the block
+        if (leftBall == rightBlock && botBall >= topBlock && topBall <= botBlock) {
             return GameConstants.HIT_RIGHT.getIntValue();
         }
 
-        if (yBall >= y && yBall <= y + BLOCK_HEIGHT.getIntValue() && xBall == x) {
+        // collision with right side of the block
+        if (rightBall == leftBlock && botBall >= topBlock && topBall <= botBlock) {
             return GameConstants.HIT_LEFT.getIntValue();
         }
 

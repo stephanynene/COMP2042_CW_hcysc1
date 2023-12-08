@@ -1,6 +1,7 @@
 package brickGame.controller;
 
 import brickGame.Main;
+import brickGame.Sounds;
 import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.stats.Stats;
@@ -28,6 +29,8 @@ public class LevelManager {
 
     public void nextLevel() {
 
+        Sounds sounds = new Sounds();
+        sounds.playSound("next-level-sound");
         // Logic for transitioning to the next level
         ball.setVelocityX(1.000);
         gameEngine.stop();

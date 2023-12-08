@@ -142,11 +142,7 @@ public class Main extends Application implements GameEngine.OnAction {
             stats = new Stats();
 
             timer = new Timer();
-            if(level == 1){
-                timer.setGameTimeLimit(60000); // Set initial game time limit
-            } else {
-                timer.setGameTimeLimit(60000 * level); // Increase time limit according to level
-            }
+            timer.setGameTimeLimit(100000); // Set initial game time limit
             timer.setGameStartTime(System.currentTimeMillis());
 
 
@@ -157,6 +153,8 @@ public class Main extends Application implements GameEngine.OnAction {
             ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
             ball.initBall(level);
             ballView = ball.getBallView();
+            ball.setVelocity(level);
+            System.out.println(ball.getVelocity());
 
             board = new Board(this);
             board.initBoard();
@@ -199,7 +197,8 @@ public class Main extends Application implements GameEngine.OnAction {
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
-        scene.setOnKeyPressed(inputHandler);
+        scene.setOnKeyPressed(inputHandler::handleKeyPress);
+        scene.setOnKeyReleased(inputHandler::handleKeyRelease);
 
         primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
@@ -245,7 +244,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
-        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats, inputHandler);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
         levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball, timer);
 

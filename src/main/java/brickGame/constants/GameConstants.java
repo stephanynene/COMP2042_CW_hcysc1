@@ -16,12 +16,12 @@ public enum GameConstants {
     NORMAL_BALL("/ball.jpg"),
     GOLD_BALL("goldball.jpg"),
 
-    BREAKPADDLE_SPEED(30),
+    BREAKPADDLE_SPEED(5),
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),
     STAR_BLOCK_IMG("star.jpg"),
-    BREAK_WIDTH(130),
-    BREAK_HEIGHT(30),
+    BREAK_WIDTH(80),
+    BREAK_HEIGHT(10),
 
     BALL_RADIUS(10),
 
