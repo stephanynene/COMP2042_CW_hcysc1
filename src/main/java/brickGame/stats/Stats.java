@@ -91,21 +91,24 @@ public class Stats {
         Label label = ScoreLabel.createLabel(message, 220, 340, main);
         Platform.runLater(() -> main.root.getChildren().add(label));
 
+
         Timeline timeline = new Timeline();
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 30; i++) {
             int finalI = i;
-            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 15), event -> {
-                label.setScaleX(Math.abs(finalI - 10));
-                label.setScaleY(Math.abs(finalI - 10));
-                label.setOpacity((20 - finalI) / 20.0);
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(i * 20), event -> {
+                label.setScaleX(Math.abs(finalI - 15));
+                label.setScaleY(Math.abs(finalI - 15));
+                label.setOpacity((30 - finalI) / 30.0);
             });
             timeline.getKeyFrames().add(keyFrame);
         }
 
         timeline.setOnFinished(event -> {
+            label.setOpacity(0.0); // opacity is  zero when the animation is finished
         });
 
         timeline.play();
+
     }
 
     public void showGameOver(final Main main, int num) {
