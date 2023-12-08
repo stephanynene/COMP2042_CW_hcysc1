@@ -15,12 +15,11 @@ public class ScoreLabel {
         return label;
     }
 
-// Method used in creating button in Score class
+//create button
     public static Button createButton(String text, double x, double y, Main main) {
-        Button restart = new Button(text);
-        restart.setTranslateX(x);
-        restart.setTranslateY(y);
-//        restart.setOnAction(event -> main.restartGame());
-        return restart;
+        Button button = new Button(text);
+        button.setTranslateX(x);
+        button.setTranslateY(y);
+        return button;
     }
 }

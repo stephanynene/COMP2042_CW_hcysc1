@@ -21,7 +21,7 @@ public enum GameConstants {
     HEART_BLOCK_IMG("heart.jpg"),
     STAR_BLOCK_IMG("star.jpg"),
     BREAK_WIDTH(80),
-    BREAK_HEIGHT(10),
+    BREAK_HEIGHT(15),
 
     BALL_RADIUS(10),
 
