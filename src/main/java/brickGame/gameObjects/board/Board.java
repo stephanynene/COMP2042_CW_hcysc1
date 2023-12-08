@@ -45,7 +45,7 @@ public class Board {
                         } else {
                             type = GameConstants.BLOCK_NORMAL.getIntValue();
                         }
-                    } else if (r % 10 == 3) {
+                    } else if (r % 15 == 3) {
                         type = GameConstants.BLOCK_STAR.getIntValue();
                     } else {
                         type = GameConstants.BLOCK_NORMAL.getIntValue();
