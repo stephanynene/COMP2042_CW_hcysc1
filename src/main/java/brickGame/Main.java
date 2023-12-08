@@ -197,7 +197,8 @@ public class Main extends Application implements GameEngine.OnAction {
         }
         Scene scene = new Scene(root, GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scene.getStylesheets().add("style.css");
-        scene.setOnKeyPressed(inputHandler);
+        scene.setOnKeyPressed(inputHandler::handleKeyPress);
+        scene.setOnKeyReleased(inputHandler::handleKeyRelease);
 
         primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
@@ -243,7 +244,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
-        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats);
+        physicsUpdater = new PhysicsUpdater(this, ball, root, chocos, breakPaddle, concretePhysicsEngine, stats, inputHandler);
         elementsUpdater = new ElementsUpdater(this, breakPaddle, ball, concretePhysicsEngine, root, stats);
         levelManager = new LevelManager(this, concretePhysicsEngine, stats, ball, timer);
 

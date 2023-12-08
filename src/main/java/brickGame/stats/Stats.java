@@ -81,9 +81,8 @@ public class Stats {
             timeline.getKeyFrames().add(keyFrame);
         }
 
-        timeline.setOnFinished(event -> {
-            System.out.println("Animation finished");
-        });
+//        timeline.setOnFinished(event -> {
+//        });
 
         timeline.play();
     }

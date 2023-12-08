@@ -46,6 +46,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
     public void onUpdate() {
         Platform.runLater(this::updateUI);
         handleBlockCollisions();
+
     }
 
 

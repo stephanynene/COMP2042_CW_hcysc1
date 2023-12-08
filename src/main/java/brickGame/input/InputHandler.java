@@ -15,6 +15,9 @@ public class InputHandler implements EventHandler<KeyEvent> {
     private Main game;
     private Stats stats;
 
+    private boolean leftKeyPressed = false;
+    private boolean rightKeyPressed = false;
+
     public InputHandler(BreakPaddle breakPaddle, Ball ball, Main game, Stats stats) {
         this.breakPaddle = breakPaddle;
         this.ball = ball;
@@ -22,23 +25,51 @@ public class InputHandler implements EventHandler<KeyEvent> {
         this.stats = stats;
     }
 
-    //Keyboard for paddle
+    // Keyboard for paddle
     @Override
     public void handle(KeyEvent event) {
+        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+            handleKeyPress(event);
+        } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
+            handleKeyRelease(event);
+        }
+    }
+
+    public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
-                breakPaddle.moveLeft();
+                leftKeyPressed = true;
                 break;
             case RIGHT:
-                breakPaddle.moveRight();
+                rightKeyPressed = true;
                 break;
             case DOWN:
-               // setPhysicsToBall();
+                // setPhysicsToBall();
                 break;
             case S:
                 GameSaver gameSaver = new GameSaver();
                 gameSaver.saveGameState(game, breakPaddle, ball, stats);
                 break;
+        }
+        movePaddle();
+    }
+
+    public void handleKeyRelease(KeyEvent event) {
+        switch (event.getCode()) {
+            case LEFT:
+                leftKeyPressed = false;
+                break;
+            case RIGHT:
+                rightKeyPressed = false;
+                break;
+        }
+    }
+    public void movePaddle() {
+        if (leftKeyPressed) {
+            breakPaddle.moveLeft();
+        }
+        if (rightKeyPressed) {
+            breakPaddle.moveRight();
         }
     }
 }
