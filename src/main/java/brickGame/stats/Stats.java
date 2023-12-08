@@ -115,7 +115,7 @@ public class Stats {
         Platform.runLater(() -> {
 
             Sounds sounds = new Sounds();
-            sounds.playSound("game-over");
+            sounds.playSound("game-over-sound");
 
             String text;
             if (num == 1) {
