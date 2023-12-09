@@ -32,6 +32,7 @@ import brickGame.gameObjects.bonus.Bonus;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main extends Application implements GameEngine.OnAction {
 
@@ -130,6 +131,8 @@ public class Main extends Application implements GameEngine.OnAction {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
+
+
         if (loadFromSave == false) {
             level++;
             if (level >1){
@@ -167,9 +170,11 @@ public class Main extends Application implements GameEngine.OnAction {
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
             load.setTranslateX(220);
-            load.setTranslateY(300);
+            load.setTranslateY(380);
             newGame.setTranslateX(220);
             newGame.setTranslateY(340);
+
+            promptForLoadOrNewGame();
         }
 
         root = new Pane();
@@ -185,9 +190,9 @@ public class Main extends Application implements GameEngine.OnAction {
 
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, load);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         }
 
         for (Block block : blocks) {
@@ -262,9 +267,18 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     public void checkDestroyedCount() {
-        if (stats.getDestroyedBlockCount() == blocks.size()) {
+        boolean allDestroyed = true;
+        for (Block block : blocks) {
+            if (!block.isDestroyed) {
+                allDestroyed = false;
+            }
+        }
+        if (allDestroyed) {
             Platform.runLater(() -> levelManager.nextLevel());
         }
+//        if (stats.getDestroyedBlockCount() == blocks.size()) {
+//            Platform.runLater(() -> levelManager.nextLevel());
+//        }
     }
 
     private void loadGame() {
@@ -316,6 +330,20 @@ public class Main extends Application implements GameEngine.OnAction {
         }
 
     }
+
+    public void promptForLoadOrNewGame() {
+        // Set button actions
+        load.setOnAction(event -> loadGame());
+        newGame.setOnAction(event -> initGameComponents());
+
+        // Hide existing buttons
+        load.setVisible(false);
+        newGame.setVisible(false);
+
+        load.setVisible(true);
+        newGame.setVisible(true);
+    }
+
 
     public void restartGameLevel(){
         levelManager.restartGame();
