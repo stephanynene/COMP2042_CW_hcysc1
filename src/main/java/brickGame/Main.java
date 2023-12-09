@@ -267,9 +267,18 @@ public class Main extends Application implements GameEngine.OnAction {
     }
 
     public void checkDestroyedCount() {
-        if (stats.getDestroyedBlockCount() == blocks.size()) {
+        boolean allDestroyed = true;
+        for (Block block : blocks) {
+            if (!block.isDestroyed) {
+                allDestroyed = false;
+            }
+        }
+        if (allDestroyed) {
             Platform.runLater(() -> levelManager.nextLevel());
         }
+//        if (stats.getDestroyedBlockCount() == blocks.size()) {
+//            Platform.runLater(() -> levelManager.nextLevel());
+//        }
     }
 
     private void loadGame() {
