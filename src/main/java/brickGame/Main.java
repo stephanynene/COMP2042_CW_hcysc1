@@ -32,6 +32,7 @@ import brickGame.gameObjects.bonus.Bonus;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main extends Application implements GameEngine.OnAction {
 
@@ -130,6 +131,8 @@ public class Main extends Application implements GameEngine.OnAction {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
 
+
+
         if (loadFromSave == false) {
             level++;
             if (level >1){
@@ -170,6 +173,8 @@ public class Main extends Application implements GameEngine.OnAction {
             load.setTranslateY(300);
             newGame.setTranslateX(220);
             newGame.setTranslateY(340);
+
+            promptForLoadOrNewGame();
         }
 
         root = new Pane();
@@ -185,7 +190,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
 
         if (loadFromSave == false) {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         } else {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, load);
         }
@@ -316,6 +321,20 @@ public class Main extends Application implements GameEngine.OnAction {
         }
 
     }
+
+    public void promptForLoadOrNewGame() {
+        // Set button actions
+        load.setOnAction(event -> loadGame());
+        newGame.setOnAction(event -> initGameComponents());
+
+        // Hide existing buttons
+        load.setVisible(false);
+        newGame.setVisible(false);
+
+        load.setVisible(true);
+        newGame.setVisible(true);
+    }
+
 
     public void restartGameLevel(){
         levelManager.restartGame();
