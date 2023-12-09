@@ -170,7 +170,7 @@ public class Main extends Application implements GameEngine.OnAction {
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
             load.setTranslateX(220);
-            load.setTranslateY(300);
+            load.setTranslateY(380);
             newGame.setTranslateX(220);
             newGame.setTranslateY(340);
 
@@ -192,7 +192,7 @@ public class Main extends Application implements GameEngine.OnAction {
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         } else {
-            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, load);
+            root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         }
 
         for (Block block : blocks) {
