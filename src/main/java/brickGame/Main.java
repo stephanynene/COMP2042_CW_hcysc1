@@ -169,9 +169,9 @@ public class Main extends Application implements GameEngine.OnAction {
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
-            load.setTranslateX(220);
-            load.setTranslateY(380);
-            newGame.setTranslateX(220);
+            load.setTranslateX(194);
+            load.setTranslateY(375);
+            newGame.setTranslateX(203);
             newGame.setTranslateY(340);
 
             promptForLoadOrNewGame();
