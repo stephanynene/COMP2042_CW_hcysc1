@@ -34,6 +34,8 @@ public class LoadSave {
     public long             time;
     public long             goldTime;
     public double           vX;
+    public long elapsedTime;
+    public long remainingSeconds;
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
 
@@ -48,6 +50,9 @@ public class LoadSave {
             score = inputStream.readInt();
             heart = inputStream.readInt();
             destroyedBlockCount = inputStream.readInt();
+
+            elapsedTime = inputStream.readLong();
+            remainingSeconds = inputStream.readLong();
 
 
             xBall = inputStream.readDouble();

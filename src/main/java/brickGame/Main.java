@@ -165,7 +165,7 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-            inputHandler = new InputHandler(breakPaddle, ball, this, stats);
+            inputHandler = new InputHandler(breakPaddle, ball, this, stats, timer);
 
             load = new Button("Resume Load Game");
             newGame = new Button("Start New Game");
@@ -313,6 +313,9 @@ public class Main extends Application implements GameEngine.OnAction {
         stats.setGoldTime(loadSave.goldTime);
         ball.setVelocityX(loadSave.vX);
 
+        timer.setRemainingSeconds(loadSave.remainingSeconds);
+        timer.setElapsedTime(loadSave.elapsedTime);
+
         blocks.clear();
         chocos.clear();
 
@@ -378,15 +381,15 @@ public class Main extends Application implements GameEngine.OnAction {
         stats.setTime(time);
 
         // Calculate elapsed time
-        long elapsedTime = System.currentTimeMillis() - timer.getGameStartTime();
+        timer.setElapsedTime(System.currentTimeMillis() - timer.getGameStartTime());
 
         // Check if the player has exceeded the time limit
-        if (elapsedTime > timer.getGameTimeLimit()) {
+        if (timer.getElapsedTime() > timer.getGameTimeLimit()) {
             timer.timeUpGameOver(this); // Implement this method to handle the game-over condition
         }
 
         // Update the countdown timer on the game screen (you may need to convert milliseconds to seconds or minutes)
-        timer.updateCountdownTimer(timer.getGameTimeLimit() - elapsedTime, countdownLabel);
+        timer.updateCountdownTimer(timer.getGameTimeLimit() - timer.getElapsedTime(), countdownLabel);
     }
 
 
