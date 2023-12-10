@@ -246,6 +246,11 @@ public class Main extends Application implements GameEngine.OnAction {
 
 
     private void initGameComponents(){
+
+        Sounds sounds = new Sounds();
+        sounds.playBackgroundMusic();
+        sounds.setBackgroundMusicVolume(0.8);
+
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
@@ -276,9 +281,6 @@ public class Main extends Application implements GameEngine.OnAction {
         if (allDestroyed) {
             Platform.runLater(() -> levelManager.nextLevel());
         }
-//        if (stats.getDestroyedBlockCount() == blocks.size()) {
-//            Platform.runLater(() -> levelManager.nextLevel());
-//        }
     }
 
     private void loadGame() {

@@ -112,6 +112,7 @@ public class Stats {
 
             Sounds sounds = new Sounds();
             sounds.playSound("game-over-sound");
+            sounds.stopBackgroundMusic();
 
             String text;
             if (num == 1) {
