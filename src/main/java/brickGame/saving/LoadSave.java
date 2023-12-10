@@ -26,7 +26,7 @@ public class LoadSave {
     public int              score;
     public int              heart;
     public int              destroyedBlockCount;
-    public double           xBall;
+    public double            xBall;
     public double           yBall;
     public double           xBreak;
     public double           yBreak;

@@ -160,9 +160,6 @@ public class Ball extends Circle {
 
 
     public void initBall(int level) {
-//        Random random = new Random();
-//        xBall = random.nextInt(GameConstants.SCENE_WIDTH.getIntValue()) + 1;
-//        yBall = random.nextInt(GameConstants.SCENE_HEIGHT.getIntValue() - 200) + ((level + 1) * Block.getHeight()) + 15;
         xBall = (double) GameConstants.SCENE_WIDTH.getIntValue() / 2;
         yBall = (double) GameConstants.SCENE_HEIGHT.getIntValue() / 2;
 

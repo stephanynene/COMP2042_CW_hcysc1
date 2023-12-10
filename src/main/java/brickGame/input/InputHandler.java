@@ -44,7 +44,6 @@ public class InputHandler implements EventHandler<KeyEvent> {
                 rightKeyPressed = true;
                 break;
             case DOWN:
-                // setPhysicsToBall();
                 break;
             case S:
                 GameSaver gameSaver = new GameSaver();

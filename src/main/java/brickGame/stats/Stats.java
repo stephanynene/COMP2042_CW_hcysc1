@@ -80,10 +80,6 @@ public class Stats {
             });
             timeline.getKeyFrames().add(keyFrame);
         }
-
-//        timeline.setOnFinished(event -> {
-//        });
-
         timeline.play();
     }
 
