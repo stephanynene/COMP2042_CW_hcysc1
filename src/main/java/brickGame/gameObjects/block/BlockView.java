@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class BlockView {
 
-
     private Rectangle rect;
 
     public Rectangle getRect() {

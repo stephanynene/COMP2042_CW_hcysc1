@@ -44,7 +44,6 @@ public class GameEngine {
     public void start() {
         Initialize();
         Update();
-//        isStopped = false;
     }
 
     public void stop() {

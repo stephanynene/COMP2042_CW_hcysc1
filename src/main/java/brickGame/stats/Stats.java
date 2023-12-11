@@ -80,10 +80,6 @@ public class Stats {
             });
             timeline.getKeyFrames().add(keyFrame);
         }
-
-//        timeline.setOnFinished(event -> {
-//        });
-
         timeline.play();
     }
 
@@ -116,6 +112,7 @@ public class Stats {
 
             Sounds sounds = new Sounds();
             sounds.playSound("game-over-sound");
+            sounds.stopBackgroundMusic();
 
             String text;
             if (num == 1) {
@@ -140,7 +137,11 @@ public class Stats {
             Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200, 250, main);
             label.setScaleX(2);
             label.setScaleY(2);
-            main.root.getChildren().addAll(label);
+
+            Button restart = ScoreLabel.createButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220, 300, main);
+            restart.setOnAction(event -> main.restartGameLevel());
+
+            main.root.getChildren().addAll(label, restart);
         });
     }
 }

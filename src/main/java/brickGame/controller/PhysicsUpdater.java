@@ -52,8 +52,7 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     public void onPhysicsUpdate() {
         game.checkDestroyedCount();
         concretePhysicsEngine.setPhysicsToBall();
-
-inputHandler.movePaddle();
+        inputHandler.movePaddle();
         updateGoldStatus();
         updateChocos();
 
@@ -111,18 +110,22 @@ inputHandler.movePaddle();
         game.setScore(game.getScore() +3 );
         new Stats().show(choco.x, choco.y, 3, game);
     }
+
     private void updateChocoPosition(Bonus choco) {
         choco.y += ((stats.getTime() - choco.timeCreated) / 1000.0) + 1.0;
         Platform.runLater(() -> choco.choco.setY(choco.y));
     }
+
     private boolean shouldSkipChocoUpdate(Bonus choco) {
         return choco.y > GameConstants.SCENE_HEIGHT.getIntValue() || choco.taken;
     }
+
     private void updateGoldStatus() {
         if (stats.getTime() - stats.getGoldTime() > 5000) {
             resetGoldStatus();
         }
     }
+
     private void resetGoldStatus() {
         Platform.runLater(() -> {
             if (root != null) {
@@ -133,6 +136,4 @@ inputHandler.movePaddle();
             game.setGoldStatus(false);
         });
     }
-
-
 }

@@ -7,6 +7,7 @@ import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.block.Block;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
+import brickGame.timer.Timer;
 import javafx.application.Platform;
 
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class GameSaver {
 
-    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball, Stats stats) {
+    public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball, Stats stats, Timer timer) {
         new File(GameConstants.SAVE_PATH_DIR.getStringValue()).mkdirs();
         File file = new File(GameConstants.SAVE_PATH.getStringValue());
 
@@ -35,6 +36,9 @@ public class GameSaver {
             outputStream.writeInt(gameInstance.getScore());
             outputStream.writeInt(stats.getHeart());
             outputStream.writeInt(stats.getDestroyedBlockCount());
+            outputStream.writeLong(timer.getElapsedTime());
+            outputStream.writeLong(timer.getRemainingSeconds());
+
 
             outputStream.writeDouble(ball.getxBall());
             outputStream.writeDouble(ball.getyBall());

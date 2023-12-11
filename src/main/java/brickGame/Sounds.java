@@ -1,5 +1,7 @@
 package brickGame;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +9,8 @@ import java.util.Map;
 public class Sounds {
 
     private static final Map<String, AudioClip> audioClips = new HashMap<>();
+    private static MediaPlayer backgroundMusicPlayer;
+
 
     static {
 
@@ -18,6 +22,10 @@ public class Sounds {
         audioClips.put("star-block-sound", new AudioClip(Sounds.class.getResource("/starblock.wav").toExternalForm()));
         audioClips.put("lose-heart-sound", new AudioClip(Sounds.class.getResource("/lose-heart.wav").toExternalForm()));
         audioClips.put("next-level-sound", new AudioClip(Sounds.class.getResource("/next-level.wav").toExternalForm()));
+
+        Media backgroundMusicMedia = new Media(Sounds.class.getResource("/background-music.mp3").toExternalForm());
+        backgroundMusicPlayer = new MediaPlayer(backgroundMusicMedia);
+        backgroundMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop indefinitely
 
     }
 
@@ -33,6 +41,25 @@ public class Sounds {
         if (audioClip != null) {
             audioClip.stop();
         }
+    }
+
+    public static void playBackgroundMusic() {
+        backgroundMusicPlayer.play();
+    }
+
+    public static void stopBackgroundMusic() {
+        backgroundMusicPlayer.stop();
+    }
+
+    public static void muteBackgroundMusic() {
+        backgroundMusicPlayer.setMute(true);
+    }
+
+    public static void unmuteBackgroundMusic() {
+        backgroundMusicPlayer.setMute(false);
+    }
+    public static void setBackgroundMusicVolume(double volume) {
+        backgroundMusicPlayer.setVolume(volume);
     }
 
 }

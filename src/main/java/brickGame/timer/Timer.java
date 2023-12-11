@@ -6,14 +6,15 @@ import brickGame.stats.Stats;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
-public class Timer {
-
-    private GameEngine gameEngine;
+public class Timer {    private GameEngine gameEngine;
+    private long gameTimeLimit; // Time limit for game
+    private long gameStartTime; // Time when game started
+    private long elapsedTime;
+    private long remainingSeconds;
 
     public void setGameEngineTimer(GameEngine gameEngine){
         this.gameEngine = gameEngine;
     }
-    private long gameTimeLimit; // Time limit for game
 
     public long getGameTimeLimit() {
         return gameTimeLimit;
@@ -22,7 +23,6 @@ public class Timer {
     public void setGameTimeLimit(long gameTimeLimit) {
         this.gameTimeLimit = gameTimeLimit;
     }
-    private long gameStartTime; // Time when game started
 
     public long getGameStartTime() {
         return gameStartTime;
@@ -31,6 +31,25 @@ public class Timer {
     public void setGameStartTime(long gameStartTime) {
         this.gameStartTime = gameStartTime;
     }
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+
+    public long getRemainingSeconds() {
+        return remainingSeconds;
+    }
+
+    public void setRemainingSeconds(long remainingSeconds) {
+        this.remainingSeconds = remainingSeconds;
+    }
+
+
 
     public void timeUpGameOver(final Main main) {
         Platform.runLater(() -> {
@@ -41,7 +60,7 @@ public class Timer {
     }
 
     public void updateCountdownTimer(long remainingTimeMillis, Label countdownLabel) {
-        long remainingSeconds = remainingTimeMillis / 1000;
+         remainingSeconds = remainingTimeMillis / 1000;
 
         // Update countdown timer UI element
         Platform.runLater(() -> countdownLabel.setText("Timer: " + remainingSeconds + "s"));

@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -107,6 +108,8 @@ public class Main extends Application implements GameEngine.OnAction {
     private Label heartLabel;
     private Label levelLabel;
     private Label countdownLabel;
+
+
     private boolean loadFromSave = false;
 
     public Stage  primaryStage;
@@ -165,23 +168,27 @@ public class Main extends Application implements GameEngine.OnAction {
             breakPaddle = new BreakPaddle();
             breakPaddle.initBreak();
 
-            inputHandler = new InputHandler(breakPaddle, ball, this, stats);
+            inputHandler = new InputHandler(breakPaddle, ball, this, stats, timer);
 
             load = new Button("Resume Load Game");
+            load.setTranslateX(194);
+            load.setTranslateY(375);
+
             newGame = new Button("Start New Game");
-            load.setTranslateX(220);
-            load.setTranslateY(380);
-            newGame.setTranslateX(220);
+            newGame.setTranslateX(203);
             newGame.setTranslateY(340);
 
-            promptForLoadOrNewGame();
+
+
         }
 
         root = new Pane();
         root.setPrefSize(GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scoreLabel = new Label("Score: " + score);
+
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
+
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
@@ -191,6 +198,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
+
         } else {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         }
@@ -239,13 +247,16 @@ public class Main extends Application implements GameEngine.OnAction {
             loadFromSave = false;
         }
     }
-
     public static void main(String[] args) {
         launch(args);
     }
 
 
     private void initGameComponents(){
+
+        Sounds.playBackgroundMusic();
+        Sounds.setBackgroundMusicVolume(0.8);
+
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
 
@@ -276,9 +287,6 @@ public class Main extends Application implements GameEngine.OnAction {
         if (allDestroyed) {
             Platform.runLater(() -> levelManager.nextLevel());
         }
-//        if (stats.getDestroyedBlockCount() == blocks.size()) {
-//            Platform.runLater(() -> levelManager.nextLevel());
-//        }
     }
 
     private void loadGame() {
@@ -311,6 +319,9 @@ public class Main extends Application implements GameEngine.OnAction {
         stats.setGoldTime(loadSave.goldTime);
         ball.setVelocityX(loadSave.vX);
 
+        timer.setRemainingSeconds(loadSave.remainingSeconds);
+        timer.setElapsedTime(loadSave.elapsedTime);
+
         blocks.clear();
         chocos.clear();
 
@@ -329,19 +340,6 @@ public class Main extends Application implements GameEngine.OnAction {
             e.printStackTrace();
         }
 
-    }
-
-    public void promptForLoadOrNewGame() {
-        // Set button actions
-        load.setOnAction(event -> loadGame());
-        newGame.setOnAction(event -> initGameComponents());
-
-        // Hide existing buttons
-        load.setVisible(false);
-        newGame.setVisible(false);
-
-        load.setVisible(true);
-        newGame.setVisible(true);
     }
 
 
@@ -376,15 +374,15 @@ public class Main extends Application implements GameEngine.OnAction {
         stats.setTime(time);
 
         // Calculate elapsed time
-        long elapsedTime = System.currentTimeMillis() - timer.getGameStartTime();
+        timer.setElapsedTime(System.currentTimeMillis() - timer.getGameStartTime());
 
         // Check if the player has exceeded the time limit
-        if (elapsedTime > timer.getGameTimeLimit()) {
+        if (timer.getElapsedTime() > timer.getGameTimeLimit()) {
             timer.timeUpGameOver(this); // Implement this method to handle the game-over condition
         }
 
         // Update the countdown timer on the game screen (you may need to convert milliseconds to seconds or minutes)
-        timer.updateCountdownTimer(timer.getGameTimeLimit() - elapsedTime, countdownLabel);
+        timer.updateCountdownTimer(timer.getGameTimeLimit() - timer.getElapsedTime(), countdownLabel);
     }
 
 

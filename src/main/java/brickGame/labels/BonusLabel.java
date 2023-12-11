@@ -27,7 +27,7 @@ public class BonusLabel {
         messageLabel.setLayoutX((root.getWidth() - labelWidth) / 2);
         messageLabel.setLayoutY(root.getHeight() / 2);
 
-        // Set a timeline to remove the message after a certain duration
+        // Set timeline to remove the message after a certain duration
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), event -> messageLabel.setText("")));
         timeline.setCycleCount(1);
         timeline.play();
