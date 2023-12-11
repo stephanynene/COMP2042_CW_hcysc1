@@ -90,8 +90,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
                 stats.setHeart(stats.getHeart() - 1);
-                Sounds sounds = new Sounds();
-                sounds.playSound("lose-heart-sound");
+                Sounds.playSound("lose-heart-sound");
 
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
                 if (stats.getHeart() == 0) {

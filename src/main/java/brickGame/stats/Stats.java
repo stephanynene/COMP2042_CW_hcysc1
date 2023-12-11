@@ -110,9 +110,8 @@ public class Stats {
     public void showGameOver(final Main main, int num) {
         Platform.runLater(() -> {
 
-            Sounds sounds = new Sounds();
-            sounds.playSound("game-over-sound");
-            sounds.stopBackgroundMusic();
+            Sounds.playSound("game-over-sound");
+            Sounds.stopBackgroundMusic();
 
             String text;
             if (num == 1) {

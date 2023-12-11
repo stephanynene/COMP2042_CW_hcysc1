@@ -223,8 +223,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     private void handleStarBlockHit() {
         Platform.runLater(() -> {
-            Sounds sounds = new Sounds();
-            sounds.playSound("star-block-sound");
+            Sounds.playSound("star-block-sound");
 
             stats.setGoldTime(stats.getTime());
             ball.getBallView().setBallImage(GameConstants.GOLD_BALL);
