@@ -69,7 +69,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     // Calculate velocity based on time and hit time
     public void calculateVelocity() {
-        ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 1.000);
+        ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 2.000);
     }
 
     //Handle boundary collisions

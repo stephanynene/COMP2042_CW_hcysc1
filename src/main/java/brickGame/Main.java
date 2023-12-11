@@ -170,13 +170,17 @@ public class Main extends Application implements GameEngine.OnAction {
 
             inputHandler = new InputHandler(breakPaddle, ball, this, stats, timer);
 
-            load = new Button("Resume Load Game");
-            load.setTranslateX(194);
-            load.setTranslateY(375);
-
             newGame = new Button("Start New Game");
-            newGame.setTranslateX(203);
+            newGame.getStyleClass().add("custom-button");
+            newGame.setTranslateX(180);
             newGame.setTranslateY(340);
+
+            load = new Button("Resume Load Game");
+            load.setTranslateX(170);
+            load.setTranslateY(390);
+            load.getStyleClass().add("custom-button");
+
+
 
 
 
@@ -185,15 +189,19 @@ public class Main extends Application implements GameEngine.OnAction {
         root = new Pane();
         root.setPrefSize(GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scoreLabel = new Label("Score: " + score);
-
+        scoreLabel.getStyleClass().add("custom-label");
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
+        levelLabel.getStyleClass().add("custom-label");
+
 
         heartLabel = new Label("Heart : " + stats.getHeart());
-        heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
+        heartLabel.getStyleClass().add("custom-label");
+        heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 80);
 
         countdownLabel = new Label("Timer: " + (timer.getGameTimeLimit() / 1000) + "s");
         countdownLabel.setTranslateX(200);
+        countdownLabel.getStyleClass().add("custom-label");
 
 
         if (loadFromSave == false) {
