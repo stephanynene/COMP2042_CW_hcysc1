@@ -135,7 +135,7 @@ public class Ball extends Circle {
         this.velocity = velocity;
     }
 
-    private double velocity = 1.000;
+    private double velocity = 2.000;
 
     public double getVelocityX() {
         return velocityX;
@@ -145,7 +145,7 @@ public class Ball extends Circle {
         this.velocityX = velocityX;
     }
 
-    private double velocityX = 1.000;
+    private double velocityX = 2.000;
 
     public double getVelocityY() {
         return velocityY;
@@ -155,7 +155,7 @@ public class Ball extends Circle {
         this.velocityY = velocityY;
     }
 
-    private double velocityY = 1.000;
+    private double velocityY = 2.000;
 
 
 

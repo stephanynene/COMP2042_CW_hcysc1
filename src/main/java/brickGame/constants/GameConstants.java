@@ -10,7 +10,7 @@ public enum GameConstants {
     TIMES_UP_MESSAGE("Times up!"),
 
     LEVEL_UP_MESSAGE("Level up!"),
-    WIN_MESSAGE("You Win!"),
+    WIN_MESSAGE("You Won!"),
     RESTART_MESSAGE("Restart"),
 
     NORMAL_BALL("/ball.jpg"),
