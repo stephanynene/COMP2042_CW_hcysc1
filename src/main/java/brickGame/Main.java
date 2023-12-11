@@ -335,6 +335,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         timer.setRemainingSeconds(gameStateReader.remainingSeconds);
         timer.setElapsedTime(gameStateReader.elapsedTime);
+        timer.setGameStartTime(timer.getGameStartTime() - timer.getElapsedTime());
 
         blocks.clear();
         chocos.clear();
@@ -342,7 +343,7 @@ public class Main extends Application implements GameEngine.OnAction {
         for (BlockSerializable ser : gameStateReader.blocks) {
             int r = new Random().nextInt(200);
             Color[] colors = GameConstants.COLORS.getValue();
-            blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type));
+            blocks.add(new Block(ser.row, ser.j, colors[r % colors.length], ser.type, 0));
 
 
         }
@@ -390,7 +391,7 @@ public class Main extends Application implements GameEngine.OnAction {
         // Calculate elapsed time
         timer.setElapsedTime(System.currentTimeMillis() - timer.getGameStartTime());
 
-        // Check if player has exceeded the time limit
+        // Check if the player has exceeded the time limit
         if (timer.getElapsedTime() > timer.getGameTimeLimit()) {
             timer.timeUpGameOver(this);
         }

@@ -22,6 +22,8 @@ public class Sounds {
         audioClips.put("star-block-sound", new AudioClip(Sounds.class.getResource("/starblock.wav").toExternalForm()));
         audioClips.put("lose-heart-sound", new AudioClip(Sounds.class.getResource("/lose-heart.wav").toExternalForm()));
         audioClips.put("next-level-sound", new AudioClip(Sounds.class.getResource("/next-level.wav").toExternalForm()));
+        audioClips.put("sturdy-sound", new AudioClip(Sounds.class.getResource("/sturdy-sound.wav").toExternalForm()));
+
 
         Media backgroundMusicMedia = new Media(Sounds.class.getResource("/background-music.mp3").toExternalForm());
         backgroundMusicPlayer = new MediaPlayer(backgroundMusicMedia);

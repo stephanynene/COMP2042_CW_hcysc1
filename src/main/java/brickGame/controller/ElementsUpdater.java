@@ -119,26 +119,32 @@ public class ElementsUpdater implements GameEngine.OnAction {
     private void handleBlockHit(Block block) {
         // Show score, hide block, and update game state
         new Stats().show(block.x, block.y, 1, game);
-        block.getBlockView().getRect().setVisible(false);
-        block.isDestroyed = true;
-        Sounds sounds = new Sounds();
-        sounds.playSound("breakpaddle-hit-sound");
-        stats.setDestroyedBlockCount(stats.getDestroyedBlockCount() + 1);
-        concretePhysicsEngine.resetCollideFlags();
+        if (block.getDurability() <= 0) {
+            block.getBlockView().getRect().setVisible(false);
+            block.isDestroyed = true;
+            stats.setDestroyedBlockCount(stats.getDestroyedBlockCount() + 1);
+            concretePhysicsEngine.resetCollideFlags();
+        } else {
+            block.setDurability(block.getDurability() - 1);
+        }
+
+        Sounds.playSound("breakpaddle-hit-sound");
 
         // Handle different block types
         if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
             handleChocoBlockHit(block);
         } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
-            sounds.stopSound("breakpaddle-hit-sound");
+            Sounds.stopSound("breakpaddle-hit-sound");
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
             stats.setHeart(stats.getHeart() + 1);
-//            Sounds sounds = new Sounds();
-            sounds.playSound("gain-heart-sound");
+            Sounds.playSound("gain-heart-sound");
 
         } else if (block.type == GameConstants.BLOCK_DOUBLE_BALL.getIntValue()) {
             handleDoubleBallHit(block);
+            Sounds.stopSound("breakpaddle-hit-sound");
+            Sounds.playSound("sturdy-sound");
+
         }
     }
 

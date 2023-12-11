@@ -20,6 +20,7 @@ public enum GameConstants {
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),
     STAR_BLOCK_IMG("star.jpg"),
+    STURDY_BLOCK_IMG("sturdyBrick.jpg"),
     BREAK_WIDTH(80),
     BREAK_HEIGHT(15),
 
@@ -34,6 +35,7 @@ public enum GameConstants {
     BLOCK_CHOCO(100),
     BLOCK_HEART(101),
     BLOCK_STAR(102),
+    BLOCK_STURDY(103),
     BLOCK_DOUBLE_BALL(103),
 
     NO_HIT(-1),

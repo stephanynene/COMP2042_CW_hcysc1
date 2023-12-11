@@ -30,13 +30,14 @@ public class Block implements Serializable {
 
     public int x;
     public int y;
+    private int durability; // 0 means will break on impact
 
-    public Block(int row, int column, Color color, int type) {
+    public Block(int row, int column, Color color, int type, int durability) {
         this.row = row;
         this.column = column;
         this.color = color;
         this.type = type;
-
+        this.durability = durability;
         draw();
     }
 
@@ -66,9 +67,7 @@ public class Block implements Serializable {
 
         // collision with bottom of block
         if (topBall <= botBlock && botBall >= topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
-//            System.out.println("collide");
 //            return GameConstants.HIT_BOTTOM.getIntValue();
-
 
             // collision with right
             if (leftBall <= rightBlock && rightBall > rightBlock) {
@@ -109,6 +108,12 @@ public class Block implements Serializable {
 
     public BlockView getBlockView(){
         return blockView;
+    }
+    public int getDurability() {
+        return durability;
+    }
+    public void setDurability(int durability) {
+        this.durability = durability;
     }
 
 }
