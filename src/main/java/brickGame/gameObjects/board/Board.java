@@ -30,6 +30,7 @@ public class Board {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < mainInstance.level + 1; j++) {
                     int r = random.nextInt(500);
+                    int durability = 0;
 
                     if (r % 5 == 0) {
                         continue; // Skip this iteration
@@ -47,12 +48,17 @@ public class Board {
                         }
                     } else if (r % 30 == 3) {
                         type = GameConstants.BLOCK_STAR.getIntValue();
+                    }else if (r % 10 == 3) {
+                        type = GameConstants.BLOCK_THUNDER.getIntValue();
+                    }else if (r % 5 == 3) {
+                        type = GameConstants.BLOCK_STURDY.getIntValue();
+                        durability = 2;
                     } else {
                         type = GameConstants.BLOCK_NORMAL.getIntValue();
                     }
 
                     Color[] colors = (Color[]) ((Object[]) GameConstants.COLORS.getValue());
-                    mainBlocks.add(new Block(j, i, colors[r % colors.length], type));
+                    mainBlocks.add(new Block(j, i, colors[r % colors.length], type, durability));
                 }
             }
         }

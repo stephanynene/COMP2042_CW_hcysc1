@@ -110,9 +110,8 @@ public class Stats {
     public void showGameOver(final Main main, int num) {
         Platform.runLater(() -> {
 
-            Sounds sounds = new Sounds();
-            sounds.playSound("game-over-sound");
-            sounds.stopBackgroundMusic();
+            Sounds.playSound("game-over-sound");
+            Sounds.stopBackgroundMusic();
 
             String text;
             if (num == 1) {
@@ -134,14 +133,17 @@ public class Stats {
 
     public void showWin(final Main main) {
         Platform.runLater(() -> {
-            Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200, 250, main);
+            Label label = ScoreLabel.createLabel(GameConstants.WIN_MESSAGE.getStringValue(), 200, 220, main);
             label.setScaleX(2);
             label.setScaleY(2);
 
+            Label finalScore = ScoreLabel.createLabel("Your Score: " + String.valueOf(main.getScore()), 200, 250, main);
+            finalScore.setScaleX(2);
+            finalScore.setScaleY(2);
             Button restart = ScoreLabel.createButton(GameConstants.RESTART_MESSAGE.getStringValue(), 220, 300, main);
             restart.setOnAction(event -> main.restartGameLevel());
 
-            main.root.getChildren().addAll(label, restart);
+            main.root.getChildren().addAll(label, restart, finalScore);
         });
     }
 }

@@ -17,3 +17,17 @@
     -fx-label-padding: 8px;
     -fx-font-size: 15px;
 }
+.custom-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 2px;
+}
+.custom-button {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 2px;
+}
+
+.custom-button:hover {
+ -fx-font-size: 18px;
+}

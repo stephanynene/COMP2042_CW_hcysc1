@@ -69,7 +69,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     // Calculate velocity based on time and hit time
     public void calculateVelocity() {
-        ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 1.000);
+        ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 2.000);
     }
 
     //Handle boundary collisions
@@ -80,17 +80,17 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             //vX = 1.000;
             resetCollideFlags();
             ball.setGoDownBall(true);
+            Sounds.playBounceSound();
             return;
 
         }
         // Check if the ball goes beyond the bottom boundary
         if (ball.getyBall() >= GameConstants.SCENE_HEIGHT.getIntValue()) {
-
+            Sounds.playBounceSound();
             ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
                 stats.setHeart(stats.getHeart() - 1);
-                Sounds sounds = new Sounds();
-                sounds.playSound("lose-heart-sound");
+                Sounds.playSound("lose-heart-sound");
 
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
                 if (stats.getHeart() == 0) {
@@ -103,6 +103,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
         // Check if the ball hits the right boundary
         if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
+            Sounds.playBounceSound();
             resetCollideFlags();
             //vX = 1.000;
             ball.setColideToRightWall(true);
@@ -110,6 +111,8 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
         // Check if the ball hits the left boundary
         if (ball.getxBall() <= 0) {
+            Sounds.playBounceSound();
+
             resetCollideFlags();
             //vX = 1.000;
             ball.setColideToLeftWall(true);
@@ -161,8 +164,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
                 stats.setHitTime(stats.getTime());
                 resetCollideFlags();
                 ball.setColideToBreak(true);
-                Sounds sounds = new Sounds();
-                sounds.playSound("breakpaddle-hit-sound");
+              Sounds.playBounceSound();
                 ball.setGoDownBall(false);
 
                 // Calculate relation and update velocity based on collision
