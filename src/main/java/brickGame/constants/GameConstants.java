@@ -34,6 +34,7 @@ public enum GameConstants {
     BLOCK_CHOCO(100),
     BLOCK_HEART(101),
     BLOCK_STAR(102),
+    BLOCK_DOUBLE_BALL(103),
 
     NO_HIT(-1),
     HIT_RIGHT(0),

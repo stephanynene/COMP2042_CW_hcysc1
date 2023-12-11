@@ -137,6 +137,8 @@ public class ElementsUpdater implements GameEngine.OnAction {
 //            Sounds sounds = new Sounds();
             sounds.playSound("gain-heart-sound");
 
+        } else if (block.type == GameConstants.BLOCK_DOUBLE_BALL.getIntValue()) {
+            handleDoubleBallHit(block);
         }
     }
 
@@ -150,6 +152,10 @@ public class ElementsUpdater implements GameEngine.OnAction {
             Platform.runLater(() -> root.getChildren().add(choco.choco));
             game.getChocos().add(choco);
         }
+    }
+
+    private void handleDoubleBallHit(Block block) {
+
     }
 
 
