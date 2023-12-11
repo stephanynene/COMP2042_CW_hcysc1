@@ -49,6 +49,8 @@ public class Board {
                     } else if (r % 30 == 3) {
                         type = GameConstants.BLOCK_STAR.getIntValue();
                     }else if (r % 10 == 3) {
+                        type = GameConstants.BLOCK_THUNDER.getIntValue();
+                    }else if (r % 5 == 3) {
                         type = GameConstants.BLOCK_STURDY.getIntValue();
                         durability = 2;
                     } else {

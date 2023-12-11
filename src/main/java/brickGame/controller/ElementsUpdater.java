@@ -5,13 +5,15 @@ import brickGame.Sounds;
 import brickGame.constants.GameConstants;
 import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
+import brickGame.gameObjects.ball.BallView;
 import brickGame.gameObjects.block.Block;
 import brickGame.gameObjects.bonus.Bonus;
+import brickGame.labels.BonusLabel;
 import brickGame.stats.Stats;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -128,23 +130,25 @@ public class ElementsUpdater implements GameEngine.OnAction {
             block.setDurability(block.getDurability() - 1);
         }
 
-        Sounds.playSound("breakpaddle-hit-sound");
+        Sounds.playBounceSound();
+
 
         // Handle different block types
         if (block.type == GameConstants.BLOCK_CHOCO.getIntValue()) {
             handleChocoBlockHit(block);
         } else if (block.type == GameConstants.BLOCK_STAR.getIntValue()) {
-            Sounds.stopSound("breakpaddle-hit-sound");
+            Sounds.stopBounceSound();
             handleStarBlockHit();
         } else if (block.type == GameConstants.BLOCK_HEART.getIntValue()) {
             stats.setHeart(stats.getHeart() + 1);
             Sounds.playSound("gain-heart-sound");
-
-        } else if (block.type == GameConstants.BLOCK_DOUBLE_BALL.getIntValue()) {
-            handleDoubleBallHit(block);
-            Sounds.stopSound("breakpaddle-hit-sound");
+        } else if (block.type == GameConstants.BLOCK_STURDY.getIntValue()) {
+            Sounds.stopBounceSound();
             Sounds.playSound("sturdy-sound");
-
+        } else if (block.type == GameConstants.BLOCK_THUNDER.getIntValue()) {
+            Sounds.stopBounceSound();
+            Sounds.playSound("thunder-sound");
+            handleThunderBlockHit();
         }
     }
 
@@ -160,9 +164,61 @@ public class ElementsUpdater implements GameEngine.OnAction {
         }
     }
 
-    private void handleDoubleBallHit(Block block) {
+//    private void handleDoubleBallHit(Block block) {
+//
+//        Ball secondBall = new Ball(GameConstants.BALL_RADIUS.getIntValue());
+//        secondBall.initBall();
+//        BallView secondBallView = new BallView(GameConstants.BALL_RADIUS.getIntValue());
+//        secondBallView.setBallImage(GameConstants.SECOND_BALL);
+//        root.getChildren().add(secondBallView);
+//
+//        ball.setVelocity(10);
+//        root.getChildren().add(secondBall);
+//        secondBall.setGoRightBall(false);
+//        secondBall.setGoDownBall(true);
+//        secondBall.setVelocityX(1);
+//        secondBall.setVelocityY(1);
+//    }
 
+    private void handleThunderBlockHit() {
+        game.setScore(game.getScore() + 10);
+
+        double originalTranslateX = root.getTranslateX();
+        double originalTranslateY = root.getTranslateY();
+
+        Label pointsLabel = new Label("Thunder Block +10 points");
+
+
+        pointsLabel.setTranslateX(200);
+        pointsLabel.setTranslateY(300);
+
+        root.getChildren().add(pointsLabel);
+
+        // Animation for screen shake
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(root.translateXProperty(), originalTranslateX - 5)),
+                new KeyFrame(Duration.seconds(0.2), new KeyValue(root.translateYProperty(), originalTranslateY + 5)),
+                new KeyFrame(Duration.seconds(0.3), new KeyValue(root.translateXProperty(), originalTranslateX + 5)),
+                new KeyFrame(Duration.seconds(0.4), new KeyValue(root.translateYProperty(), originalTranslateY - 5)),
+                new KeyFrame(Duration.seconds(0.5), new KeyValue(root.translateXProperty(), originalTranslateX))
+        );
+
+        timeline.setOnFinished(event -> {
+            root.setTranslateX(originalTranslateX);
+            root.setTranslateY(originalTranslateY);
+
+            // PauseTransition for 2 seconds
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(pauseEvent -> {
+                root.getChildren().remove(pointsLabel);
+            });
+            pause.play();
+        });
+
+        timeline.play();
     }
+
+
 
 
     private void handleStarBlockHit() {

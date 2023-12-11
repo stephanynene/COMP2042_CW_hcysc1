@@ -246,7 +246,7 @@ public class Main extends Application implements GameEngine.OnAction {
         blockManager.drawBlocks();
 
         ball = new Ball(GameConstants.BALL_RADIUS.getIntValue());
-        ball.initBall(level);
+        ball.initBall();
         ballView = ball.getBallView();
         ball.setVelocity(level);
 

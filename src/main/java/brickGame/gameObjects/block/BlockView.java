@@ -40,12 +40,12 @@ public class BlockView {
             setBlockImage(GameConstants.HEART_BLOCK_IMG.getStringValue());
         } else if (type == GameConstants.BLOCK_STAR.getIntValue()) {
             setBlockImage(GameConstants.STAR_BLOCK_IMG.getStringValue());
-        }
-        else if (type == GameConstants.BLOCK_STURDY.getIntValue()) {
+        } else if (type == GameConstants.BLOCK_STURDY.getIntValue()) {
             setBlockImage(GameConstants.STURDY_BLOCK_IMG.getStringValue());
-        }else {
+        } else if (type == GameConstants.BLOCK_THUNDER.getIntValue()) {
+            setBlockImage(GameConstants.THUNDER_BLOCK_IMG.getStringValue());
+        } else {
             rect.setFill(color);
         }
     }
-
 }

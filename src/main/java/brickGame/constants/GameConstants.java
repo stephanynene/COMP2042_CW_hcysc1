@@ -15,12 +15,14 @@ public enum GameConstants {
 
     NORMAL_BALL("/ball.jpg"),
     GOLD_BALL("goldball.jpg"),
+    SECOND_BALL("second-ball.png"),
 
     BREAKPADDLE_SPEED(5),
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),
     STAR_BLOCK_IMG("star.jpg"),
     STURDY_BLOCK_IMG("sturdyBrick.jpg"),
+    THUNDER_BLOCK_IMG("thunder-block.png"),
     BREAK_WIDTH(80),
     BREAK_HEIGHT(15),
 
@@ -36,7 +38,7 @@ public enum GameConstants {
     BLOCK_HEART(101),
     BLOCK_STAR(102),
     BLOCK_STURDY(103),
-    BLOCK_DOUBLE_BALL(103),
+    BLOCK_THUNDER(104),
 
     NO_HIT(-1),
     HIT_RIGHT(0),

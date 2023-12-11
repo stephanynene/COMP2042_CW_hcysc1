@@ -159,7 +159,7 @@ public class Ball extends Circle {
 
 
 
-    public void initBall(int level) {
+    public void initBall() {
         xBall = (double) GameConstants.SCENE_WIDTH.getIntValue() / 2;
         yBall = (double) GameConstants.SCENE_HEIGHT.getIntValue() / 2;
 
