@@ -43,6 +43,8 @@ public enum GameConstants {
 
     BLOCK_WIDTH(100),
     BLOCK_HEIGHT(30),
+    BLOCK_X_CENTRE(BLOCK_WIDTH.getIntValue() / 2),
+    BLOCK_Y_CENTRE(BLOCK_HEIGHT.getIntValue() / 2),
     PADDING_H(50),
     COLORS(new Color[]{
         Color.MAGENTA, Color.RED, Color.GOLD, Color.CORAL,

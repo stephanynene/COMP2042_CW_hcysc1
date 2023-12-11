@@ -84,6 +84,32 @@ public class ElementsUpdater implements GameEngine.OnAction {
                     // Increase the score and handle the specific block hit
                     game.setScore(game.getScore() + 1);
                     handleBlockHit(block);
+
+                    // top collision
+                    if (hitCode == GameConstants.HIT_TOP.getIntValue()) {
+//                        System.out.println("top");
+                        concretePhysicsEngine.resetCollideFlags();
+                        ball.setGoDownBall(false);
+                        return;
+                    }
+                    // bot collision
+                    if (hitCode == GameConstants.HIT_BOTTOM.getIntValue()) {
+//                        System.out.println("bot");
+                        ball.setGoDownBall(true);
+                        return;
+                    }
+                    // right collision
+                    if (hitCode == GameConstants.HIT_RIGHT.getIntValue()) {
+//                        System.out.println("right");
+                        ball.setGoRightBall(true);
+                        return;
+                    }
+                    // left collision
+                    if (hitCode == GameConstants.HIT_LEFT.getIntValue()) {
+//                        System.out.println("left");
+                        ball.setGoRightBall(false);
+                        return;
+                    }
                 }
             }
         }
