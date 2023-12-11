@@ -1,6 +1,7 @@
 package brickGame.input;
 
 import brickGame.Main;
+import brickGame.Sounds;
 import brickGame.saving.GameSaver;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
@@ -19,6 +20,7 @@ public class InputHandler implements EventHandler<KeyEvent> {
 
     private boolean leftKeyPressed = false;
     private boolean rightKeyPressed = false;
+    private int muteCount = 0;
 
     public InputHandler(BreakPaddle breakPaddle, Ball ball, Main game, Stats stats, Timer timer) {
         this.breakPaddle = breakPaddle;
@@ -52,6 +54,13 @@ public class InputHandler implements EventHandler<KeyEvent> {
                 GameSaver gameSaver = new GameSaver();
                 gameSaver.saveGameState(game, breakPaddle, ball, stats, timer);
                 break;
+            case M:
+                if (muteCount % 2 == 0) {
+                    Sounds.muteBackgroundMusic();
+                } else {
+                    Sounds.unmuteBackgroundMusic();
+                }
+                muteCount++;
         }
         movePaddle();
     }

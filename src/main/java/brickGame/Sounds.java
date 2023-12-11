@@ -51,6 +51,13 @@ public class Sounds {
         backgroundMusicPlayer.stop();
     }
 
+    public static void muteBackgroundMusic() {
+        backgroundMusicPlayer.setMute(true);
+    }
+
+    public static void unmuteBackgroundMusic() {
+        backgroundMusicPlayer.setMute(false);
+    }
     public static void setBackgroundMusicVolume(double volume) {
         backgroundMusicPlayer.setVolume(volume);
     }

@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -107,6 +108,8 @@ public class Main extends Application implements GameEngine.OnAction {
     private Label heartLabel;
     private Label levelLabel;
     private Label countdownLabel;
+
+
     private boolean loadFromSave = false;
 
     public Stage  primaryStage;
@@ -168,20 +171,24 @@ public class Main extends Application implements GameEngine.OnAction {
             inputHandler = new InputHandler(breakPaddle, ball, this, stats, timer);
 
             load = new Button("Resume Load Game");
-            newGame = new Button("Start New Game");
             load.setTranslateX(194);
             load.setTranslateY(375);
+
+            newGame = new Button("Start New Game");
             newGame.setTranslateX(203);
             newGame.setTranslateY(340);
 
-            promptForLoadOrNewGame();
+
+
         }
 
         root = new Pane();
         root.setPrefSize(GameConstants.SCENE_WIDTH.getIntValue(), GameConstants.SCENE_HEIGHT.getIntValue());
         scoreLabel = new Label("Score: " + score);
+
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
+
         heartLabel = new Label("Heart : " + stats.getHeart());
         heartLabel.setTranslateX(GameConstants.SCENE_WIDTH.getIntValue() - 70);
 
@@ -191,6 +198,7 @@ public class Main extends Application implements GameEngine.OnAction {
 
         if (loadFromSave == false) {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
+
         } else {
             root.getChildren().addAll(breakPaddle.rect, ballView, scoreLabel, heartLabel, levelLabel, countdownLabel, newGame, load);
         }
@@ -239,7 +247,6 @@ public class Main extends Application implements GameEngine.OnAction {
             loadFromSave = false;
         }
     }
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -247,9 +254,8 @@ public class Main extends Application implements GameEngine.OnAction {
 
     private void initGameComponents(){
 
-        Sounds sounds = new Sounds();
-        sounds.playBackgroundMusic();
-        sounds.setBackgroundMusicVolume(0.8);
+        Sounds.playBackgroundMusic();
+        Sounds.setBackgroundMusicVolume(0.8);
 
         // Create instances of classes that implement the PhysicsEngine interface
         concretePhysicsEngine = new ConcretePhysicsEngine(this, ball, breakPaddle, stats);
@@ -334,19 +340,6 @@ public class Main extends Application implements GameEngine.OnAction {
             e.printStackTrace();
         }
 
-    }
-
-    public void promptForLoadOrNewGame() {
-        // Set button actions
-        load.setOnAction(event -> loadGame());
-        newGame.setOnAction(event -> initGameComponents());
-
-        // Hide existing buttons
-        load.setVisible(false);
-        newGame.setVisible(false);
-
-        load.setVisible(true);
-        newGame.setVisible(true);
     }
 
 
