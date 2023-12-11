@@ -66,22 +66,24 @@ public class Block implements Serializable {
 
         // collision with bottom of block
         if (topBall <= botBlock && botBall >= topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
-            return GameConstants.HIT_BOTTOM.getIntValue();
-        }
+//            return GameConstants.HIT_BOTTOM.getIntValue();
 
-        // collision with top of the block
-        if (botBall == topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
-            return GameConstants.HIT_TOP.getIntValue();
-        }
-
-        // collision with right side of the block
-        if (leftBall == rightBlock && botBall >= topBlock && topBall <= botBlock) {
-            return GameConstants.HIT_RIGHT.getIntValue();
-        }
-
-        // collision with right side of the block
-        if (rightBall == leftBlock && botBall >= topBlock && topBall <= botBlock) {
-            return GameConstants.HIT_LEFT.getIntValue();
+            // collision with top
+            if (botBall >= topBlock && topBall < topBlock) {
+                return HIT_TOP.getIntValue();
+            }
+            // collision with bot
+            else if (topBall <= botBlock && botBall >= botBlock) {
+                return HIT_BOTTOM.getIntValue();
+            }
+            // collision with right
+            else if (leftBall <= rightBlock && rightBall > rightBlock) {
+                return HIT_RIGHT.getIntValue();
+            }
+            // collision with left
+            else if (rightBall >= leftBlock && leftBall < leftBlock) {
+                return HIT_LEFT.getIntValue();
+            }
         }
 
         return GameConstants.NO_HIT.getIntValue();
