@@ -4,6 +4,10 @@ import java.io.Serializable;
 /**
  * serializable representation of a block in the game.
  * Implements the Serializable interface
+ *
+ * Original source code for the {@code BlockSerializable} class.
+ * <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/BlockSerializable.java">
+ * BlockSerializable.java</a> file.
  */
 public class BlockSerializable implements Serializable {
     public final int row;

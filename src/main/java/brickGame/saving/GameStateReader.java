@@ -9,6 +9,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+/**
+ * Reads the current state of game
+ * Original Source code:
+ * <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/LoadSave.java">
+ * LoadSave.java</a>.
+ */
 public class GameStateReader {
     public boolean          isExistHeartBlock;
     public boolean          isGoldStauts;
@@ -39,6 +45,11 @@ public class GameStateReader {
     public ArrayList<BlockSerializable> blocks = new ArrayList<BlockSerializable>();
 
 
+    /**
+     * Reads the saved game state from a file, restoring the game's variables and objects to their previous state.
+     * This method uses ObjectInputStream for deserialization.
+     * @throws IOException If an I/O error occurs while reading from the file.
+     */
     public void read() {
 
 

@@ -8,7 +8,11 @@ import javafx.util.Duration;
 
 /**
  * The GameEngine class manages the game loop and triggers various actions during the game.
+ *Original Source code
+ * <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/GameEngine.java">
+ * GameEngine.java</a>.
  */
+
 public class GameEngine {
 
     private OnAction onAction;

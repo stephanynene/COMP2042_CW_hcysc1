@@ -7,8 +7,11 @@ import java.io.Serializable;
 
 import static brickGame.constants.GameConstants.*;
 /**
- * Block class represents a block in the game. Part of game's grid
- * and can have different colors, types, and durability. Blocks can be destroyed by the ball depending on .
+ * Block class represents a block in the game.
+ * Part of game's grid, can have different colors, types, and durability. Blocks can be destroyed by the ball depending on .
+ *
+ * Original source code
+ * {@linkplain <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Block.java</a>}
  */
 
 public class Block implements Serializable {

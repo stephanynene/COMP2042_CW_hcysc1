@@ -12,6 +12,9 @@ import java.io.Serializable;
  * This class provides information about the bonus, including its visual representation, creation time,
  * position on the game board, and if it is good or bad bonus
  *
+ * Original source code
+ * <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Bonus.java">
+ * Bonus.java</a>.
  */
 public class Bonus implements Serializable {
     public Rectangle choco;

@@ -35,16 +35,24 @@ import java.util.Random;
 
 
 /**
+ *
+ * Original Source Code link:
+ * {@linkplain <a href="https://github.com/kooitt/CourseworkGame">GitHub - CourseworkGame</a>}.
+ *  Original Main class:
+ *  {@linkplain <a href="https://github.com/kooitt/CourseworkGame/blob/master/src/main/java/brickGame/Main.java">
+ *   Main.java</a>}.
+ *
  * The Main class is the entry point of the Space Brick Breaker game.
  * It extends the JavaFX Application class and initialises various game components,
  * such as the game engine, physics engine, input handling, and more.
  * The game starts with the creation of the main game window and allows users
  * to interact with the game through keyboard inputs. It also manages game state,
  * levels, and provides functionality for saving and loading the game.
- *The Space Brick Breaker game involves breaking blocks with a ball and paddle.
- *  * Players progress through levels, earning points and encountering various challenges.
- *  * The game supports functionalities such as saving, loading, and resuming from a previous state.
+ * The Space Brick Breaker game involves breaking blocks with a ball and paddle.
+ * Players progress through levels, earning points and encountering various challenges.
+ *  The game supports functionalities such as saving, loading, and resuming from a previous state.
  * @author Stephanie Chung Sing Hung
+ *
  *
  */
 public class Main extends Application implements GameEngine.OnAction {
