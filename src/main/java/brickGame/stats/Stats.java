@@ -14,7 +14,7 @@ import javafx.util.Duration;
 public class Stats {
 
     private int destroyedBlockCount = 0;
-    private int  heart    = 3;
+    private int  heart    = 0;
     private long time = 0;
     private long hitTime  = 0;
     private long goldTime = 0;
@@ -32,7 +32,16 @@ public class Stats {
     }
 
     public void setHeart(int heart) {
+        System.out.println("set");
         this.heart = heart;
+    }
+    public void decreaseHeart() {
+        System.out.println("decrease");
+        this.heart -= 1;
+    }
+    public void increaseHeart() {
+        System.out.println("increase");
+        this.heart += 1;
     }
 
     public long getTime() {

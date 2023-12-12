@@ -2,6 +2,9 @@ package brickGame.constants;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Includes all necessary constants used in the game
+ */
 public enum GameConstants {
 
     SAVE_PATH("C:/save/save.mdds"),

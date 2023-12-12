@@ -7,11 +7,11 @@ import brickGame.gameEngine.GameEngine;
 import brickGame.stats.Stats;
 import brickGame.gameObjects.ball.Ball;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
-
+/**
+ * Concrete implementation of the PhysicsEngine interface.
+ * Manages physics interactions between game elements like the ball and BreakPaddle.
+ */
 public class ConcretePhysicsEngine implements PhysicsEngine {
-    /**
-     *
-     */
 
     private Main game;
     private Ball ball;
@@ -19,6 +19,14 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     private GameEngine gameEngine;
     private Stats stats;
 
+    /**
+     * Constructs a ConcretePhysicsEngine instance.
+     *
+     * @param game        The main game instance.
+     * @param ball        The ball object in the game.
+     * @param breakPaddle The BreakPaddle object in the game.
+     * @param stats       The game statistics.
+     */
     public ConcretePhysicsEngine(Main game, Ball ball, BreakPaddle breakPaddle, Stats stats) {
         this.game = game;
         this.ball = ball;
@@ -26,11 +34,17 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         this.stats = stats;
     }
 
+    /**
+     * @param gameEngine
+     * Sets the game engine
+     */
     public void setPEGameEngine(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
-        System.out.println(gameEngine);
     }
 
+    /**
+     * Calls various methods
+     */
     public void setPhysicsToBall() {
         calculateVelocity();
         ballPositioning();
@@ -40,6 +54,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         wallCollisons();
         ballCollision();
     }
+
+    /**
+     * Checks various conditions related to ball collisions with different game elements.
+     * Adjusts ball movement by setting different booleans based on collision conditions.
+     */
     public void ballCollision(){
         if (ball.isColideToRightBlock()) {
             ball.setGoRightBall(true);
@@ -58,6 +77,11 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         }
     }
 
+    /**
+     * Checks conditions based on whether colliding to left or right wall
+     * if left, set go right boolean to be true
+     * and vise versa
+     */
     public void wallCollisons(){
 
         if (ball.isColideToRightWall()) {
@@ -70,13 +94,30 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
 
     }
 
-    // Calculate velocity based on time and hit time
+    /**
+     * Calculates velocity of ball based on time and hit time
+     */
     public void calculateVelocity() {
         ball.setVelocity(((stats.getTime() - stats.getHitTime()) / 1000.000) + 2.000);
     }
 
-    //Handle boundary collisions
-    public void boundaryCollisons(){
+    /**
+     * Handles boundary collisions for the ball.
+     * Checks if the ball hits the top, bottom, right, or left boundary of the scene.
+     * Adjusts the ball behavior and triggers respective sound effects .
+     *
+     * If ball hits the top boundary it resets collision flags, sets the ball to move downward,
+     * and plays a bounce sound effect.
+     *
+     * If the ball goes beyond the bottom boundary, it plays a bounce sound effect,
+     * stops the ball from moving downward, and handles heart decrement and game over conditions if necessary.
+     *
+     * If the ball hits the right boundary, it plays a bounce sound effect, resets collision flags,
+     * and sets the "colideToRightWall" flag.
+     *
+     * If the ball hits the left boundary, it plays a bounce sound effect, resets collision flags,
+     * and sets the "colideToLeftWall" flag.
+     */    public void boundaryCollisons(){
 
         // Check if  ball hits the top boundary
         if (ball.getyBall() <= 0) {
@@ -92,7 +133,7 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             Sounds.playBounceSound();
             ball.setGoDownBall(false);
             if (!game.isGoldStatus()) {
-                stats.setHeart(stats.getHeart() - 1);
+                stats.decreaseHeart();
                 Sounds.playSound("lose-heart-sound");
 
                 new Stats().show(GameConstants.SCENE_WIDTH.getIntValue() / 2, GameConstants.SCENE_HEIGHT.getIntValue() / 2, -1, game);
@@ -108,7 +149,6 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         if (ball.getxBall() >= GameConstants.SCENE_WIDTH.getIntValue()) {
             Sounds.playBounceSound();
             resetCollideFlags();
-            //vX = 1.000;
             ball.setColideToRightWall(true);
         }
 
@@ -117,14 +157,16 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
             Sounds.playBounceSound();
 
             resetCollideFlags();
-            //vX = 1.000;
             ball.setColideToLeftWall(true);
         }
     }
 
 
-    //Update ball positioning
-    public void ballPositioning(){
+    /**
+     * - Updates the ball position based on its movement direction.
+     * - If ball is moving downward, increment the y-coordinate; otherwise decrement
+     * - If ball is moving to the right, increment the x-coordinate; otherwise decrement
+     */    public void ballPositioning(){
         if (ball.isGoDownBall()) {
             double currentY = ball.getyBall(); // Get the current yBall value
             currentY += ball.getVelocityY(); // Update the yBall value
@@ -147,7 +189,10 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
     }
 
 
-    //Handle collisions to break paddle
+    /**
+     * If ball collides with  BreakPaddle, updates the ball's horizontal movement direction
+     * according to the direction of collision
+     */
     public void breakCollisonDirection(){
         if (ball.isColideToBreak()) {
 
@@ -159,12 +204,27 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         }
     }
 
+    /**
+     * Handles collision between the ball and the BreakPaddle.
+     *
+     *
+     * Reset collision flags and play a bounce sound on impact.
+     * Update ball velocity based on collision position and direction.
+     * Record collision time for game statistics.
+     *
+     *
+     * Resets flags: colideToBreak, colideToBreakAndMoveToRight, goDownBall.
+     * Plays a bounce sound effect using the Sounds class.
+     * Adjusts ball velocity considering collision characteristics.
+     * Records the collision time in game statistics.
+     * Collision detection relies on ball x-coordinate within BreakPaddle's bounds.
+     */
     public void handleBreakCollision(){
         // Check if the ball collides with the BreakPaddle
         if (ball.getyBall() >= breakPaddle.getyBreak() - GameConstants.BALL_RADIUS.getIntValue()) {
 
             if (ball.getxBall() >= breakPaddle.getxBreak() && ball.getxBall() <= breakPaddle.getxBreak() + GameConstants.BREAK_WIDTH.getIntValue() ) {
-                stats.setHitTime(stats.getTime());
+                stats.setHitTime(stats.getTime()); // Record time of collision
                 resetCollideFlags();
                 ball.setColideToBreak(true);
               Sounds.playBounceSound();
@@ -195,6 +255,9 @@ public class ConcretePhysicsEngine implements PhysicsEngine {
         }
     }
 
+    /**
+     * resets all the collide booleans to be false
+     */
     public void resetCollideFlags() {
 
         ball.setColideToBreak(false);

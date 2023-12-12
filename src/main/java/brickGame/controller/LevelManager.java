@@ -7,6 +7,10 @@ import brickGame.gameObjects.ball.Ball;
 import brickGame.stats.Stats;
 import brickGame.timer.Timer;
 
+/**
+ * LevelManager class manages level by defining the nextLevel method and restartGame method
+ *
+ */
 public class LevelManager {
 
     private Main game;
@@ -15,6 +19,16 @@ public class LevelManager {
     private Stats stats;
     private Ball ball;
     private Timer timer;
+
+    /**
+     * Constructs a new LevelManager instance.
+     *
+     * @param game                The Main game instance.
+     * @param concretePhysicsEngine The ConcretePhysicsEngine instance.
+     * @param stats               The Stats instance.
+     * @param ball                The Ball instance.
+     * @param timer               The Timer instance.
+     */
     public LevelManager(Main game, ConcretePhysicsEngine concretePhysicsEngine, Stats stats, Ball ball, Timer timer) {
         this.game = game;
         this.concretePhysicsEngine = concretePhysicsEngine;
@@ -23,10 +37,18 @@ public class LevelManager {
         this.timer = timer;
     }
 
+    /**
+     * @param gameEngine
+     * Sets the game engine
+     */
     public void setLMGameEngine(GameEngine gameEngine) {
         this.gameEngine = gameEngine;
     }
 
+    /**
+     * Advances game to next level.
+     * Resets game parameters and starts the next level.
+     */
     public void nextLevel() {
 
         Sounds sounds = new Sounds();
@@ -56,6 +78,10 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Restarts game for restart button use
+     * Resets game parameters and starts game from the beginning.
+     */
     public void restartGame() {
         // Logic for restarting the game
         game.setLevel(0);

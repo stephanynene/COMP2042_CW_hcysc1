@@ -5,7 +5,13 @@ import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * The Sounds class manages game sound effects and background music.
+ *
+ * It provides methods to play various sound effects such as hitting blocks, gaining hearts, and game over sounds.
+ * Additionally, it handles background music, allowing for playback control, muting, and volume adjustment.
+ *
+ */
 public class Sounds {
 
     private static final Map<String, AudioClip> audioClips = new HashMap<>();
@@ -32,6 +38,11 @@ public class Sounds {
 
     }
 
+
+    /**
+     * @param soundKey
+     * plays the sound according to the name set
+     */
     public static void playSound(String soundKey) {
         AudioClip audioClip = audioClips.get(soundKey);
         if (audioClip != null) {
@@ -39,13 +50,24 @@ public class Sounds {
         }
     }
 
+    /**
+     * plays the bounce sound using playsound method
+     */
     public static void playBounceSound(){
         playSound("bounce-sound");
     }
 
+    /**
+     * Stops the bounce sound using stop sound method
+     */
     public static void stopBounceSound(){
         stopSound("bounce-sound");
     }
+
+    /**
+     * @param soundKey
+     * Stops the sound according to its name
+     */
     public static void stopSound(String soundKey) {
         AudioClip audioClip = audioClips.get(soundKey);
         if (audioClip != null) {
@@ -53,21 +75,39 @@ public class Sounds {
         }
     }
 
+    /**
+     * Plays the background music.
+     */
     public static void playBackgroundMusic() {
         backgroundMusicPlayer.play();
     }
 
+    /**
+     * Stops the background music.
+     */
     public static void stopBackgroundMusic() {
         backgroundMusicPlayer.stop();
     }
 
+    /**
+     * Mutes the background music.
+     */
     public static void muteBackgroundMusic() {
         backgroundMusicPlayer.setMute(true);
     }
 
+    /**
+     * Unmutes the background music.
+     */
     public static void unmuteBackgroundMusic() {
         backgroundMusicPlayer.setMute(false);
     }
+
+    /**
+     * Sets the volume for the background music.
+     *
+     * @param volume The volume level (0.0 to 1.0).
+     */
     public static void setBackgroundMusicVolume(double volume) {
         backgroundMusicPlayer.setVolume(volume);
     }
