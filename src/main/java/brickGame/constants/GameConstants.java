@@ -2,6 +2,9 @@ package brickGame.constants;
 
 import javafx.scene.paint.Color;
 
+/**
+ * Includes all necessary constants used in the game
+ */
 public enum GameConstants {
 
     SAVE_PATH("C:/save/save.mdds"),
@@ -16,7 +19,6 @@ public enum GameConstants {
     NORMAL_BALL("/ball.jpg"),
     GOLD_BALL("goldball.jpg"),
     SECOND_BALL("second-ball.png"),
-
     BREAKPADDLE_SPEED(5),
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),
@@ -28,8 +30,8 @@ public enum GameConstants {
 
     BALL_RADIUS(10),
 
-    LEFT(1),
-    RIGHT(2),
+    GOOD_BONUS_IMG("good-bonus.png"),
+    BAD_BONUS_IMG("bad-bonus.png"),
 
     SCENE_WIDTH(500),
     SCENE_HEIGHT(700),
@@ -45,6 +47,8 @@ public enum GameConstants {
     HIT_BOTTOM(1),
     HIT_LEFT(2),
     HIT_TOP(3),
+
+    BREAKPADDLE_IMG("block.png"),
 
     BLOCK_WIDTH(100),
     BLOCK_HEIGHT(30),

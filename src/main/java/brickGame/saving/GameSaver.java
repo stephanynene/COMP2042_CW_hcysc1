@@ -14,9 +14,21 @@ import javafx.application.Platform;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * The GameSaver saves the current game state to a file specified in GameConstants.
+ */
 
 public class GameSaver {
 
+    /**
+     * Saves the current game state to a file.
+     *
+     * @param gameInstance The main instance of the game.
+     * @param breakPaddle  The breakable paddle in the game.
+     * @param ball         The game ball.
+     * @param stats        The statistics related to the game.
+     * @param timer        The game timer.
+     */
     public void saveGameState(Main gameInstance, BreakPaddle breakPaddle, Ball ball, Stats stats, Timer timer) {
         new File(GameConstants.SAVE_PATH_DIR.getStringValue()).mkdirs();
         File file = new File(GameConstants.SAVE_PATH.getStringValue());

@@ -10,6 +10,10 @@ import brickGame.timer.Timer;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * The InputHandler class manages user input events -> handling key presses and releases.
+ * It is responsible for controlling the movement of the breakable paddle and triggering various game actions.
+ */
 public class InputHandler implements EventHandler<KeyEvent> {
 
     private BreakPaddle breakPaddle;
@@ -22,6 +26,15 @@ public class InputHandler implements EventHandler<KeyEvent> {
     private boolean rightKeyPressed = false;
     private int muteCount = 0;
 
+    /**
+     * Constructs an InputHandler instance with references to the game objects and components.
+     *
+     * @param breakPaddle The breakable paddle controlled by user input.
+     * @param ball        The game ball.
+     * @param game        The main game instance.
+     * @param stats       The game statistics.
+     * @param timer       The game timer.
+     */
     public InputHandler(BreakPaddle breakPaddle, Ball ball, Main game, Stats stats, Timer timer) {
         this.breakPaddle = breakPaddle;
         this.ball = ball;
@@ -31,6 +44,11 @@ public class InputHandler implements EventHandler<KeyEvent> {
     }
 
     // Keyboard for paddle
+    /**
+     * Handles both key presses and key releases.
+     *
+     * @param event The KeyEvent representing the user's input.
+     */
     @Override
     public void handle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
@@ -40,6 +58,14 @@ public class InputHandler implements EventHandler<KeyEvent> {
         }
     }
 
+    /**
+     * Handles key presses and triggers corresponding actions.
+     * LEFT -> sets leftKeyPressed true and moves break paddle left
+     * RIGHT -> sets rightKeyPressed tre and moves break paddle right
+     * S - > Save game for loading
+     * M - > Mute and unmute background music
+     * @param event The KeyEvent representing the key press event.
+     */
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
@@ -55,16 +81,16 @@ public class InputHandler implements EventHandler<KeyEvent> {
                 gameSaver.saveGameState(game, breakPaddle, ball, stats, timer);
                 break;
             case M:
-                if (muteCount % 2 == 0) {
-                    Sounds.muteBackgroundMusic();
-                } else {
-                    Sounds.unmuteBackgroundMusic();
-                }
-                muteCount++;
+               toggleBackgroundMusicMute();
         }
         movePaddle();
     }
 
+    /**
+     * Handles key releases and updates corresponding flags.
+     *
+     * @param event The KeyEvent representing the key release event.
+     */
     public void handleKeyRelease(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT:
@@ -75,6 +101,10 @@ public class InputHandler implements EventHandler<KeyEvent> {
                 break;
         }
     }
+
+    /**
+     * Moves the breakpaddle based on the user input.
+     */
     public void movePaddle() {
         if (leftKeyPressed) {
             breakPaddle.moveLeft();
@@ -82,5 +112,16 @@ public class InputHandler implements EventHandler<KeyEvent> {
         if (rightKeyPressed) {
             breakPaddle.moveRight();
         }
+    }
+    /**
+     * Toggles the mute state of the background music when the 'M' key is pressed.
+     */
+    private void toggleBackgroundMusicMute() {
+        if (muteCount % 2 == 0) {
+            Sounds.muteBackgroundMusic();
+        } else {
+            Sounds.unmuteBackgroundMusic();
+        }
+        muteCount++;
     }
 }

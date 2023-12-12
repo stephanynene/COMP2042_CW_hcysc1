@@ -1,5 +1,8 @@
 package brickGame.controller;
 
+/**
+ * The PhysicsEngine interface defines methods related to physics and collision handling in the game.
+ */
 public interface PhysicsEngine {
 
     void setPhysicsToBall();
