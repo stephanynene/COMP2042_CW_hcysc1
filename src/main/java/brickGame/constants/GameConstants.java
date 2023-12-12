@@ -45,6 +45,8 @@ public enum GameConstants {
     HIT_LEFT(2),
     HIT_TOP(3),
 
+    BREAKPADDLE_IMG("block.png"),
+
     BLOCK_WIDTH(100),
     BLOCK_HEIGHT(30),
     BLOCK_X_CENTRE(BLOCK_WIDTH.getIntValue() / 2),

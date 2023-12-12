@@ -12,7 +12,7 @@ public class BreakPaddleView extends Rectangle {
         rect.setX(x);
         rect.setY(y);
 
-        ImagePattern pattern = new ImagePattern(new Image("block.png"));
+        ImagePattern pattern = new ImagePattern(new Image(GameConstants.BREAKPADDLE_IMG.getStringValue()));
         rect.setFill(pattern);
     }
 

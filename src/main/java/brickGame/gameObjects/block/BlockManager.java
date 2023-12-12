@@ -21,7 +21,7 @@ public class BlockManager {
     }
 
     public void drawBlocks() {
-        // Iterate over blocks and add them to the manager
+        // Iterate over blocks and add to the manager
         for (Block block : blocks) {
             addBlock(block);
         }

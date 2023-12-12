@@ -67,7 +67,6 @@ public class Block implements Serializable {
 
         // collision with bottom of block
         if (topBall <= botBlock && botBall >= topBlock && rightBall >= leftBlock && leftBall <= rightBlock) {
-//            return GameConstants.HIT_BOTTOM.getIntValue();
 
             // collision with right
             if (leftBall <= rightBlock && rightBall > rightBlock) {
