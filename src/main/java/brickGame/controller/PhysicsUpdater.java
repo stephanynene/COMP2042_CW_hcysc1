@@ -99,15 +99,26 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     }
     private void handleChocoCollisionWithPaddle(Bonus choco) {
 
-        Sounds.playSound("bonus-sound");
         BonusLabel bonuslabel = new BonusLabel(root);
-        bonuslabel.showMessage("+3! Bonus", choco.x, choco.y);
 
+        // Check if bonus is good or bad
+        if (choco.isGood()) {
+            Sounds.playSound("bonus-sound");
+            bonuslabel.showMessage("+3! Bonus", choco.x, choco.y);
+            game.setScore(game.getScore() + 3);
+            new Stats().show(choco.x, choco.y, 3, game);
+        } else {
+            Sounds.playSound("lose-heart-sound");
+            bonuslabel.showMessage("-2! Penalty", choco.x, choco.y);
+            game.setScore(game.getScore() - 2);
+            new Stats().show(choco.x, choco.y, -2, game);
+        }
+
+        // Mark choco as taken and hide it
         choco.taken = true;
         choco.choco.setVisible(false);
-        game.setScore(game.getScore() +3 );
-        new Stats().show(choco.x, choco.y, 3, game);
     }
+
 
     private void updateChocoPosition(Bonus choco) {
         choco.y += ((stats.getTime() - choco.timeCreated) / 1000.0) + 1.0;

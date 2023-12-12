@@ -16,7 +16,6 @@ public enum GameConstants {
     NORMAL_BALL("/ball.jpg"),
     GOLD_BALL("goldball.jpg"),
     SECOND_BALL("second-ball.png"),
-
     BREAKPADDLE_SPEED(5),
     CHOCO_BLOCK_IMG("choco.jpg"),
     HEART_BLOCK_IMG("heart.jpg"),
@@ -28,8 +27,8 @@ public enum GameConstants {
 
     BALL_RADIUS(10),
 
-    BONUS1_IMG("bonus1.png"),
-    BONUS2_IMG("bonus2.png"),
+    GOOD_BONUS_IMG("good-bonus.png"),
+    BAD_BONUS_IMG("bad-bonus.png"),
 
     SCENE_WIDTH(500),
     SCENE_HEIGHT(700),

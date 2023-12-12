@@ -17,6 +17,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ElementsUpdater implements GameEngine.OnAction {
 
@@ -143,7 +144,9 @@ public class ElementsUpdater implements GameEngine.OnAction {
 
     // Handle hit to choco block
     private void handleChocoBlockHit(Block block) {
-        final Bonus choco = new Bonus(block.row, block.column);
+        boolean isGood = determineIfGoodBonus();
+
+        final Bonus choco = new Bonus(block.row, block.column, isGood);
         choco.timeCreated = stats.getTime();
 
         // Use synchronized block to add choco to UI and update game state
@@ -153,6 +156,9 @@ public class ElementsUpdater implements GameEngine.OnAction {
         }
     }
 
+    private boolean determineIfGoodBonus() {
+            return new Random().nextBoolean(); // Returns true or false randomly
+    }
 
     private void handleThunderBlockHit() {
         game.setScore(game.getScore() + 10);
