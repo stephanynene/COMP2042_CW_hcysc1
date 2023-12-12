@@ -5,10 +5,8 @@ import brickGame.Sounds;
 import brickGame.constants.GameConstants;
 import brickGame.gameEngine.GameEngine;
 import brickGame.gameObjects.ball.Ball;
-import brickGame.gameObjects.ball.BallView;
 import brickGame.gameObjects.block.Block;
 import brickGame.gameObjects.bonus.Bonus;
-import brickGame.labels.BonusLabel;
 import brickGame.stats.Stats;
 import brickGame.gameObjects.breakpaddle.BreakPaddle;
 import javafx.animation.*;
@@ -66,15 +64,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
         updateChocoList();
     }
 
-    // Check if ball is within vertical game bounds
-    private boolean isBallWithinBounds() {
-        double paddingTop = Block.getPaddingTop();
-        double ballY = ball.getyBall();
-        double blockHeight = Block.getHeight();
-        int level = game.getLevel();
-
-        return ballY >= paddingTop && ballY <= (blockHeight * (level + 1)) + paddingTop;
-    }
 
     private void handleBlockCollisions() {
         // Synchronize access to the game's blocks list
@@ -164,21 +153,6 @@ public class ElementsUpdater implements GameEngine.OnAction {
         }
     }
 
-//    private void handleDoubleBallHit(Block block) {
-//
-//        Ball secondBall = new Ball(GameConstants.BALL_RADIUS.getIntValue());
-//        secondBall.initBall();
-//        BallView secondBallView = new BallView(GameConstants.BALL_RADIUS.getIntValue());
-//        secondBallView.setBallImage(GameConstants.SECOND_BALL);
-//        root.getChildren().add(secondBallView);
-//
-//        ball.setVelocity(10);
-//        root.getChildren().add(secondBall);
-//        secondBall.setGoRightBall(false);
-//        secondBall.setGoDownBall(true);
-//        secondBall.setVelocityX(1);
-//        secondBall.setVelocityY(1);
-//    }
 
     private void handleThunderBlockHit() {
         game.setScore(game.getScore() + 10);
@@ -186,15 +160,12 @@ public class ElementsUpdater implements GameEngine.OnAction {
         double originalTranslateX = root.getTranslateX();
         double originalTranslateY = root.getTranslateY();
 
-        Label pointsLabel = new Label("Thunder Block +10 points");
+        Label thunderLabel = new Label("Thunder Block +10 points");
+        thunderLabel.setTranslateX(200);
+        thunderLabel.setTranslateY(300);
+        root.getChildren().add(thunderLabel);
 
-
-        pointsLabel.setTranslateX(200);
-        pointsLabel.setTranslateY(300);
-
-        root.getChildren().add(pointsLabel);
-
-        // Animation for screen shake
+        // Animate a screen shaking
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0.1), new KeyValue(root.translateXProperty(), originalTranslateX - 5)),
                 new KeyFrame(Duration.seconds(0.2), new KeyValue(root.translateYProperty(), originalTranslateY + 5)),
@@ -210,7 +181,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
             // PauseTransition for 2 seconds
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(pauseEvent -> {
-                root.getChildren().remove(pointsLabel);
+                root.getChildren().remove(thunderLabel);
             });
             pause.play();
         });
@@ -232,7 +203,7 @@ public class ElementsUpdater implements GameEngine.OnAction {
             ball.setVelocityX(ball.getVelocityX() * 2);
             ball.setVelocityY(ball.getVelocityY() * 2);
 
-            // Use Animation Timeline to reset gold status after a certain duration
+            // Use Animation Timeline to reset gold status after certain duration
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(5000), event -> {
                 resetGoldStatus();
             }));

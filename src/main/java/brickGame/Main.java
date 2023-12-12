@@ -34,7 +34,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Main extends Application implements GameEngine.OnAction {
-
+    private boolean isGoldStatus = false;
+    private boolean isExistHeartBlock = false;
+    public int level = 0;
+    private int  score    = 0;
+    private ArrayList<Block> blocks = new ArrayList<Block>();
+    private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
     public boolean isGoldStatus() {
         return isGoldStatus;
     }
@@ -42,8 +47,6 @@ public class Main extends Application implements GameEngine.OnAction {
     public void setGoldStatus(boolean goldStatus) {
         isGoldStatus = goldStatus;
     }
-
-    private boolean isGoldStatus = false;
 
     public boolean isExistHeartBlock() {
         return isExistHeartBlock;
@@ -53,8 +56,6 @@ public class Main extends Application implements GameEngine.OnAction {
         isExistHeartBlock = existHeartBlock;
     }
 
-    private boolean isExistHeartBlock = false;
-
     public int getLevel() {
         return level;
     }
@@ -62,8 +63,6 @@ public class Main extends Application implements GameEngine.OnAction {
     public void setLevel(int level) {
         this.level = level;
     }
-
-    public int level = 0;
 
     public int getScore() {
         return score;
@@ -73,8 +72,6 @@ public class Main extends Application implements GameEngine.OnAction {
         this.score = score;
     }
 
-    private int  score    = 0;
-
     public ArrayList<Block> getBlocks() {
         return blocks;
     }
@@ -83,30 +80,16 @@ public class Main extends Application implements GameEngine.OnAction {
         this.blocks = blocks;
     }
 
-    private ArrayList<Block> blocks = new ArrayList<Block>();
-    private ArrayList<BlockView> blockViews = new ArrayList<>();
-
-
     public ArrayList<Bonus> getChocos() {
         return chocos;
     }
 
-    public void setChocos(ArrayList<Bonus> chocos) {
-        this.chocos = chocos;
-    }
 
-
-    private ArrayList<Bonus> chocos = new ArrayList<Bonus>();
-
-    public void addToChocos( Bonus bonus) {
-        chocos.add(bonus);
-    }
     public  Pane root;
     private Label scoreLabel;
     private Label heartLabel;
     private Label levelLabel;
     private Label countdownLabel;
-
 
     private boolean loadFromSave = false;
 

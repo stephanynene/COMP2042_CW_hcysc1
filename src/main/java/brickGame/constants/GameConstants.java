@@ -28,8 +28,8 @@ public enum GameConstants {
 
     BALL_RADIUS(10),
 
-    LEFT(1),
-    RIGHT(2),
+    BONUS1_IMG("bonus1.png"),
+    BONUS2_IMG("bonus2.png"),
 
     SCENE_WIDTH(500),
     SCENE_HEIGHT(700),

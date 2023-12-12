@@ -1,5 +1,6 @@
 package brickGame.gameObjects.bonus;
 
+import brickGame.constants.GameConstants;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -16,9 +17,9 @@ public class BonusView {
 
         String url;
         if (new Random().nextInt(20) % 2 == 0) {
-            url = "bonus1.png";
+            url = GameConstants.BONUS1_IMG.getStringValue();
         } else {
-            url = "bonus2.png";
+            url = GameConstants.BONUS2_IMG.getStringValue();
         }
 
         choco.setFill(new ImagePattern(new Image(url)));

@@ -22,7 +22,6 @@ public class PhysicsUpdater implements GameEngine.OnAction {
     private Main game;
     private Ball ball;
     private Pane root;
-    private Bonus bonus;
     private BreakPaddle breakPaddle;
     private ConcretePhysicsEngine concretePhysicsEngine;
     private Stats stats;
@@ -99,7 +98,6 @@ public class PhysicsUpdater implements GameEngine.OnAction {
         }
     }
     private void handleChocoCollisionWithPaddle(Bonus choco) {
-
 
         Sounds.playSound("bonus-sound");
         BonusLabel bonuslabel = new BonusLabel(root);

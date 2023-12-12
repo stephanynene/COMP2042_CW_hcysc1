@@ -6,17 +6,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BreakPaddle {
-
+    private int halfBreakWidth = GameConstants.BREAK_WIDTH.getIntValue() / 2;
+    private static final Duration ANIMATION_DURATION = Duration.millis(1);
     private BreakPaddleView breakPaddleView;
 
-    public void setxBreak(double xBreak) {
-        this.xBreak = xBreak;
-    }
-    public double getxBreak() {
-        return xBreak;
-    }
     private double xBreak = 0.0f;
-
+    public Rectangle rect;
+    private double centerBreakX;
+    private double yBreak = 640.0f;
     public double getCenterBreakX() {
         return centerBreakX;
     }
@@ -25,7 +22,6 @@ public class BreakPaddle {
         this.centerBreakX = centerBreakX;
     }
 
-    private double centerBreakX;
 
     public double getyBreak() {
         return yBreak;
@@ -34,11 +30,13 @@ public class BreakPaddle {
     public void setyBreak(double yBreak) {
         this.yBreak = yBreak;
     }
-    private double yBreak = 640.0f;
-    private int halfBreakWidth = GameConstants.BREAK_WIDTH.getIntValue() / 2;
 
-    public Rectangle rect;
-    private static final Duration ANIMATION_DURATION = Duration.millis(1);
+    public void setxBreak(double xBreak) {
+        this.xBreak = xBreak;
+    }
+    public double getxBreak() {
+        return xBreak;
+    }
 
     public void initBreak() {
         rect = new Rectangle();

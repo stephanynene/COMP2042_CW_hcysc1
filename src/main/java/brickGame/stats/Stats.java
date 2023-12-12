@@ -13,6 +13,11 @@ import javafx.util.Duration;
 
 public class Stats {
 
+    private int destroyedBlockCount = 0;
+    private int  heart    = 3;
+    private long time = 0;
+    private long hitTime  = 0;
+    private long goldTime = 0;
 
     public int getDestroyedBlockCount() {
         return destroyedBlockCount;
@@ -22,8 +27,6 @@ public class Stats {
         this.destroyedBlockCount = destroyedBlockCount;
     }
 
-    private int destroyedBlockCount = 0;
-
     public int getHeart() {
         return heart;
     }
@@ -31,7 +34,6 @@ public class Stats {
     public void setHeart(int heart) {
         this.heart = heart;
     }
-    private int  heart    = 3;
 
     public long getTime() {
         return time;
@@ -41,8 +43,6 @@ public class Stats {
         this.time = time;
     }
 
-    private long time = 0;
-
     public long getHitTime() {
         return hitTime;
     }
@@ -50,9 +50,6 @@ public class Stats {
     public void setHitTime(long hitTime) {
         this.hitTime = hitTime;
     }
-
-    private long hitTime  = 0;
-
 
     public long getGoldTime() {
         return goldTime;
@@ -62,7 +59,6 @@ public class Stats {
         this.goldTime = goldTime;
     }
 
-    private long goldTime = 0;
 
 
     public void show(final double x, final double y, int score, final Main main) {
